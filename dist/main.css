@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Roboto-Regular';
+  src: url(03523cf578d69fa923226ff457b92d90.ttf) format("truetype");
+}
+h1 {
+  color: red;
+  font-family: Roboto-Regular, sans-serif;
+}
+
+.box {
+  padding: 1rem;
+  width: 100px;
+  height: 100px;
+  background: #000;
+  transition: 0.2s;
+}
+.box:hover {
+  padding: 2rem;
+}
+
+/*# sourceMappingURL=main.css.map*/

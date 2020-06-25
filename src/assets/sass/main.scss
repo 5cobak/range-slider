@@ -1,0 +1,10 @@
+.box {
+  padding: 1rem;
+  width: 100px;
+  height: 100px;
+  background: #000;
+  transition: .2s;
+  &:hover {
+    padding: 2rem;
+  }
+}

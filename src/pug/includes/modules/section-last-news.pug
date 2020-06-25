@@ -1,0 +1,31 @@
+section.section-slider.section-last-news
+	.container
+		.swiper-container
+			h2.section-title Последние новости
+			a.link-all-catalog(href="#") Весь Каталог
+			.swiper-button-prev
+			.swiper-button-next
+			.swiper-wrapper
+				.swiper-slide
+					.items-slide.items-slide_news
+						+item-news('assets/img/news-1.png')
+						+item-news('assets/img/news-2.png')
+						+item-news('assets/img/news-3.png')
+				.swiper-slide
+					.items-slide.items-slide_news
+						+item-news('assets/img/news-1.png')
+						+item-news('assets/img/news-2.png')
+						+item-news('assets/img/news-3.png')
+				.swiper-slide
+					.items-slide.items-slide_news
+						+item-news('assets/img/news-1.png')
+						+item-news('assets/img/news-2.png')
+						+item-news('assets/img/news-3.png')
+		.subscribe
+			form
+				label.subscribe__label
+					span.subscribe__title Подпишитесь на рассылку и будьте в курсе новостей, акций, новинок
+					br
+					input(type="text" name="Email" method="POST" placeholder="Ваш Email").subscribe__input
+					input(type="submit" value="Подписаться").button.button_in-cart.button_subscribe
+					
