@@ -167,6 +167,15 @@ module.exports = {
 				test: /\.pug$/,
 				loader: 'pug-loader',
 			},
+			{
+				test: /\.svg$/,
+				loader: 'svg-sprite-loader',
+				options: {
+					extract: false,
+					spriteFilename: './assets/img/icons/icons.svg',
+					runtimeCompat: true,
+				},
+			},
 		],
 	},
 }
