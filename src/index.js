@@ -1,6 +1,6 @@
 import './assets/css/main.css'
 import './assets/sass/main.scss'
-import './js/range-slider';
+import './js/ts/range-slider.ts';
 import './js/index'
 
 // import Logo from './assets/img/logo.png'

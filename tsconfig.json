@@ -1,12 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": "",
-    "outDir": "./src/js",
-    "target": "ES2017",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "ES6",
+    "lib": ["DOM", "DOM.Iterable"],
     "sourceMap": true,
+    "removeComments": true,
+    "outDir": "./src/js",
     "rootDir": "./src",
     "downlevelIteration": false,
-    "charset": "utf8"
+    "charset": "utf8",
+    "strict": true
+    // "noEmitOnError": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
