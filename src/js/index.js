@@ -2,4 +2,4 @@ function requireAll(r) {
 	r.keys().forEach(r);
 }
 requireAll(require.context('../assets/img/icons/', true, /\.svg$/));
-$('.js-range-slider-4').myPlugin({ type: 'single', flag: true });
+$('.js-range-slider-4').myPlugin({ type: 'single-vertical', flag: true });

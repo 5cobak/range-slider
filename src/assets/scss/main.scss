@@ -1,8 +1,8 @@
-@import 'utils/fonts';
-@import 'utils/libs';
-@import 'utils/vars';
-@import 'utils/mixins';
-@import 'utils/reset';
+@import "utils/fonts";
+@import "utils/libs";
+@import "utils/vars";
+@import "utils/mixins";
+@import "utils/reset";
 
 html {
   line-height: $mainLineHeight;
@@ -14,7 +14,7 @@ html {
   @media screen and (max-width: $phoneWidth) {
     font-size: 15px;
   }
-  @media screen and (max-width: $smPhoneWidth) {
+  @media screen and (max-width: $smPhoneWidth ) {
     font-size: 14px;
   }
 }
@@ -28,20 +28,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
+*, *:before, *:after { box-sizing: border-box; }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-}
+h1, h2, h3, h4, h5, h6 { margin: 0; }
 
 h1 {
   color: $ds100;
@@ -56,12 +45,10 @@ h3 {
   text-transform: uppercase;
 }
 
-a {
-  text-decoration: none;
-}
 
-ul,
-li {
+a { text-decoration: none; }
+
+ul, li {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -75,8 +62,7 @@ button {
   padding: 0;
 }
 
-input,
-label {
+input, label {
   cursor: pointer;
 }
 input {
@@ -84,8 +70,7 @@ input {
   text-shadow: none;
 }
 
-section,
-.section {
+section, .section {
   position: relative;
   padding: rem(40) 0;
   // @media screen and (max-width: $desktopWidth) {
@@ -101,6 +86,7 @@ section,
 
 ::spelling-error {
   color: #fff;
+
 }
 
 .wrapper {
@@ -148,7 +134,7 @@ section,
   grid-gap: 1rem;
   margin-bottom: 3rem;
   @media (min-width: $phoneWidth) and (max-width: $tableWidth) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);    
   }
   @media (min-width: $smPhoneWidth) and (max-width: $phoneWidth) {
     grid-template-columns: 1fr;
@@ -157,6 +143,9 @@ section,
   @media screen and (max-width: $smPhoneWidth) {
     grid-template-columns: 1fr;
   }
+}
+.col {
+
 }
 
 .last {
@@ -189,10 +178,11 @@ button {
 }
 // Modules
 
+
 .ranges-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-@import 'modules/range-slider';
+@import "modules/range-slider"

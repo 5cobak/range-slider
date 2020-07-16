@@ -1,8 +1,7 @@
-import './assets/css/main.css'
-import './assets/sass/main.scss'
-import './js/ts/range-slider.ts';
-import './js/index'
+/* eslint-disable */
+import './assets/scss/main.scss';
 
-// import Logo from './assets/img/logo.png'
-// import React from 'react'
-// import { render } from 'react-dom'
+import './js/range-slider.js';
+import './js';
+
+// plugins

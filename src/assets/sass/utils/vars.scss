@@ -1,0 +1,66 @@
+// Font
+
+// Size
+$mainFontColor           : #101010;
+$mainFontSize            : 18px;
+$normal					         : 400;
+$bold						         : 700;
+$mainLineHeight          : 1.4;
+
+// media size
+
+
+$desktopWidth            : 1440px;
+$mdDesktopWidth          : 1160px;
+$smDesktopWidth          : 980px;
+$tableWidth              : 768px;
+$phoneWidth              : 480px;
+$smPhoneWidth            : 320px;
+
+// Main color
+// $default-color           : #ffffff;
+// $primary-color           : #444ce0;
+// $success-color           : #26de81;
+$danger-color            		: #fc5c65;
+// $warning-color           : #fed330;
+// $light-color             : #999999;
+// $purple-color            : #8854d0;
+
+// // Neutral Color
+// $neutral-primary         : #303133;
+// $neutral-regular         : #606266;
+// $neutral-secondary       : #909399;
+// $neutral-placeholder     : #C0C4CC;
+
+// // Border Color
+// $border-base             : #DCDFE6;
+// $border-light            : #E4E7ED;
+// $border-lighter          : #EBEEF5;
+// $border-lightex          : #F2F6FC;
+
+$ds100                   : #1f2041;
+$ds75                    : rgba(31, 32, 65, 0.75);
+$ds50                    : rgba(31, 32, 65, 0.5);
+$ds25                    : rgba(31, 32, 65, 0.25);
+$ds5                     : rgba(31, 32, 65, 0.05);
+$purple                  : #BC9CFF;
+$salad                   : #6FCF97;
+$darkGreen               : #66D2EA;
+$bodyColor							 : #E5E5E5;
+$white                   : #ffffff;
+
+// box-shadow
+
+$bs-2										 : 0px 10px 20px rgba(31, 32, 65, 0.05);
+
+// transition 
+
+$trFast                  : .25s;
+$trMid                   : .5s;
+
+// gradients
+
+$purpleGr                : linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+$purpleGr-hover          : linear-gradient(180deg, #BC9CFF 0%, #BC9CFF 100%);
+$greenGrVertical         : linear-gradient(-180deg, #6FCF97 0%, #66D2EA 100%);
+$greenGrGorizont         : linear-gradient(-90deg, #6FCF97 0%, #66D2EA 100%);

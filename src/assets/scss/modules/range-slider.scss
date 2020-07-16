@@ -1,0 +1,77 @@
+.range-slider {
+	position: relative;
+	height: 8px;
+	width: 100%;
+	max-width: 266px;
+	border-radius: rem(20);
+	border: 1px solid $ds25;
+	user-select: none;
+	&_single {
+		.range-slider__inner {
+			width: 50%;
+			outline: none;
+		}
+		.range-slider__span-to {
+			display: none;
+		}
+	}
+	&_vertical {
+		width: 8px;
+		height: 266px;
+
+		.range-slider__inner {
+			width: 8px;
+			left: -1px;
+			background: $greenGrVertical;
+		}
+		.range-slider__thumb {
+			left: calc(50% - 7.5px);
+		}
+		.range-slider__flag {
+			left: 20px;
+		}
+	}
+
+	&__inner {
+		height: 8px;
+		background: $greenGrGorizont;
+		border-radius: rem(20);
+		position: absolute;
+		top: -1px;
+	}
+	&__thumb{
+		position: absolute;
+		display: block;
+		width: 15px;
+		height: 15px;
+
+		background: $darkGreen;
+		border-radius: 50%;
+		border: 2px solid grey;
+		cursor: pointer;
+	}
+	&__thumb {
+		top: calc(50% - 8px);
+	}
+	&__span-to {
+		right: -2px;
+		top: calc(50% - 7px);
+	}
+	&__flag {
+		display: inline-flex;
+		justify-content: center;
+		min-width: 35px;
+		min-height: 20px;
+		align-items: center;
+		line-height: 100%;
+		position: absolute;
+		border: 1px solid grey;
+		top: -30px;
+		background: $darkGreen;
+		cursor: pointer;
+		font-size: 14px;
+		border-radius: 20px;
+		color: $white;
+		// font-family: "MontserratBold";
+	}
+}

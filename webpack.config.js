@@ -88,18 +88,16 @@ module.exports = {
 	context: path.resolve(__dirname, 'src'),
 	mode: 'development',
 	entry: {
-		main: ['@babel/polyfill', './index.js'],
+		main: ['@babel/polyfill', './index.ts'],
 		// some other entry point
 	},
 	output: {
 		filename: filename('js'),
 		path: path.resolve(__dirname, 'dist'),
 	},
-	// resolve: {
-	//   alias: {
-	// example '~': path.resolve(__dirname, 'node_modules')
-	//   }
-	// },
+	resolve: {
+	  extensions: [ '.jsx', '.ts', '.js' ],
+	},
 	optimization: optimization(),
 	devServer: {
 		port: 4200,
@@ -115,7 +113,12 @@ module.exports = {
 			$: 'jquery',
 			jQuery: 'jquery',
 		}),
-		// new CopyWebpackPlugin(),
+		// new CopyWebpackPlugin([
+		// 	{
+		// 		from: 'src/assets/**/*',
+		// 		to: './assets',
+		// 	},
+		// ]),
 		new MiniCssExtractPlugin({
 			filename: filename('css'),
 		}),
