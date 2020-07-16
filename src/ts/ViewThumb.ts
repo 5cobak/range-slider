@@ -1,6 +1,6 @@
 /// <reference path="globals.d.ts" />
 
-class ViewThumb implements IClassProperties {
+export default class ViewThumb implements IClassProperties {
   settings: IsettingsTypes;
   el: HTMLElement;
   constructor(settings: IsettingsTypes) {
@@ -321,5 +321,3 @@ class ViewThumb implements IClassProperties {
     }
   }
 }
-
-module.exports = ViewThumb;

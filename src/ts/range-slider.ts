@@ -1,7 +1,7 @@
 /*	eslint no-param-reassign: "off"	*/
 /// <reference path="globals.d.ts" />
 /// <reference path="jquery.range-slider.d.ts" />
-const ViewSlider = require('./View.ts');
+import View from './View';
 (($) => {
   $.fn.extend({
     myPlugin: function (options: IsettingsTypes) {
@@ -19,8 +19,8 @@ const ViewSlider = require('./View.ts');
         },
         options // custom options object
       );
-      const view = new ViewSlider($this, settings);
-      const presenter = new Presenter(view, model);
+      const view = new View($this, settings);
+      // const presenter = new Presenter(view, model);
       return this;
     },
   });

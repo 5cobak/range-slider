@@ -1,5 +1,6 @@
 /// <reference path="globals.d.ts" />
-class ViewInner {
+
+export default class ViewInner {
   settings: IsettingsTypes;
   el: HTMLElement;
   constructor(settings: IsettingsTypes) {
@@ -33,4 +34,3 @@ class ViewInner {
     }
   }
 }
-module.exports = ViewInner;

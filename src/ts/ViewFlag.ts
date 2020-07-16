@@ -1,5 +1,5 @@
 /// <reference path="globals.d.ts" />
-class ViewFlag {
+export default class ViewFlag {
   el: HTMLElement;
   constructor(settings: IsettingsTypes) {
     this.el = this.createFlag();
@@ -40,4 +40,3 @@ class ViewFlag {
     }
   }
 }
-module.exports = ViewFlag;

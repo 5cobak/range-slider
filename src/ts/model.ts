@@ -3,9 +3,9 @@ class Model {
   modelType?: object;
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
-    this.modelType = this.chooseView(settings);
+    this.modelType = this.chooseModelType(settings);
   }
-  chooseView(settings: IsettingsTypes) {
+  chooseModelType(settings: IsettingsTypes) {
     let modelType: object;
     if (settings.type === 'single') {
       return (modelType = new ModelSingle());

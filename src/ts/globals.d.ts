@@ -14,6 +14,9 @@ interface IClassProperties {
   el: HTMLElement;
   setPosition(settings: IsettingsTypes): void;
 }
+interface ITrack {
+  el: HTMLElement;
+}
 
 interface IClassFlag {
   el: HTMLElement;

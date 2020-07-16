@@ -1,4 +1,4 @@
-class ViewTrack {
+export default class ViewTrack {
   el: HTMLElement;
   _type!: string;
 
@@ -37,4 +37,3 @@ class ViewTrack {
     return this._type;
   }
 }
-module.exports = ViewTrack;
