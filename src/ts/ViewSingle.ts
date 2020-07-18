@@ -44,17 +44,10 @@ export default class ViewSingle {
       this.inner.setPosition(this.settings);
 
       const $settings = this.settings;
-      function writeVal() {
-        $this.flag.writeValueIn($settings);
-      }
+
       // write value in the flags by click on track
-      writeVal();
+
       // write value in the flags by move thumb or flag
-      document.addEventListener('mousemove', writeVal);
-      // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
-      document.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', writeVal);
-      });
     });
   }
 
@@ -62,7 +55,6 @@ export default class ViewSingle {
   init() {
     this.thumb.setPosition(this.settings);
     this.flag.setPosition(this.settings);
-    this.flag.writeValueIn(this.settings);
     this.inner.setPosition(this.settings);
   }
 }

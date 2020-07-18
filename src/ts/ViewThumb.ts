@@ -58,12 +58,10 @@ export default class ViewThumb implements IClassProperties {
       const fullWidthThumb: number = parseInt(getComputedStyle(targetThumb).width);
       targetThumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
       /// min position
-      if (parseInt(getComputedStyle(targetThumb).left) <= 0) {
-        targetThumb.style.left = `${0}px`;
-      }
-      /// max position
-      else if (parseInt(getComputedStyle(targetThumb).left) >= track.offsetWidth - fullWidthThumb) {
-        targetThumb.style.left = `${track.offsetWidth - fullWidthThumb}px`;
+      if (parseInt(getComputedStyle(targetThumb).left) <= -halfThumb) {
+        targetThumb.style.left = `${-halfThumb}px`;
+      } else if (parseInt(getComputedStyle(targetThumb).left) >= track.offsetWidth - halfThumb) {
+        targetThumb.style.left = `${track.offsetWidth - halfThumb}px`;
       }
       if (
         targetThumb === firstThumb &&
@@ -158,11 +156,11 @@ export default class ViewThumb implements IClassProperties {
       const halfThumb = parseInt(getComputedStyle(thumb).width) / 2;
       const fullWidthThumb = parseInt(getComputedStyle(thumb).width);
       thumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
-      if (parseInt(getComputedStyle(thumb).left) <= 0) {
-        thumb.style.left = `${0}px`;
-      }
-      if (parseInt(getComputedStyle(thumb).left) >= track.offsetWidth - fullWidthThumb) {
-        thumb.style.left = `${track.offsetWidth - fullWidthThumb}px`;
+
+      if (parseInt(getComputedStyle(thumb).left) <= -halfThumb) {
+        thumb.style.left = `${-halfThumb}px`;
+      } else if (parseInt(getComputedStyle(thumb).left) >= track.offsetWidth - halfThumb) {
+        thumb.style.left = `${track.offsetWidth - halfThumb}px`;
       }
       inner.style.width = `${parseInt(getComputedStyle(thumb).left) + halfThumb}px`;
     }

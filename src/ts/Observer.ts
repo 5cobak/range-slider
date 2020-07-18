@@ -24,12 +24,12 @@ export default class MakeObservableSubject {
     throw new Error('could not find observer in list of observers');
   }
 
-  notifyObservers(data: any) {
+  notifyObservers() {
     // Make a copy of observer list in case the list
     // is mutated during the notifications.
     let observersSnapshot = this.observers.slice(0);
     for (let i = 0, ilen = observersSnapshot.length; i < ilen; i += 1) {
-      observersSnapshot[i](data);
+      observersSnapshot[i]();
     }
   }
 }

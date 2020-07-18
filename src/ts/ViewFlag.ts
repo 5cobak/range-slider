@@ -27,16 +27,4 @@ export default class ViewFlag {
       } else this.el.style.top = `${0}px`;
     }
   }
-
-  writeValueIn(settings: IsettingsTypes) {
-    let parentEl = this.el.parentElement as HTMLElement;
-
-    if (!settings.flag) return;
-
-    if (settings.type === 'single' || settings.type === 'double') {
-      this.el.innerHTML = `${parseInt(parentEl.style.left)}`;
-    } else if (settings.type === 'single-vertical' || settings.type === 'double-vertical') {
-      this.el.innerHTML = `${parseInt(parentEl.style.top)}`;
-    }
-  }
 }

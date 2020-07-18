@@ -20,7 +20,6 @@ interface ITrack {
 
 interface IClassFlag {
   el: HTMLElement;
-  writeValueIn(settings: IsettingsTypes): void;
   setPosition(settings: IsettingsTypes): void;
 }
 
@@ -50,4 +49,25 @@ interface IClassThumb {
 
 interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;
+}
+
+interface IObserver {
+  addObservers(o: Function): void;
+  notifyObservers(): void;
+  removeObserver(o: Function): void;
+}
+interface IBank {
+  currentValue?: number;
+  currentSecondValue?: number;
+  generalVal?: number;
+}
+interface IModel {
+  modelChangedSubject: IObserver;
+  bank?: IBank;
+  type: ISubModel;
+}
+interface ISubModel {
+  bank: IBank;
+  setCurrentValue(thumbPos: number, trackWidth: number): number;
+  getGeneralValue(settings: IsettingsTypes): number;
 }

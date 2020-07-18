@@ -7,6 +7,7 @@ import ViewSingleVertical from './ViewSingleVertical';
 export default class View {
   settings: IsettingsTypes;
   el: HTMLElement;
+  type: object;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.el = element;
     this.settings = settings;

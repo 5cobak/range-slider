@@ -1,18 +1,26 @@
-class Model {
+import ModelSingle from './ModelSingle';
+import modelDouble from './modelDouble';
+import modelDoubleVertical from './modelDoubleVertical';
+import modelSingleVertical from './modelSingleVertical';
+import MakeObservableSubject from './Observer';
+
+export default class Model implements IModel {
   settings: IsettingsTypes;
-  modelType?: object;
+  type: ISubModel;
+  modelChangedSubject: IObserver;
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
-    this.modelType = this.chooseModelType(settings);
+    this.type = this.chooseModelType(settings);
+    this.modelChangedSubject = new MakeObservableSubject();
   }
   chooseModelType(settings: IsettingsTypes) {
-    let modelType: object;
+    let type: ISubModel;
     if (settings.type === 'single') {
-      return (modelType = new ModelSingle());
+      return (type = new ModelSingle(settings));
     } else if (settings.type === 'double') {
-      return (modelType = new modelDouble());
+      return (type = new modelDouble());
     } else if (settings.type === 'double-vertical') {
-      return (modelType = new modelDoubleVertical());
-    } else return (modelType = new modelSingleVertical());
+      return (type = new modelDoubleVertical());
+    } else return (type = new modelSingleVertical());
   }
 }

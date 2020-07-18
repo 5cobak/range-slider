@@ -1,4 +1,4 @@
-class ModelDoubleVertical {
+export default class ModelDoubleVertical {
   bank: object;
   constructor() {
     this.bank = {

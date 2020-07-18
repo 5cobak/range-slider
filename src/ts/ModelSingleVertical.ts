@@ -1,4 +1,4 @@
-class ModelSingleVertical {
+export default class ModelSingleVertical {
   bank: object;
   constructor() {
     this.bank = {
