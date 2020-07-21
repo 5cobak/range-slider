@@ -16,19 +16,53 @@ export default class ViewThumb implements IClassProperties {
 
   setPosition(settings: IsettingsTypes): void {
     const track = this.el.parentElement;
+    const widthThumb = this.el.offsetWidth;
     if (!(track instanceof HTMLElement)) return;
     if (settings.type === 'single') {
-      this.el.style.left = `${track.offsetWidth / 2}px`;
+      this.el.style.left = '0px';
     } else if (settings.type === 'double') {
       this.el.style.left = `${track.offsetWidth / 4}px`;
     } else if (settings.type === 'single-vertical') {
-      this.el.style.top = `${track.offsetHeight / 2}px`;
+      this.el.style.top = '0px';
     } else {
       this.el.style.top = `${track.offsetHeight / 4}px`;
     }
   }
 
   // -------------------------------------------------------------  events for X type range
+  moveSingleTypeX(e: MouseEvent): void {
+    const target = e.target as HTMLElement;
+
+    const track = target.closest('.range-slider') as HTMLElement;
+    const thumb = target.closest('.range-slider__thumb') as HTMLElement;
+    const inner = track.querySelector('.range-slider__inner') as HTMLElement;
+    if (!thumb) return;
+    thumb.ondragstart = function (): boolean {
+      return false;
+    };
+
+    moveAt(e.pageX);
+    function moveAt(pageX: number) {
+      const halfThumb = parseInt(getComputedStyle(thumb).width) / 2;
+      const fullWidthThumb = parseInt(getComputedStyle(thumb).width);
+      thumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
+
+      if (parseInt(getComputedStyle(thumb).left) <= 0) {
+        thumb.style.left = `${0}px`;
+      } else if (parseInt(getComputedStyle(thumb).left) >= track.offsetWidth - fullWidthThumb) {
+        thumb.style.left = `${track.offsetWidth - fullWidthThumb}px`;
+      }
+      inner.style.width = `${parseInt(getComputedStyle(thumb).left) + halfThumb}px`;
+    }
+    function onMouseMove(e: MouseEvent) {
+      moveAt(e.pageX);
+    }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', () => {
+      document.removeEventListener('mousemove', onMouseMove);
+    });
+  }
+
   moveDoubleTypeX(e: MouseEvent) {
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -56,6 +90,7 @@ export default class ViewThumb implements IClassProperties {
       if (!track) return;
       const halfThumb: number = parseInt(getComputedStyle(targetThumb).width) / 2;
       const fullWidthThumb: number = parseInt(getComputedStyle(targetThumb).width);
+
       targetThumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
       /// min position
       if (parseInt(getComputedStyle(targetThumb).left) <= -halfThumb) {
@@ -63,15 +98,12 @@ export default class ViewThumb implements IClassProperties {
       } else if (parseInt(getComputedStyle(targetThumb).left) >= track.offsetWidth - halfThumb) {
         targetThumb.style.left = `${track.offsetWidth - halfThumb}px`;
       }
-      if (
-        targetThumb === firstThumb &&
-        targetThumb.getBoundingClientRect().left >= targetSecondThumb.getBoundingClientRect().left
-      ) {
+
+      if (targetThumb === firstThumb && targetThumb.offsetLeft >= targetSecondThumb.offsetLeft) {
         targetThumb.style.left = `${parseInt(getComputedStyle(targetSecondThumb).left)}px`;
-      }
-      if (
+      } else if (
         targetThumb === secondThumb &&
-        targetThumb.getBoundingClientRect().left <= targetSecondThumb.getBoundingClientRect().left
+        targetThumb.offsetLeft <= targetSecondThumb.offsetLeft
       ) {
         targetThumb.style.left = `${parseInt(getComputedStyle(targetSecondThumb).left)}px`;
       }
@@ -138,39 +170,6 @@ export default class ViewThumb implements IClassProperties {
         movedThumb.style.left = `${track.offsetWidth - fullWidthThumb}px`;
       }
     }
-  }
-
-  moveSingleTypeX(e: MouseEvent): void {
-    const target = e.target as HTMLElement;
-
-    const track = target.closest('.range-slider') as HTMLElement;
-    const thumb = target.closest('.range-slider__thumb') as HTMLElement;
-    const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    if (!thumb) return;
-    thumb.ondragstart = function (): boolean {
-      return false;
-    };
-
-    moveAt(e.pageX);
-    function moveAt(pageX: number) {
-      const halfThumb = parseInt(getComputedStyle(thumb).width) / 2;
-      const fullWidthThumb = parseInt(getComputedStyle(thumb).width);
-      thumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
-
-      if (parseInt(getComputedStyle(thumb).left) <= -halfThumb) {
-        thumb.style.left = `${-halfThumb}px`;
-      } else if (parseInt(getComputedStyle(thumb).left) >= track.offsetWidth - halfThumb) {
-        thumb.style.left = `${track.offsetWidth - halfThumb}px`;
-      }
-      inner.style.width = `${parseInt(getComputedStyle(thumb).left) + halfThumb}px`;
-    }
-    function onMouseMove(e: MouseEvent) {
-      moveAt(e.pageX);
-    }
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', () => {
-      document.removeEventListener('mousemove', onMouseMove);
-    });
   }
 
   // -------------------------------------------------------------  events for Y type range
@@ -249,30 +248,26 @@ export default class ViewThumb implements IClassProperties {
       return false;
     };
     const shiftY = e.clientY - parseInt(getComputedStyle(targetThumb).top);
+
     moveAt(e.clientY);
-    function moveAt(clientY: number) {
-      const fullHeightThumb = parseInt(getComputedStyle(targetThumb).height);
-      targetThumb.style.top = `${clientY - shiftY}px`;
+
+    function moveAt(pageX: number): void {
+      if (!track) return;
+      const halfThumb: number = parseInt(getComputedStyle(targetThumb).width) / 2;
+
+      targetThumb.style.top = `${pageX - track.offsetTop - halfThumb}px`;
       /// min position
-      if (parseInt(getComputedStyle(targetThumb).top) <= 0) {
-        targetThumb.style.top = `${0}px`;
+      if (parseInt(getComputedStyle(targetThumb).top) <= -halfThumb) {
+        targetThumb.style.top = `${-halfThumb}px`;
+      } else if (parseInt(getComputedStyle(targetThumb).top) >= track.offsetHeight - halfThumb) {
+        targetThumb.style.top = `${track.offsetHeight - halfThumb}px`;
       }
-      /// max position
-      else if (
-        parseInt(getComputedStyle(targetThumb).top) >=
-        track.offsetHeight - fullHeightThumb
-      ) {
-        targetThumb.style.top = `${track.offsetHeight - fullHeightThumb}px`;
-      }
-      if (
-        targetThumb === firstThumb &&
-        targetThumb.getBoundingClientRect().top >= targetSecondThumb.getBoundingClientRect().top
-      ) {
+
+      if (targetThumb === firstThumb && targetThumb.offsetTop >= targetSecondThumb.offsetTop) {
         targetThumb.style.top = `${parseInt(getComputedStyle(targetSecondThumb).top)}px`;
-      }
-      if (
+      } else if (
         targetThumb === secondThumb &&
-        targetThumb.getBoundingClientRect().top <= targetSecondThumb.getBoundingClientRect().top
+        targetThumb.offsetTop <= targetSecondThumb.offsetTop
       ) {
         targetThumb.style.top = `${parseInt(getComputedStyle(targetSecondThumb).top)}px`;
       }

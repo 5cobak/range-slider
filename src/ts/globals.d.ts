@@ -6,6 +6,7 @@ interface IsettingsTypes {
   from: number;
   to: number;
   flag: boolean;
+  step: number;
   firstValue?: number;
   secondValue?: number;
 }
@@ -20,7 +21,7 @@ interface ITrack {
 
 interface IClassFlag {
   el: HTMLElement;
-  setPosition(settings: IsettingsTypes): void;
+  setPosition(settings: IsettingsTypes): any;
 }
 
 type $MouseDown = JQuery.MouseDownEvent<HTMLElement, null, HTMLElement, HTMLElement>;
@@ -68,6 +69,6 @@ interface IModel {
 }
 interface ISubModel {
   bank: IBank;
-  setCurrentValue(thumbPos: number, trackWidth: number): number;
+  setValue(thumbPos: number, trackWidth: number): number;
   getGeneralValue(settings: IsettingsTypes): number;
 }

@@ -13,7 +13,7 @@ export default class ViewFlag {
 
   setPosition(settings: IsettingsTypes) {
     const thumb = this.el.parentElement as HTMLElement;
-    const halfWidthThumb = thumb.offsetWidth / 2;
+    const halfWidthThumb = parseInt(getComputedStyle(thumb).width) / 2;
     const halfWidthFlag = parseInt(getComputedStyle(this.el).width) / 2;
     const borderThumbWidth = parseInt(getComputedStyle(thumb).borderWidth);
     const halfHeightThumb = parseInt(getComputedStyle(thumb).height) / 2;

@@ -59,21 +59,6 @@ export default class ViewDoubleVertical {
       this.thumb.moveDoubleTypeY(e);
       this.thumb.setPosOnClickDoubleTypeY(e);
       this.inner.setPosition(this.settings);
-
-      const $settings = this.settings;
-
-      function writeVal(): void {
-        $this.flag.writeValueIn($settings);
-        $this.secondFlag.writeValueIn($settings);
-      }
-      // write value in flags by click on track
-      writeVal();
-      // write value in flags by move thumb or flag
-      document.addEventListener('mousemove', writeVal);
-      // eslint-disable-next-line fsd/no-function-declaration-in-event-listener
-      document.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', writeVal);
-      });
     });
   }
 
@@ -81,11 +66,9 @@ export default class ViewDoubleVertical {
   init() {
     this.thumb.setPosition(this.settings);
     this.flag.setPosition(this.settings);
-    this.flag.writeValueIn(this.settings);
 
     this.secondThumb.setPosition(this.settings);
     this.secondFlag.setPosition(this.settings);
-    this.secondFlag.writeValueIn(this.settings);
 
     this.inner.setPosition(this.settings);
   }

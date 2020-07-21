@@ -5,7 +5,7 @@ export default class ModelDouble implements ISubModel {
     this.settings = settings;
     this.bank = {};
   }
-  setCurrentValue(position: number, trackWidth: number) {
+  setValue(position: number, trackWidth: number) {
     return (position / trackWidth) * 100;
   }
   getGeneralValue(settings: IsettingsTypes) {

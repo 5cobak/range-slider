@@ -4,8 +4,9 @@ export default class ModelSingle implements ISubModel {
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
     this.bank = {};
+    this.setStep(settings);
   }
-  setCurrentValue(position: number, trackWidth: number) {
+  setValue(position: number, trackWidth: number) {
     return (position / trackWidth) * 100;
   }
   getGeneralValue(settings: IsettingsTypes) {
@@ -15,6 +16,11 @@ export default class ModelSingle implements ISubModel {
     } else {
       let generalValue = settings.max;
       return generalValue;
+    }
+  }
+  setStep(settings: IsettingsTypes) {
+    if (settings.step < 0) {
+      throw new Error('slider step must be more than 0');
     }
   }
 }

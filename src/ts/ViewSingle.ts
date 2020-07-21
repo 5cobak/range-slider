@@ -42,10 +42,7 @@ export default class ViewSingle {
       this.thumb.moveSingleTypeX(e);
       this.thumb.setPosOnClickSingleTypeX(e);
       this.inner.setPosition(this.settings);
-
       const $settings = this.settings;
-
-      // write value in the flags by click on track
 
       // write value in the flags by move thumb or flag
     });
@@ -53,7 +50,6 @@ export default class ViewSingle {
 
   // inicialize view, set position for elements
   init() {
-    this.thumb.setPosition(this.settings);
     this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
   }

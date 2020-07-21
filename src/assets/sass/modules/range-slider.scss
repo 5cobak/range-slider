@@ -38,13 +38,14 @@
     border-radius: rem(20);
     position: absolute;
     top: -1px;
+    box-shadow: 0 0 3px 1px $darkGreen;
   }
   &__thumb {
     position: absolute;
     display: block;
     width: 15px;
     height: 15px;
-
+    box-shadow: 0 0 3px 2px $darkGreen;
     background: $darkGreen;
     border-radius: 50%;
     border: 2px solid grey;
@@ -73,6 +74,7 @@
     border-radius: 20px;
     color: $white;
     padding: 0 10px;
+    box-shadow: 0 0 3px 2px $darkGreen;
     // font-family: "MontserratBold";
   }
 }
