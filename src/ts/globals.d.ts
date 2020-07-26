@@ -26,26 +26,26 @@ interface IClassFlag {
 
 type $MouseDown = JQuery.MouseDownEvent<HTMLElement, null, HTMLElement, HTMLElement>;
 
-interface IClassThumb {
+interface IThumb {
   el: HTMLElement;
 
-  moveSingleTypeX(e: MouseEvent): any;
+  moveSingleTypeX(settings: IsettingsTypes, e: MouseEvent, step: number): any;
 
-  setPosOnClickSingleTypeX(e: MouseEvent): void;
+  setPosOnClickSingleTypeX(e: MouseEvent, step: number): void;
 
-  setPosOnClickDoubleTypeX(e: MouseEvent): void;
+  setPosOnClickDoubleTypeX(e: MouseEvent, step: number): void;
 
-  moveSingleTypeY(e: MouseEvent): any;
+  moveSingleTypeY(e: MouseEvent, step: number): any;
 
-  setPosOnClickSingleTypeY(e: MouseEvent): void;
+  setPosOnClickSingleTypeY(e: MouseEvent, step: number): void;
 
-  moveDoubleTypeY(e: MouseEvent): any;
+  moveDoubleTypeY(e: MouseEvent, step: number): any;
 
-  setPosOnClickDoubleTypeY(e: MouseEvent): void;
+  setPosOnClickDoubleTypeY(e: MouseEvent, step: number): void;
 
-  setPosition(settings: IsettingsTypes): void;
+  setPosition(settings: IsettingsTypes, step: number): void;
 
-  moveDoubleTypeX(e: MouseEvent): void;
+  moveDoubleTypeX(e: MouseEvent, step: number): void;
 }
 
 interface IClassPropertiesJquery {
@@ -57,18 +57,35 @@ interface IObserver {
   notifyObservers(): void;
   removeObserver(o: Function): void;
 }
-interface IBank {
+interface IBankModel {
   currentValue?: number;
-  currentSecondValue?: number;
-  generalVal?: number;
+  currentValueSecond?: number;
+  generalValue?: number;
+}
+interface IBankView {
+  trackSize: number;
+  thumbSize: number;
+  thumbPos: number;
+  thumbPosSecond?: number;
+  setSecondThumbPos?(settings: IsettingsTypes): number;
 }
 interface IModel {
   modelChangedSubject: IObserver;
-  bank?: IBank;
+  bank: IBankModel;
   type: ISubModel;
-}
-interface ISubModel {
-  bank: IBank;
-  setValue(thumbPos: number, trackWidth: number): number;
+  setCurrentValue(pos: number, stepSize: number, step: number): number;
   getGeneralValue(settings: IsettingsTypes): number;
+  validateStep(settings: IsettingsTypes): void;
+}
+interface IView {
+  modelChangedSubject: IObserver;
+  type: ISubView;
+  bank: IBankView;
+}
+interface ISubModel {}
+
+interface ISubView {
+  track: ITrack;
+  thumb: IThumb;
+  secondThumb?: IThumb;
 }

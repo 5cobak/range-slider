@@ -83,6 +83,8 @@ export default class ViewDouble {
   // inicialize view, set position for elements
   init() {
     this.thumb.setPosition(this.settings);
+    this.flag.setPosition(this.settings);
+    this.secondFlag.setPosition(this.settings);
 
     this.secondThumb.setPosition(this.settings);
 

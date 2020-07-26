@@ -13,7 +13,7 @@
     "indent": [2, "tab"],
     "no-console": "warn",
     "eot-last": "off",
-    "max-len": [2, 150, 4, { "ignoreUrls": true }],
+    "max-len": [2, 200, 4, { "ignoreUrls": true }],
     "no-plusplus": "off",
     "prefer-destructuring": "off",
     "no-param-resassign": "off",

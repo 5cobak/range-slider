@@ -1,5 +1,7 @@
 /// <reference path="globals.d.ts" />
 
+import { parse } from '@babel/core';
+
 export default class ViewThumb implements IClassProperties {
   settings: IsettingsTypes;
   el: HTMLElement;
@@ -30,7 +32,7 @@ export default class ViewThumb implements IClassProperties {
   }
 
   // -------------------------------------------------------------  events for X type range
-  moveSingleTypeX(e: MouseEvent): void {
+  moveSingleTypeX(settings: IsettingsTypes, e: MouseEvent, step: number): void {
     const target = e.target as HTMLElement;
 
     const track = target.closest('.range-slider') as HTMLElement;
@@ -41,16 +43,26 @@ export default class ViewThumb implements IClassProperties {
       return false;
     };
 
+    let generalVal = settings.max - settings.min;
+
+    const halfThumb = parseInt(getComputedStyle(thumb).width) / 2;
+    const thumbWidth: number = parseInt(getComputedStyle(thumb).width);
+    let trackWidth: number = parseInt(getComputedStyle(track).width) - thumbWidth;
+    const stepCount = generalVal / step;
+    let stepSize = +(trackWidth / stepCount).toFixed(5);
+
     moveAt(e.pageX);
+
     function moveAt(pageX: number) {
-      const halfThumb = parseInt(getComputedStyle(thumb).width) / 2;
-      const fullWidthThumb = parseInt(getComputedStyle(thumb).width);
-      thumb.style.left = `${pageX - track.offsetLeft - halfThumb}px`;
+      let newLeft = pageX - track.offsetLeft - halfThumb;
+      let posPercent = Math.round(newLeft / stepSize) * stepSize;
+
+      thumb.style.left = posPercent + 'px';
 
       if (parseInt(getComputedStyle(thumb).left) <= 0) {
         thumb.style.left = `${0}px`;
-      } else if (parseInt(getComputedStyle(thumb).left) >= track.offsetWidth - fullWidthThumb) {
-        thumb.style.left = `${track.offsetWidth - fullWidthThumb}px`;
+      } else if (parseInt(getComputedStyle(thumb).left) >= trackWidth) {
+        thumb.style.left = `${trackWidth}px`;
       }
       inner.style.width = `${parseInt(getComputedStyle(thumb).left) + halfThumb}px`;
     }
