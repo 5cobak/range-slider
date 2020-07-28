@@ -60,23 +60,10 @@ export default class ViewDouble {
   addEvents() {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
       const $this = this;
-      if (this.settings.type === 'single') {
-        this.thumb.moveSingleTypeX(e);
-        this.thumb.setPosOnClickSingleTypeX(e);
-        this.inner.setPosition(this.settings);
-      } else if (this.settings.type === 'double') {
-        this.thumb.moveDoubleTypeX(e);
-        this.thumb.setPosOnClickDoubleTypeX(e);
-        this.inner.setPosition(this.settings);
-      } else if (this.settings.type === 'single-vertical') {
-        this.thumb.moveSingleTypeY(e);
-        this.thumb.setPosOnClickSingleTypeY(e);
-        this.inner.setPosition(this.settings);
-      } else {
-        this.thumb.moveDoubleTypeY(e);
-        this.thumb.setPosOnClickDoubleTypeY(e);
-        this.inner.setPosition(this.settings);
-      }
+
+      this.thumb.moveDoubleType(e, this.settings, this.settings.step);
+      this.thumb.onClickDoubleType(e, this.settings);
+      this.inner.setPosition(this.settings);
     });
   }
 

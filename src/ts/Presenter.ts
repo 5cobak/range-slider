@@ -9,16 +9,17 @@ export default class Presenter {
     this.settings = settings;
     this.view = new View($this, settings);
     this.model = new Model(settings);
-    this.addObserversInModel(settings);
     this.addObserversInView(settings);
+    this.addObserversInModel(settings);
     this.settings = settings;
+    this.view.modelChangedSubject.notifyObservers();
     this.model.modelChangedSubject.notifyObservers();
   }
   private addObserversInView(settings: IsettingsTypes) {
     const flag = this.view.type.flag.el;
 
     this.view.modelChangedSubject.addObservers(() => {
-      if (settings.type === 'single' || settings.type === 'signle-vertical') {
+      if (settings.type === 'single' || settings.type === 'single-vertical') {
         flag.innerHTML = this.model.bank.currentValue;
       } else if (settings.type === 'double' || settings.type === 'double-vertical') {
         const secondFlag = this.view.type.secondFlag.el;
@@ -50,20 +51,14 @@ export default class Presenter {
     let that = this;
 
     function changeVal() {
-      let currentValPercent: number;
-      let generalVal = that.model.type.getGeneralValue(that.settings);
-      const thumbSize =
-        offset === 'width' ? parseInt(getComputedStyle(that.view.type.thumb.el).width) : parseInt(getComputedStyle(that.view.type.thumb.el).height);
+      that.view.modelChangedSubject.notifyObservers();
+      let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
-      const trackWidth =
-        offset === 'width'
-          ? parseInt(getComputedStyle(that.view.type.track.el).width) - thumbSize
-          : parseInt(getComputedStyle(that.view.type.track.el).height) - thumbSize;
-      const flag = that.view.type.flag.el;
+      const trackSize = that.view.trackSize;
       const stepCount = generalVal / step;
-      let stepSize = trackWidth / stepCount;
-      let leftPos =
-        pos === 'left' ? parseInt(getComputedStyle(that.view.type.thumb.el).left) : parseInt(getComputedStyle(that.view.type.thumb.el).top);
+      let stepSize = trackSize / stepCount;
+      let thumbPos = that.view.thumbPos;
+      that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
       that.view.modelChangedSubject.notifyObservers();
     }
     changeVal();
@@ -81,27 +76,16 @@ export default class Presenter {
     let that = this;
 
     function changeVal() {
-      let currentValPercent: number;
-      let generalVal = that.model.type.getGeneralValue(that.settings);
-      const thumbSize =
-        offset === 'width' ? parseInt(getComputedStyle(that.view.type.thumb.el).width) : parseInt(getComputedStyle(that.view.type.thumb.el).height);
+      that.view.modelChangedSubject.notifyObservers();
+      let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
-      const trackWidth =
-        offset === 'width'
-          ? parseInt(getComputedStyle(that.view.type.track.el).width) - thumbSize
-          : parseInt(getComputedStyle(that.view.type.track.el).height) - thumbSize;
-      const flag = that.view.type.flag.el;
-      const flagSecond = that.view.type.secondFlag.el;
+      const trackSize = that.view.trackSize;
       const stepCount = generalVal / step;
-      let stepSize = trackWidth / stepCount;
-      let leftPos =
-        pos === 'left' ? parseInt(getComputedStyle(that.view.type.thumb.el).left) : parseInt(getComputedStyle(that.view.type.thumb.el).top);
-      let leftPosSecond =
-        pos === 'left'
-          ? parseInt(getComputedStyle(that.view.type.secondThumb.el).left)
-          : parseInt(getComputedStyle(that.view.type.secondThumb.el).top);
-      that.model.bank.currentValue = that.model.setCurrentValue(leftPos, stepSize, step);
-      that.model.bank.currentValueSecond = that.model.setCurrentValue(leftPosSecond, stepSize, step);
+      let stepSize = trackSize / stepCount;
+      let thumbPos = that.view.thumbPos;
+      let thumbPosSecond = that.view.thumbPosSecond;
+      that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
+      that.model.bank.currentValueSecond = that.model.setCurrentValue(thumbPosSecond, stepSize, step);
       that.view.modelChangedSubject.notifyObservers();
     }
     changeVal();

@@ -38,9 +38,8 @@ export default class ViewSingleVertical {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
       const $this = this;
 
-      this.thumb.moveSingleTypeY(e);
-      this.thumb.setPosOnClickSingleTypeY(e);
-      this.inner.setPosition(this.settings);
+      this.thumb.moveSingleType(e, this.settings, this.settings.step);
+      this.thumb.onClickSingleType(e, this.settings);
     });
   }
 

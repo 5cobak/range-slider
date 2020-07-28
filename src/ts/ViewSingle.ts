@@ -37,14 +37,8 @@ export default class ViewSingle {
   // add view events
   addEvents() {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
-      const $this = this;
-
-      this.thumb.moveSingleTypeX(this.settings, e, this.settings.step);
-      // this.thumb.setPosOnClickSingleTypeX(e);
-      this.inner.setPosition(this.settings);
-      const $settings = this.settings;
-
-      // write value in the flags by move thumb or flag
+      this.thumb.moveSingleType(e, this.settings, this.settings.step);
+      this.thumb.onClickSingleType(e, this.settings, this.settings.step);
     });
   }
 

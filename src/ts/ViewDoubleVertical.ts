@@ -56,9 +56,8 @@ export default class ViewDoubleVertical {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
       const $this = this;
 
-      this.thumb.moveDoubleTypeY(e);
-      this.thumb.setPosOnClickDoubleTypeY(e);
-      this.inner.setPosition(this.settings);
+      this.thumb.moveDoubleType(e, this.settings);
+      this.thumb.onClickDoubleType(e, this.settings);
     });
   }
 
@@ -66,10 +65,8 @@ export default class ViewDoubleVertical {
   init() {
     this.thumb.setPosition(this.settings);
     this.flag.setPosition(this.settings);
-
     this.secondThumb.setPosition(this.settings);
     this.secondFlag.setPosition(this.settings);
-
     this.inner.setPosition(this.settings);
   }
 }

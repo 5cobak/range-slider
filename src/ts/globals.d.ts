@@ -60,7 +60,7 @@ interface IObserver {
 interface IBankModel {
   currentValue?: number;
   currentValueSecond?: number;
-  generalValue?: number;
+  generalValue: number;
 }
 interface IBankView {
   trackSize: number;
@@ -74,13 +74,12 @@ interface IModel {
   bank: IBankModel;
   type: ISubModel;
   setCurrentValue(pos: number, stepSize: number, step: number): number;
-  getGeneralValue(settings: IsettingsTypes): number;
-  validateStep(settings: IsettingsTypes): void;
+  // getGeneralValue(settings: IsettingsTypes): number;
+  // validateStep(settings: IsettingsTypes): void;
 }
 interface IView {
   modelChangedSubject: IObserver;
   type: ISubView;
-  bank: IBankView;
 }
 interface ISubModel {}
 

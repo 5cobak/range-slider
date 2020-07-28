@@ -13,8 +13,10 @@ export default class Model implements IModel {
     this.settings = settings;
     this.type = this.chooseModelType(settings);
     this.modelChangedSubject = new MakeObservableSubject();
-    this.bank = {};
-    this.bank.generalValue = this.getGeneralValue(settings);
+    this.bank = {
+      generalValue: 0,
+    };
+    this.bank.generalValue = this.getGeneralValue(settings, settings.step);
     this.validateStep(settings);
   }
   private chooseModelType(settings: IsettingsTypes) {
@@ -27,17 +29,15 @@ export default class Model implements IModel {
       return (type = new ModelDoubleVertical(settings));
     } else return (type = new MsodelSingleVertical(settings));
   }
-  private getGeneralValue(settings: IsettingsTypes) {
-    if (settings.min < 0) {
-      let generalValue = -settings.min + settings.max;
-      return generalValue;
-    } else {
-      let generalValue = settings.max;
-      return generalValue;
-    }
+  private getGeneralValue(settings: IsettingsTypes, step: number) {
+    let generalValue;
+    generalValue = settings.max - settings.min;
+    if ((generalValue % (step * 10)) / 10) generalValue -= (generalValue % (step * 10)) / 10;
+    return generalValue;
   }
   setCurrentValue(pos: number, stepSize: number, step: number) {
-    return Math.round(pos / stepSize) * step;
+    const currentVal = this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
+    return currentVal;
   }
   private validateStep(settings: IsettingsTypes) {
     if (settings.step < 0) {
