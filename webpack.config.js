@@ -31,10 +31,11 @@ const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`)
 
 const cssLoaders = (extra) => {
 	const loaders = [{
-		loader: MiniCssExtractPlugin.loader,
+		loader: MiniCssExtractPlugin.loader, 
 		options: {
 			hmr: isDev,
 			reloadAll: true,
+			sourceMap: isDev
 		},
 	},
 	'css-loader',

@@ -1,35 +1,17 @@
 /// <reference path="globals.d.ts" />
 
-import { parse } from '@babel/core';
-import { HtmlHTMLAttributes } from 'react';
-
 export default class ViewThumb implements IClassProperties {
   settings: IsettingsTypes;
   el: HTMLElement;
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
-    this.el = this.createThumb();
+    this.el = this.createElem();
   }
 
-  createThumb(): HTMLElement {
+  private createElem(): HTMLElement {
     const thumb: HTMLElement = document.createElement('span');
     thumb.className = 'range-slider__thumb range-slider__thumb_first';
     return thumb;
-  }
-
-  setPosition(settings: IsettingsTypes): void {
-    const track = this.el.parentElement;
-    const widthThumb = this.el.offsetWidth;
-    if (!(track instanceof HTMLElement)) return;
-    if (settings.type === 'single') {
-      this.el.style.left = '0px';
-    } else if (settings.type === 'double') {
-      this.el.style.left = `${track.offsetWidth / 4}px`;
-    } else if (settings.type === 'single-vertical') {
-      this.el.style.top = '0px';
-    } else {
-      this.el.style.top = `${track.offsetHeight / 4}px`;
-    }
   }
 
   // -------------------------------------------------------------  events for X type range
@@ -45,7 +27,8 @@ export default class ViewThumb implements IClassProperties {
     };
 
     let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (step / 10)) * 10;
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
     const halfSizeThumb = settings.type.match('vertical')
       ? parseInt(getComputedStyle(thumb).height) / 2
       : parseInt(getComputedStyle(thumb).width) / 2;
@@ -57,11 +40,10 @@ export default class ViewThumb implements IClassProperties {
       : parseInt(getComputedStyle(track).width) - thumbSize;
     const stepCount = generalVal / step;
     let stepSize = +(trackWidth / stepCount).toFixed(5);
-
     settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
 
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetHeight';
+    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -104,7 +86,6 @@ export default class ViewThumb implements IClassProperties {
     } else {
       targetSecondThumb = firstThumb;
     }
-    if (!targetThumb) return;
     targetThumb.style.zIndex = '100';
     targetSecondThumb.style.zIndex = '50';
     targetThumb.ondragstart = function (): boolean {
@@ -112,6 +93,7 @@ export default class ViewThumb implements IClassProperties {
     };
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
     const halfSizeThumb = settings.type.match('vertical')
       ? parseInt(getComputedStyle(targetThumb).height) / 2
@@ -126,7 +108,7 @@ export default class ViewThumb implements IClassProperties {
 
     let stepSize = +(trackSize / stepCount).toFixed(5);
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetHeight';
+    const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
     function moveAt(pageXorY: number): void {
@@ -174,9 +156,10 @@ export default class ViewThumb implements IClassProperties {
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
     const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetHeight';
+    const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -216,7 +199,7 @@ export default class ViewThumb implements IClassProperties {
     let firstDifference = thumbs[0].getBoundingClientRect().right - clientX;
     let secondDifference = thumbs[1].getBoundingClientRect().left - clientX;
     let movedThumb: HTMLElement;
-    if (target.classList.contains('range-slider__thumb')) return;
+    if (target.closest('.range-slider__thumb')) return;
 
     if (firstDifference < 0) firstDifference = -firstDifference;
     if (secondDifference < 0) secondDifference = -secondDifference;
@@ -225,9 +208,10 @@ export default class ViewThumb implements IClassProperties {
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
     const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetHeight';
+    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -248,12 +232,20 @@ export default class ViewThumb implements IClassProperties {
       if (parseInt(getComputedStyle(movedThumb)[coord]) > trackSize) {
         movedThumb.style[coord] = `${trackSize}px`;
       }
+      if (movedThumb === firstThumb && firstThumb[offsetCoord] >= secondThumb[offsetCoord]) {
+        movedThumb.style[coord] = `${parseInt(getComputedStyle(secondThumb)[coord])}px`;
+      } else if (
+        movedThumb === secondThumb &&
+        secondThumb[offsetCoord] <= firstThumb[offsetCoord]
+      ) {
+        movedThumb.style[coord] = `${parseInt(getComputedStyle(firstThumb)[coord])}px`;
+      }
+
       inner.style[coord] = `${firstThumb[offsetCoord] + firstThumb[offsetSize] / 2}px`;
       inner.style[size] = `${
         parseInt(getComputedStyle(secondThumb)[coord]) -
         parseInt(getComputedStyle(firstThumb)[coord])
       }px`;
-
     }
   }
 }

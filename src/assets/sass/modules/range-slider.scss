@@ -27,9 +27,33 @@
     }
     .range-slider__thumb {
       left: calc(50% - 7.5px);
+      top: 0;
     }
     .range-slider__flag {
       left: 20px;
+    }
+    .range-slider__scale {
+      position: relative;
+      opacity: 0.5;
+      z-index: 10;
+      top: 0;
+      left: 150%;
+      width: 20px;
+      height: calc(99%);
+      overflow: visible;
+      overflow-y: hidden;
+    }
+    .range-slider__big-line {
+      width: 20px;
+      height: 2px;
+      background-color: $darkGreen;
+      position: absolute;
+    }
+    .range-slider__small-line {
+      width: 10px;
+      height: 2px;
+      background-color: $darkGreen;
+      position: absolute;
     }
   }
 
@@ -43,6 +67,7 @@
   }
   &__thumb {
     position: absolute;
+    z-index: 11;
     display: block;
     width: 15px;
     height: 15px;
@@ -77,5 +102,26 @@
     padding: 0 10px;
     box-shadow: 0 0 3px 2px $darkGreen;
     // font-family: "MontserratBold";
+  }
+  &__scale {
+    position: relative;
+    opacity: 0.5;
+    z-index: 10;
+    top: calc(150%);
+    width: calc(99%);
+    height: 20px;
+    overflow-x: hidden;
+  }
+  &__big-line {
+    width: 2px;
+    height: 20px;
+    background-color: $darkGreen;
+    position: absolute;
+  }
+  &__small-line {
+    width: 2px;
+    height: 10px;
+    background-color: $darkGreen;
+    position: absolute;
   }
 }

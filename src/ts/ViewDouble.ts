@@ -3,6 +3,7 @@ import ViewTrack from './ViewTrack';
 import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
+import ViewScale from './ViewScale';
 
 export default class ViewDouble {
   settings: IsettingsTypes;
@@ -13,7 +14,7 @@ export default class ViewDouble {
   flag: IClassFlag;
   secondFlag: IClassFlag;
   secondThumb!: IClassThumb;
-
+  scale: IScale;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.settings = settings;
     this.$el = element;
@@ -22,6 +23,7 @@ export default class ViewDouble {
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag(this.settings);
     this.secondFlag = new ViewFlag(this.settings);
+    this.scale = new ViewScale(this.settings);
     this.addElements();
     this.addEvents();
     this.init();
@@ -37,7 +39,6 @@ export default class ViewDouble {
     this.secondThumb.setPosition = (settings: IsettingsTypes) => {
       this.secondThumb.el.style.left = `${this.track.el.offsetWidth / 1.5}px`;
       this.secondFlag.el.className = 'range-slider__flag range-slider__flag_second';
-      this.secondThumb.el.append(this.secondFlag.el);
     };
   }
 
@@ -49,11 +50,8 @@ export default class ViewDouble {
 
     this.addSecondThumb();
     this.track.el.append(this.secondThumb.el);
-
-    if (this.settings.flag) {
-      this.secondThumb.el.append(this.secondFlag.el);
-      // this.secondFlag.setPosition(this.settings);
-    }
+    if (this.settings.flag) this.secondThumb.el.append(this.secondFlag.el);
+    if (this.settings.scale) this.track.el.append(this.scale.el);
   }
 
   // add view events
@@ -69,12 +67,11 @@ export default class ViewDouble {
 
   // inicialize view, set position for elements
   init() {
-    this.thumb.setPosition(this.settings);
-    this.flag.setPosition(this.settings);
-    this.secondFlag.setPosition(this.settings);
-
-    this.secondThumb.setPosition(this.settings);
+    if (this.settings.flag) {
+      this.flag.setPosition(this.settings);
+    }
 
     this.inner.setPosition(this.settings);
+    if (this.settings.scale) this.scale.setCountOfLines(this.settings);
   }
 }

@@ -25,21 +25,27 @@ export default class View implements IView {
       : parseInt(getComputedStyle(this.type.thumb.el).width);
 
     this.trackSize = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(this.type.track.el).height) - parseInt(getComputedStyle(this.type.thumb.el).height)
-      : parseInt(getComputedStyle(this.type.track.el).width) - parseInt(getComputedStyle(this.type.thumb.el).width);
+      ? parseInt(getComputedStyle(this.type.track.el).height) -
+        parseInt(getComputedStyle(this.type.thumb.el).height)
+      : parseInt(getComputedStyle(this.type.track.el).width) -
+        parseInt(getComputedStyle(this.type.thumb.el).width);
 
     this.modelChangedSubject = new MakeObservableSubject();
 
     this.modelChangedSubject.addObservers(() => {
+      const coord = this.settings.type.match('vertical') ? 'top' : 'left';
+
       this.setThumbPos(settings);
+      this.setSecondThumbPos(settings);
+      this.type.thumb.el.style[coord] = `${this.thumbPos}px`;
+      if (this.type.secondThumb) this.type.secondThumb.el.style[coord] = `${this.thumbPosSecond}px`;
     });
     this.modelChangedSubject.notifyObservers();
   }
+
   setThumbPos(settings: IsettingsTypes) {
-    this.thumbPos = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(this.type.thumb.el).top)
-      : parseInt(getComputedStyle(this.type.thumb.el).left);
-    this.setSecondThumbPos(settings);
+    const coord = this.settings.type.match('vertical') ? 'top' : 'left';
+    this.thumbPos = parseInt(getComputedStyle(this.type.thumb.el)[coord]);
   }
   chooseViewType(settings: IsettingsTypes) {
     let _modelType: object;
@@ -52,10 +58,10 @@ export default class View implements IView {
     } else return (_modelType = new ViewSingleVertical(this.el, this.settings));
   }
   setSecondThumbPos(settings: IsettingsTypes) {
-    if (settings.type === 'double-vertical' && this.type.secondThumb) {
-      this.thumbPosSecond = parseInt(getComputedStyle(this.type.secondThumb.el).top);
-    } else if (settings.type === 'double' && this.type.secondThumb) {
-      this.thumbPosSecond = parseInt(getComputedStyle(this.type.secondThumb.el).left);
+    const coord = this.settings.type.match('vertical') ? 'top' : 'left';
+
+    if (this.type.secondThumb) {
+      this.thumbPosSecond = parseInt(getComputedStyle(this.type.secondThumb.el)[coord]);
     }
   }
 }

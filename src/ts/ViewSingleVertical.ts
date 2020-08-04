@@ -3,6 +3,7 @@ import ViewTrack from './ViewTrack';
 import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
+import ViewScale from './ViewScale';
 // VIEW class
 export default class ViewSingleVertical {
   settings: IsettingsTypes;
@@ -11,7 +12,7 @@ export default class ViewSingleVertical {
   thumb: IClassThumb;
   inner: IClassProperties;
   flag: IClassFlag;
-
+  scale: IScale;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.settings = settings;
     this.$el = element;
@@ -19,6 +20,7 @@ export default class ViewSingleVertical {
     this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag(this.settings);
+    this.scale = new ViewScale(this.settings);
     this.addElements();
     this.addEvents();
     this.init();
@@ -31,6 +33,7 @@ export default class ViewSingleVertical {
     this.$el.replaceWith(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
+    if (this.settings.scale) this.track.el.append(this.scale.el);
   }
 
   // add view events
@@ -45,8 +48,8 @@ export default class ViewSingleVertical {
 
   // inicialize view, set position for elements
   init() {
-    this.thumb.setPosition(this.settings);
     this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
+    if (this.settings.scale) this.scale.setCountOfLines(this.settings);
   }
 }

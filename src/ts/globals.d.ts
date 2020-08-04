@@ -6,6 +6,7 @@ interface IsettingsTypes {
   from: number;
   to: number;
   flag: boolean;
+  scale: boolean;
   step: number;
   firstValue?: number;
   secondValue?: number;
@@ -61,6 +62,8 @@ interface IBankModel {
   currentValue?: number;
   currentValueSecond?: number;
   generalValue: number;
+  fromValue: number;
+  toValue: number;
 }
 interface IBankView {
   trackSize: number;
@@ -87,4 +90,8 @@ interface ISubView {
   track: ITrack;
   thumb: IThumb;
   secondThumb?: IThumb;
+}
+
+interface IScale {
+  el: HTMLElement;
 }

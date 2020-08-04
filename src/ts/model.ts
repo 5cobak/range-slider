@@ -16,6 +16,8 @@ export default class Model implements IModel {
     this.bank = {
       generalValue: 0,
     };
+    this.bank.fromValue = this.settings.from ? this.settings.from : this.settings.min;
+    this.bank.toValue = this.settings.to ? this.settings.to : this.settings.max;
     this.bank.generalValue = this.getGeneralValue(settings, settings.step);
     this.validateStep(settings);
   }
@@ -30,11 +32,12 @@ export default class Model implements IModel {
     } else return (type = new MsodelSingleVertical(settings));
   }
   private getGeneralValue(settings: IsettingsTypes, step: number) {
-    let generalValue;
-    generalValue = settings.max - settings.min;
-    if ((generalValue % (step * 10)) / 10) generalValue -= (generalValue % (step * 10)) / 10;
-    return generalValue;
+    let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    return generalVal;
   }
+
   setCurrentValue(pos: number, stepSize: number, step: number) {
     const currentVal = this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
     return currentVal;

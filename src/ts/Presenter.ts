@@ -47,18 +47,22 @@ export default class Presenter {
       });
     }
   }
+  private setValuesByInit() {}
   private changeSingleValue(offset: string, pos: string) {
     let that = this;
 
     function changeVal() {
       that.view.modelChangedSubject.notifyObservers();
+
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
       const trackSize = that.view.trackSize;
       const stepCount = generalVal / step;
       let stepSize = trackSize / stepCount;
       let thumbPos = that.view.thumbPos;
+      stepSize = +stepSize.toFixed(1);
       that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
+
       that.view.modelChangedSubject.notifyObservers();
     }
     changeVal();
@@ -77,6 +81,7 @@ export default class Presenter {
 
     function changeVal() {
       that.view.modelChangedSubject.notifyObservers();
+
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
       const trackSize = that.view.trackSize;
@@ -85,7 +90,11 @@ export default class Presenter {
       let thumbPos = that.view.thumbPos;
       let thumbPosSecond = that.view.thumbPosSecond;
       that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
-      that.model.bank.currentValueSecond = that.model.setCurrentValue(thumbPosSecond, stepSize, step);
+      that.model.bank.currentValueSecond = that.model.setCurrentValue(
+        thumbPosSecond,
+        stepSize,
+        step
+      );
       that.view.modelChangedSubject.notifyObservers();
     }
     changeVal();
