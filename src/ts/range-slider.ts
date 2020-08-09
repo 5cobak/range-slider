@@ -13,8 +13,8 @@ import Presenter from './Presenter';
           min: 0,
           max: 1000,
           type: 'single',
-          from: 100,
-          to: 900,
+          // from: 100,
+          // to: 900,
           flag: false,
           step: 1,
         },
@@ -22,7 +22,9 @@ import Presenter from './Presenter';
       );
 
       const presenter = new Presenter(settings, $this);
-
+      const methods = {
+        update: (options: IsettingsTypes) => {},
+      };
       return this;
     },
   });

@@ -13,6 +13,24 @@ export default class Scale implements IScale {
     scale.className = 'range-slider__scale';
     return scale;
   }
+  writeMinAndMaxValues(settings: IsettingsTypes) {
+    let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+
+    let lineCollections = this.el.querySelectorAll('.range-slider__big-line');
+    const min = document.createElement('div');
+
+    min.className = 'range-slider__text';
+    min.innerHTML = `${settings.min}`;
+
+    let max = min.cloneNode(true) as HTMLElement;
+    max.innerHTML = `${settings.max}`;
+
+    lineCollections[0].append(min);
+    lineCollections[lineCollections.length - 1].append(max);
+  }
+
   setCountOfLines(settings: IsettingsTypes) {
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
     const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
@@ -30,7 +48,6 @@ export default class Scale implements IScale {
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-
     let trackSize: number = parseInt(getComputedStyle(track)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
     let stepSize = +(trackSize / stepCount).toFixed(1);
@@ -43,8 +60,25 @@ export default class Scale implements IScale {
         smallLine.className = 'range-slider__small-line';
         this.el.append(smallLine);
         const smallLineSize = parseInt(getComputedStyle(smallLine)[size]);
+
         smallLine.style[coord] = `${posCountSmallPercent - smallLineSize / 2}px`;
+        const excessLinePos = posCountSmallPercent - smallLineSize / 2;
+        if (excessLinePos >= trackSize) break;
         posCountSmallPercent += stepSize / 2;
+      }
+    } else {
+      for (let i = 0; i <= stepCount; i += 1) {
+        const smallLine: HTMLElement = document.createElement('span');
+        smallLine.className = 'range-slider__small-line';
+        this.el.append(smallLine);
+        const smallLineSize = parseInt(getComputedStyle(smallLine)[size]);
+        const excessLinePos = posCountSmallPercent - smallLineSize / 2;
+        if (excessLinePos >= trackSize) {
+          smallLine.remove();
+          break;
+        }
+        smallLine.style[coord] = `${posCountSmallPercent}px`;
+        posCountSmallPercent += thumbSize;
       }
     }
 
@@ -58,6 +92,13 @@ export default class Scale implements IScale {
 
         posCountBig += stepSize;
       }
+    } else {
+      const firstBigLine: HTMLElement = document.createElement('span');
+      firstBigLine.className = 'range-slider__big-line';
+      const lastBigLine = firstBigLine.cloneNode(true) as HTMLElement;
+      this.el.append(firstBigLine, lastBigLine);
+      firstBigLine.style[coord] = `${posCountBig}px`;
+      lastBigLine.style[coord] = `${trackSize + posCountBig}px`;
     }
   }
 }

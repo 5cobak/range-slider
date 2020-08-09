@@ -5,6 +5,7 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
+import { parse } from '@babel/core';
 
 export default class ViewSingle {
   settings: IsettingsTypes;
@@ -50,18 +51,43 @@ export default class ViewSingle {
     const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
+    if (this.settings.min > 0 && this.settings.min < settings.step) {
+      settings.step = this.settings.min;
+    } else if (this.settings.min < 0 && this.settings.min < settings.step)
+      settings.step = -this.settings.min;
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
     const thumbSize = parseInt(getComputedStyle(this.thumb.el)[size]);
     const trackSize = parseInt(getComputedStyle(this.track.el)[size]) - thumbSize;
-    let from = this.settings.from ? this.settings.from : this.settings.min;
-    from = +(trackSize / (generalVal / from)).toFixed(1);
+    const stepCount = generalVal / settings.step;
+    let stepSize = +(trackSize / stepCount);
+    let from: number = this.settings.from;
 
-    if (settings.from < settings.step || settings.from % settings.step) {
-      throw Error('from must be biggest then step and must be aliquot of step');
+    let min = settings.min;
+    let max = settings.max;
+    if (min !== 0) {
+      from = from - min;
     }
+
+    if (settings.from < min) {
+      throw Error('from must be equal or more then min');
+    } else if (settings.from > max) {
+      throw Error('from must be equal or less then max');
+    }
+    if (settings.from !== 0) {
+      if (settings.from < settings.step) {
+        throw Error('from must be euqal of zero or equal of step or more then step');
+      }
+    }
+
+    const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
+    const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
+
+    from = stepSize * (from / this.settings.step);
+
     this.thumb.el.style[coord] = `${from}px`;
   }
 
@@ -70,6 +96,9 @@ export default class ViewSingle {
     this.setThumbPosOnInit(this.settings);
     this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
-    if (this.settings.scale) this.scale.setCountOfLines(this.settings);
+    if (this.settings.scale) {
+      this.scale.setCountOfLines(this.settings);
+      this.scale.writeMinAndMaxValues(this.settings);
+    }
   }
 }

@@ -23,7 +23,9 @@ export default class Presenter {
         flag.innerHTML = this.model.bank.currentValue;
       } else if (settings.type === 'double' || settings.type === 'double-vertical') {
         const secondFlag = this.view.type.secondFlag.el;
+
         flag.innerHTML = this.model.bank.currentValue;
+
         secondFlag.innerHTML = this.model.bank.currentValueSecond;
       }
     });
@@ -53,14 +55,15 @@ export default class Presenter {
 
     function changeVal() {
       that.view.modelChangedSubject.notifyObservers();
-
+      that.model.bank.currentValue = that.settings.from;
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
       const trackSize = that.view.trackSize;
       const stepCount = generalVal / step;
       let stepSize = trackSize / stepCount;
+
       let thumbPos = that.view.thumbPos;
-      stepSize = +stepSize.toFixed(1);
+
       that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
 
       that.view.modelChangedSubject.notifyObservers();
@@ -95,6 +98,7 @@ export default class Presenter {
         stepSize,
         step
       );
+
       that.view.modelChangedSubject.notifyObservers();
     }
     changeVal();

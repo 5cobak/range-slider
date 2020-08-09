@@ -21,14 +21,14 @@ export default class View implements IView {
     this.type = this.chooseViewType(settings);
 
     this.thumbSize = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(this.type.thumb.el).height)
-      : parseInt(getComputedStyle(this.type.thumb.el).width);
+      ? parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.thumb.el).width);
 
     this.trackSize = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(this.type.track.el).height) -
-        parseInt(getComputedStyle(this.type.thumb.el).height)
-      : parseInt(getComputedStyle(this.type.track.el).width) -
-        parseInt(getComputedStyle(this.type.thumb.el).width);
+      ? parseFloat(getComputedStyle(this.type.track.el).height) -
+        parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.track.el).width) -
+        parseFloat(getComputedStyle(this.type.thumb.el).width);
 
     this.modelChangedSubject = new MakeObservableSubject();
 
@@ -45,8 +45,9 @@ export default class View implements IView {
 
   setThumbPos(settings: IsettingsTypes) {
     const coord = this.settings.type.match('vertical') ? 'top' : 'left';
-    this.thumbPos = parseInt(getComputedStyle(this.type.thumb.el)[coord]);
+    this.thumbPos = parseFloat(getComputedStyle(this.type.thumb.el)[coord]);
   }
+
   chooseViewType(settings: IsettingsTypes) {
     let _modelType: object;
     if (settings.type === 'single') {
@@ -61,7 +62,7 @@ export default class View implements IView {
     const coord = this.settings.type.match('vertical') ? 'top' : 'left';
 
     if (this.type.secondThumb) {
-      this.thumbPosSecond = parseInt(getComputedStyle(this.type.secondThumb.el)[coord]);
+      this.thumbPosSecond = parseFloat(getComputedStyle(this.type.secondThumb.el)[coord]);
     }
   }
 }

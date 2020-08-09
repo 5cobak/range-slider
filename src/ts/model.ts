@@ -35,11 +35,15 @@ export default class Model implements IModel {
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    console.log(generalVal);
     return generalVal;
   }
 
   setCurrentValue(pos: number, stepSize: number, step: number) {
-    const currentVal = this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
+    if (this.settings.min > 0 && this.settings.min < step) step = this.settings.min;
+    else if (this.settings.min < 0 && this.settings.min < step) step = -this.settings.min;
+    let currentVal = this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
+
     return currentVal;
   }
   private validateStep(settings: IsettingsTypes) {

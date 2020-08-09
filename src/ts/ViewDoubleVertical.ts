@@ -28,10 +28,66 @@ export default class ViewDoubleVertical {
     this.addEvents();
     this.init();
   }
+  private setThumbPosOnInit(settings: IsettingsTypes) {
+    const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
+    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
+    const coord = settings.type.match('vertical') ? 'top' : 'left';
+    const size = settings.type.match('vertical') ? 'height' : 'width';
+    if (this.settings.min > 0 && this.settings.min < settings.step) {
+      settings.step = this.settings.min;
+    } else if (this.settings.min < 0 && this.settings.min < settings.step)
+      settings.step = -this.settings.min;
+
+    let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    const thumbSize = parseInt(getComputedStyle(this.thumb.el)[size]);
+    const trackSize = parseInt(getComputedStyle(this.track.el)[size]) - thumbSize;
+    const stepCount = generalVal / settings.step;
+    let stepSize = +(trackSize / stepCount);
+    let from: number = this.settings.from;
+    let to: number = this.settings.to;
+
+    let min = settings.min;
+    let max = settings.max;
+    if (min !== 0) {
+      from = from - min;
+      to = to - min;
+    }
+
+    if (settings.from < min || settings.to < min) {
+      throw Error('from or to must be equal or more then min');
+    } else if (settings.from > max || settings.to > max) {
+      throw Error('from or to must be equal or less then max');
+    }
+    if (settings.from !== 0 && settings.to !== 0) {
+      if (settings.from < settings.step || settings.to < settings.step) {
+        throw Error('from or to must be euqal of zero or equal of step or more then step');
+      }
+    }
+
+    const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
+    const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
+
+    from = stepSize * (from / this.settings.step);
+    to = stepSize * (to / this.settings.step);
+
+    // if (to < thumbSize / 2) {
+    //   to = thumbSize / 2;
+    // } else if (to > trackSize) {
+    //   to = trackSize;
+    // }
+    from = isNaN(from) ? 0 : from;
+    to = isNaN(to) ? trackSize : to;
+    from = from > to ? to : from;
+    to = to < from ? from : to;
+    this.thumb.el.style[coord] = `${from}px`;
+    this.secondThumb.el.style[coord] = `${to}px`;
+  }
 
   // add second thumb
   addSecondThumb() {
-    // const $this = this;
     this.secondThumb = new ViewThumb(this.settings);
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
     this.secondThumb.el.classList.add('range-slider__thumb_second');
@@ -66,6 +122,7 @@ export default class ViewDoubleVertical {
 
   // inicialize view, set position for elements
   init() {
+    this.setThumbPosOnInit(this.settings);
     // this.thumb.setPosition(this.settings);
     if (this.settings.flag) {
       this.flag.setPosition(this.settings);
@@ -76,5 +133,6 @@ export default class ViewDoubleVertical {
 
     this.inner.setPosition(this.settings);
     if (this.settings.scale) this.scale.setCountOfLines(this.settings);
+    this.scale.writeMinAndMaxValues(this.settings);
   }
 }

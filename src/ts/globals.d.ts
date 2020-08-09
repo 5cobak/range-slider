@@ -90,8 +90,10 @@ interface ISubView {
   track: ITrack;
   thumb: IThumb;
   secondThumb?: IThumb;
+  scale: IScale;
 }
 
 interface IScale {
   el: HTMLElement;
+  writeMinAndMaxValues(settings: IsettingsTypes): void;
 }

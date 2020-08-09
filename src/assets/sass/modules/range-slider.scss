@@ -41,7 +41,6 @@
       width: 20px;
       height: calc(99%);
       overflow: visible;
-      overflow-y: hidden;
     }
     .range-slider__big-line {
       width: 20px;
@@ -54,6 +53,12 @@
       height: 2px;
       background-color: $darkGreen;
       position: absolute;
+    }
+    .range-slider__text {
+      position: relative;
+      top: -600%;
+      left: 150%;
+      width: auto;
     }
   }
 
@@ -76,10 +81,9 @@
     border-radius: 50%;
     border: 2px solid grey;
     cursor: pointer;
-  }
-  &__thumb {
     top: calc(50% - 8px);
   }
+
   &__span-to {
     right: -2px;
     top: calc(50% - 7px);
@@ -110,18 +114,27 @@
     top: calc(150%);
     width: calc(99%);
     height: 20px;
-    overflow-x: hidden;
+    // overflow-x: hidden;
   }
   &__big-line {
     width: 2px;
     height: 20px;
     background-color: $darkGreen;
     position: absolute;
+    display: flex;
+    justify-content: center;
   }
   &__small-line {
     width: 2px;
     height: 10px;
     background-color: $darkGreen;
     position: absolute;
+  }
+  &__text {
+    position: relative;
+    top: 110%;
+    min-height: 25px;
+    background-color: #fff;
+    // border: 1px solid $darkGreen;
   }
 }

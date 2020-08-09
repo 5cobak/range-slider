@@ -39,7 +39,7 @@ export default class ViewThumb implements IClassProperties {
       ? parseInt(getComputedStyle(track).height) - thumbSize
       : parseInt(getComputedStyle(track).width) - thumbSize;
     const stepCount = generalVal / step;
-    let stepSize = +(trackWidth / stepCount).toFixed(5);
+    let stepSize = trackWidth / stepCount;
     settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
 
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
@@ -106,7 +106,7 @@ export default class ViewThumb implements IClassProperties {
       : parseInt(getComputedStyle(track).width) - thumbSize;
     const stepCount = generalVal / settings.step;
 
-    let stepSize = +(trackSize / stepCount).toFixed(5);
+    let stepSize = trackSize / stepCount;
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
     const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
@@ -119,7 +119,7 @@ export default class ViewThumb implements IClassProperties {
       // if (settings.type.match('vertical')) {
       targetThumb.style[coord] = `${posPercent}px`;
       /// min position
-      if (parseInt(getComputedStyle(targetThumb)[coord]) <= -halfSizeThumb) {
+      if (parseInt(getComputedStyle(targetThumb)[coord]) <= 0) {
         targetThumb.style[coord] = `${0}px`;
       } else if (parseInt(getComputedStyle(targetThumb)[coord]) >= trackSize) {
         targetThumb.style[coord] = `${trackSize}px`;
@@ -167,7 +167,7 @@ export default class ViewThumb implements IClassProperties {
     const thumbWidth: number = parseInt(getComputedStyle(thumb)[size]);
     let trackWidth: number = parseInt(getComputedStyle(track)[size]) - thumbWidth;
     const stepCount = generalVal / settings.step;
-    let stepSize = +(trackWidth / stepCount).toFixed(5);
+    let stepSize = trackWidth / stepCount;
 
     settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
     function setCurrentValue(pos: number, stepSize: number, step: number) {
@@ -219,7 +219,7 @@ export default class ViewThumb implements IClassProperties {
     const thumbSize: number = parseInt(getComputedStyle(movedThumb)[size]);
     let trackSize: number = parseInt(getComputedStyle(track)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
-    let stepSize = +(trackSize / stepCount).toFixed(5);
+    let stepSize = trackSize / stepCount;
 
     settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
 
