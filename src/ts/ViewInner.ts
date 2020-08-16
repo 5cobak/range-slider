@@ -1,5 +1,7 @@
 /// <reference path="globals.d.ts" />
 
+import { IsettingsTypes } from './globals';
+
 export default class ViewInner {
   settings: IsettingsTypes;
   el: HTMLElement;

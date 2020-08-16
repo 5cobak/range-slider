@@ -1,20 +1,21 @@
-// ---------------------------------------   VIEW --------------------------------------------
 import ViewSingle from './ViewSingle';
 import ViewDouble from './ViewDouble';
 import ViewDoubleVertical from './ViewDoubleVertical';
 import ViewSingleVertical from './ViewSingleVertical';
 import MakeObservableSubject from './Observer';
-import { parse } from '@babel/core';
+import { IView, IsettingsTypes, ISubView, IPanel, IObserver } from './globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
   settings: IsettingsTypes;
   el: HTMLElement;
   type: ISubView;
-  modelChangedSubject: IObserver;
+  panel: IPanel;
+  viewChangedSubject: IObserver;
   thumbSize: number;
   thumbPos!: number;
   trackSize: number;
   thumbPosSecond!: number;
+  inputCurrentVal: HTMLElement;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.el = element;
     this.settings = settings;
@@ -30,17 +31,18 @@ export default class View implements IView {
       : parseFloat(getComputedStyle(this.type.track.el).width) -
         parseFloat(getComputedStyle(this.type.thumb.el).width);
 
-    this.modelChangedSubject = new MakeObservableSubject();
+    this.viewChangedSubject = new MakeObservableSubject();
 
-    this.modelChangedSubject.addObservers(() => {
+    this.viewChangedSubject.addObservers(() => {
       const coord = this.settings.type.match('vertical') ? 'top' : 'left';
 
       this.setThumbPos(settings);
       this.setSecondThumbPos(settings);
       this.type.thumb.el.style[coord] = `${this.thumbPos}px`;
+
       if (this.type.secondThumb) this.type.secondThumb.el.style[coord] = `${this.thumbPosSecond}px`;
     });
-    this.modelChangedSubject.notifyObservers();
+    this.viewChangedSubject.notifyObservers();
   }
 
   setThumbPos(settings: IsettingsTypes) {

@@ -4,12 +4,13 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
+import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale, IThumb } from './globals';
 // VIEW class
 export default class ViewSingleVertical {
   settings: IsettingsTypes;
   $el: HTMLElement;
   track: ITrack;
-  thumb: IClassThumb;
+  thumb: IThumb;
   inner: IClassProperties;
   flag: IClassFlag;
   scale: IScale;
@@ -84,7 +85,8 @@ export default class ViewSingleVertical {
     }
 
     const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
-    const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
+
+    if (!isAliquotFloatFrom) throw Error('from must be aliquot of step');
 
     from = stepSize * (from / this.settings.step);
 

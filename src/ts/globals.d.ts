@@ -1,10 +1,11 @@
+import { types } from '@babel/core';
+
 interface IsettingsTypes {
-  $el: HTMLElement;
   min: number;
   max: number;
   type: string;
   from: number;
-  to: number;
+  to?: number;
   flag: boolean;
   scale: boolean;
   step: number;
@@ -96,4 +97,20 @@ interface ISubView {
 interface IScale {
   el: HTMLElement;
   writeMinAndMaxValues(settings: IsettingsTypes): void;
+  setCountOfLines(settings: IsettingsTypes): void;
+}
+
+interface IMethods {
+  update(options: IsettingsTypes): void;
+}
+
+interface IInput {
+  title: string;
+  class: string;
+  attr: IAttr;
+}
+
+interface IAttr {
+  type: string;
+  placeholder: string;
 }

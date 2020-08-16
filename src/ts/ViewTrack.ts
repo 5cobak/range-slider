@@ -1,10 +1,12 @@
+import { IsettingsTypes } from './globals';
+
 export default class ViewTrack {
   el: HTMLElement;
   _type!: string;
 
   constructor(settings: IsettingsTypes) {
     this.el = this.createElement();
-    this.type = settings.type;
+    this.type = settings.type as string;
   }
 
   createElement() {

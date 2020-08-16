@@ -1,5 +1,6 @@
 import View from './View';
 import Model from './Model';
+import { IModel, IsettingsTypes } from './globals';
 
 export default class Presenter {
   view: any;
@@ -12,15 +13,18 @@ export default class Presenter {
     this.addObserversInView(settings);
     this.addObserversInModel(settings);
     this.settings = settings;
-    this.view.modelChangedSubject.notifyObservers();
+    this.view.viewChangedSubject.notifyObservers();
     this.model.modelChangedSubject.notifyObservers();
   }
   private addObserversInView(settings: IsettingsTypes) {
     const flag = this.view.type.flag.el;
+    const track = this.view.type.track.el;
+    this.view.viewChangedSubject.addObservers(() => {
+      const currentValue = this.model.bank.currentValue;
 
-    this.view.modelChangedSubject.addObservers(() => {
+      track.dataset.currentVal = currentValue;
       if (settings.type === 'single' || settings.type === 'single-vertical') {
-        flag.innerHTML = this.model.bank.currentValue;
+        flag.innerHTML = currentValue;
       } else if (settings.type === 'double' || settings.type === 'double-vertical') {
         const secondFlag = this.view.type.secondFlag.el;
 
@@ -49,12 +53,11 @@ export default class Presenter {
       });
     }
   }
-  private setValuesByInit() {}
   private changeSingleValue(offset: string, pos: string) {
     let that = this;
 
     function changeVal() {
-      that.view.modelChangedSubject.notifyObservers();
+      that.view.viewChangedSubject.notifyObservers();
       that.model.bank.currentValue = that.settings.from;
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
@@ -66,7 +69,7 @@ export default class Presenter {
 
       that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
 
-      that.view.modelChangedSubject.notifyObservers();
+      that.view.viewChangedSubject.notifyObservers();
     }
     changeVal();
 

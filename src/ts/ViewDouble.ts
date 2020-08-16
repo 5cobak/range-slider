@@ -4,16 +4,17 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
+import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale } from './globals';
 
 export default class ViewDouble {
   settings: IsettingsTypes;
   $el: HTMLElement;
   track: ITrack;
-  thumb: IClassThumb;
+  thumb: IThumb;
   inner: IClassProperties;
   flag: IClassFlag;
   secondFlag: IClassFlag;
-  secondThumb!: IClassThumb;
+  secondThumb!: IThumb;
   scale: IScale;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.settings = settings;
@@ -106,7 +107,8 @@ export default class ViewDouble {
 
     const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
     const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
-
+    if (!isAliquotFloatFrom) throw Error('from must be aliquot of step');
+    if (!isAliquotFloatTo) throw Error('to must be aliquot of step');
     from = stepSize * (from / this.settings.step);
     to = stepSize * (to / this.settings.step);
 

@@ -5,13 +5,13 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { parse } from '@babel/core';
+import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale } from './globals';
 
 export default class ViewSingle {
   settings: IsettingsTypes;
   $el: HTMLElement;
   track: ITrack;
-  thumb: IClassThumb;
+  thumb: IThumb;
   inner: IClassProperties;
   flag: IClassFlag;
   scale: IScale;
@@ -23,6 +23,7 @@ export default class ViewSingle {
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag(this.settings);
     this.scale = new ViewScale(this.settings);
+
     this.addElements();
     this.addEvents();
     this.init();
@@ -32,7 +33,7 @@ export default class ViewSingle {
 
   // add all elements in view
   addElements() {
-    this.$el.replaceWith(this.track.el);
+    this.$el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
     if (this.settings.scale) this.track.el.append(this.scale.el);
@@ -46,9 +47,7 @@ export default class ViewSingle {
     });
   }
 
-  private setThumbPosOnInit(settings: IsettingsTypes) {
-    const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
+  private setThumbPos(settings: IsettingsTypes, currentValue?: number) {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
     if (this.settings.min > 0 && this.settings.min < settings.step) {
@@ -64,10 +63,12 @@ export default class ViewSingle {
     const trackSize = parseInt(getComputedStyle(this.track.el)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
     let stepSize = +(trackSize / stepCount);
-    let from: number = this.settings.from;
+    let from: number = this.settings.from as number;
+    if (currentValue) from = currentValue;
 
     let min = settings.min;
     let max = settings.max;
+    if (!from) from = min;
     if (min !== 0) {
       from = from - min;
     }
@@ -77,24 +78,26 @@ export default class ViewSingle {
     } else if (settings.from > max) {
       throw Error('from must be equal or less then max');
     }
-    if (settings.from !== 0) {
-      if (settings.from < settings.step) {
+
+    if (+settings.from !== 0) {
+      if (+settings.from < +settings.step) {
         throw Error('from must be euqal of zero or equal of step or more then step');
       }
     }
 
-    const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
-    const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
+    const isAliquotFloatFrom = ((settings.from * 10) % (settings.step * 10)) / 10;
+    if (isAliquotFloatFrom) throw Error('from must be aliquot of step');
 
     from = stepSize * (from / this.settings.step);
 
     this.thumb.el.style[coord] = `${from}px`;
+    this.inner.setPosition(settings);
   }
 
   // inicialize single-view, set position for all required elements of single-view
   init() {
-    this.setThumbPosOnInit(this.settings);
-    this.flag.setPosition(this.settings);
+    this.setThumbPos(this.settings);
+    if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings);

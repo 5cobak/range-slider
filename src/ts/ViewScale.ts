@@ -1,4 +1,4 @@
-import { HtmlHTMLAttributes } from 'react';
+import { IScale, IsettingsTypes } from './globals';
 
 export default class Scale implements IScale {
   settings: IsettingsTypes;

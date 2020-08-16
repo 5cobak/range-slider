@@ -6,6 +6,7 @@
   border-radius: rem(20);
   border: 1px solid $ds25;
   user-select: none;
+  margin-bottom: 50px;
   cursor: pointer;
   &_single {
     .range-slider__inner {

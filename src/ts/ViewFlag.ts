@@ -1,4 +1,7 @@
 /// <reference path="globals.d.ts" />
+
+import { IsettingsTypes } from './globals';
+
 export default class ViewFlag {
   el: HTMLElement;
   constructor(settings: IsettingsTypes) {
