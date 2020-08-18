@@ -33,27 +33,25 @@ export default class Panel {
     return labels;
   }
 
-  onChangeVal(value: number) {
-    const inputCurrentVal = this.el.querySelector('.input-current-value') as HTMLInputElement;
+  onChangeVal(option: string, value: number) {
+    const inputCurrentVal = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
     inputCurrentVal.value = `${value}`;
   }
 
-  onInputVal(func: Function) {
-    const inputCurrentVal = this.el.querySelector('.input-current-value') as HTMLInputElement;
-    inputCurrentVal.onchange = (e: Event) => {
-      let input = e.target as HTMLInputElement;
+  onInput(option: string, func: Function) {
+    const input = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
+
+    input.onchange = (e: Event) => {
       func(input.value);
     };
+  }
+  onChangeSecondVal(value: number) {
+    const inputCurrentVal = this.el.querySelector('.input-second-value') as HTMLInputElement;
+    inputCurrentVal.value = `${value}`;
   }
   setStepOnInput(value: number) {
     const inputStep = this.el.querySelector('.input-step') as HTMLInputElement;
     inputStep.value = `${value}`;
-  }
-  onInputStep(value: Function) {
-    const inputStep = this.el.querySelector('.input-step') as HTMLInputElement;
-    inputStep.onchange = (e: Event) => {
-      value(inputStep.value);
-    };
   }
   setFlagCheck(boo: boolean) {
     const inputFlag = this.el.querySelector('.input-flag') as HTMLInputElement;
@@ -64,7 +62,104 @@ export default class Panel {
 export const panelFirst = new Panel([
   {
     title: 'Текущее значение',
-    class: 'input-current-value',
+    class: 'input-from',
+    attr: {
+      type: 'text',
+      placeholder: 'Текущее значение',
+    },
+  },
+  {
+    title: 'Шаг',
+    class: 'input-step',
+    attr: {
+      type: 'text',
+      placeholder: 'Шаг',
+    },
+  },
+  {
+    class: 'input-flag',
+    title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+]);
+
+export const panelSecond = new Panel([
+  {
+    title: 'От',
+    class: 'input-from',
+    attr: {
+      type: 'text',
+      placeholder: 'от',
+    },
+  },
+  {
+    title: 'до',
+    class: 'input-to',
+    attr: {
+      type: 'text',
+      placeholder: 'до',
+    },
+  },
+  {
+    title: 'Шаг',
+    class: 'input-step',
+    attr: {
+      type: 'text',
+      placeholder: 'Шаг',
+    },
+  },
+  {
+    class: 'input-flag',
+    title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+]);
+
+export const panelThird = new Panel([
+  {
+    title: 'От',
+    class: 'input-from',
+    attr: {
+      type: 'text',
+      placeholder: 'от',
+    },
+  },
+  {
+    title: 'до',
+    class: 'input-to',
+    attr: {
+      type: 'text',
+      placeholder: 'до',
+    },
+  },
+  {
+    title: 'Шаг',
+    class: 'input-step',
+    attr: {
+      type: 'text',
+      placeholder: 'Шаг',
+    },
+  },
+  {
+    class: 'input-flag',
+    title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+]);
+
+export const panelFourth = new Panel([
+  {
+    title: 'Текущее значение',
+    class: 'input-from',
     attr: {
       type: 'text',
       placeholder: 'Текущее значение',

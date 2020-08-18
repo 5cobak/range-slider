@@ -15,7 +15,6 @@ export default class View implements IView {
   thumbPos!: number;
   trackSize: number;
   thumbPosSecond!: number;
-  inputCurrentVal: HTMLElement;
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.el = element;
     this.settings = settings;

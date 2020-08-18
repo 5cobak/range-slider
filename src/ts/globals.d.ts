@@ -30,24 +30,10 @@ type $MouseDown = JQuery.MouseDownEvent<HTMLElement, null, HTMLElement, HTMLElem
 
 interface IThumb {
   el: HTMLElement;
-
-  moveSingleTypeX(settings: IsettingsTypes, e: MouseEvent, step: number): any;
-
-  setPosOnClickSingleTypeX(e: MouseEvent, step: number): void;
-
-  setPosOnClickDoubleTypeX(e: MouseEvent, step: number): void;
-
-  moveSingleTypeY(e: MouseEvent, step: number): any;
-
-  setPosOnClickSingleTypeY(e: MouseEvent, step: number): void;
-
-  moveDoubleTypeY(e: MouseEvent, step: number): any;
-
-  setPosOnClickDoubleTypeY(e: MouseEvent, step: number): void;
-
-  setPosition(settings: IsettingsTypes, step: number): void;
-
-  moveDoubleTypeX(e: MouseEvent, step: number): void;
+  moveSingleType(e: MouseEvent, settings: IsettingsTypes, step: number): void;
+  moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
+  onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void;
+  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
 }
 
 interface IClassPropertiesJquery {
@@ -60,8 +46,8 @@ interface IObserver {
   removeObserver(o: Function): void;
 }
 interface IBankModel {
-  currentValue?: number;
-  currentValueSecond?: number;
+  from?: number;
+  to?: number;
   generalValue: number;
   fromValue: number;
   toValue: number;

@@ -3,6 +3,7 @@ import ModelDouble from './modelDouble';
 import ModelDoubleVertical from './modelDoubleVertical';
 import MsodelSingleVertical from './modelSingleVertical';
 import MakeObservableSubject from './Observer';
+import { IModel, IsettingsTypes, ISubModel, IObserver, IBankModel } from './globals';
 
 export default class Model implements IModel {
   settings: IsettingsTypes;
@@ -43,6 +44,7 @@ export default class Model implements IModel {
     else if (this.settings.min < 0 && this.settings.min < step) step = -this.settings.min;
     let currentVal = +this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
 
+    if (currentVal > this.settings.max) currentVal = this.settings.max;
     return currentVal;
   }
   private validateStep(settings: IsettingsTypes) {

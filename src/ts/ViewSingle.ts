@@ -5,7 +5,7 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale, IThumb } from './globals';
 
 export default class ViewSingle {
   settings: IsettingsTypes;
@@ -43,7 +43,7 @@ export default class ViewSingle {
   addEvents() {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
       this.thumb.moveSingleType(e, this.settings, this.settings.step);
-      this.thumb.onClickSingleType(e, this.settings, this.settings.step);
+      this.thumb.onClickSingleType(e, this.settings);
     });
   }
 
@@ -77,12 +77,6 @@ export default class ViewSingle {
       throw Error('from must be equal or more then min');
     } else if (settings.from > max) {
       throw Error('from must be equal or less then max');
-    }
-
-    if (+settings.from !== 0) {
-      if (+settings.from < +settings.step) {
-        throw Error('from must be euqal of zero or equal of step or more then step');
-      }
     }
 
     const isAliquotFloatFrom = ((settings.from * 10) % (settings.step * 10)) / 10;

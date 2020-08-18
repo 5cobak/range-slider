@@ -31,7 +31,7 @@ export default class ViewSingleVertical {
 
   // add all elements in view
   addElements() {
-    this.$el.replaceWith(this.track.el);
+    this.$el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
     if (this.settings.scale) this.track.el.append(this.scale.el);
@@ -84,9 +84,8 @@ export default class ViewSingleVertical {
       }
     }
 
-    const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
-
-    if (!isAliquotFloatFrom) throw Error('from must be aliquot of step');
+    const isAliquotFloatFrom = ((settings.from * 10) % (settings.step * 10)) / 10;
+    if (isAliquotFloatFrom) throw Error('from must be aliquot of step');
 
     from = stepSize * (from / this.settings.step);
 
@@ -96,7 +95,7 @@ export default class ViewSingleVertical {
   // inicialize view, set position for elements
   init() {
     this.setThumbPosOnInit(this.settings);
-    this.flag.setPosition(this.settings);
+    if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
     if (this.settings.scale) this.scale.setCountOfLines(this.settings);
     this.scale.writeMinAndMaxValues(this.settings);

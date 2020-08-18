@@ -19,18 +19,22 @@ export default class Presenter {
   private addObserversInView(settings: IsettingsTypes) {
     const flag = this.view.type.flag.el;
     const track = this.view.type.track.el;
-    this.view.viewChangedSubject.addObservers(() => {
-      const currentValue = this.model.bank.currentValue;
 
-      track.dataset.currentVal = currentValue;
+    this.view.viewChangedSubject.addObservers(() => {
       if (settings.type === 'single' || settings.type === 'single-vertical') {
-        flag.innerHTML = currentValue;
+        const from = this.model.bank.from;
+        flag.innerHTML = from;
+        track.dataset.from = from;
       } else if (settings.type === 'double' || settings.type === 'double-vertical') {
         const secondFlag = this.view.type.secondFlag.el;
+        const from = this.model.bank.from;
+        const to = this.model.bank.to;
+        flag.innerHTML = from;
 
-        flag.innerHTML = this.model.bank.currentValue;
+        track.dataset.from = from;
+        track.dataset.to = to;
 
-        secondFlag.innerHTML = this.model.bank.currentValueSecond;
+        secondFlag.innerHTML = to;
       }
     });
   }
@@ -58,7 +62,7 @@ export default class Presenter {
 
     function changeVal() {
       that.view.viewChangedSubject.notifyObservers();
-      that.model.bank.currentValue = that.settings.from;
+      that.model.bank.from = that.settings.from;
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
       const trackSize = that.view.trackSize;
@@ -67,7 +71,7 @@ export default class Presenter {
 
       let thumbPos = that.view.thumbPos;
 
-      that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
+      that.model.bank.from = that.model.setCurrentValue(thumbPos, stepSize, step);
 
       that.view.viewChangedSubject.notifyObservers();
     }
@@ -86,7 +90,7 @@ export default class Presenter {
     let that = this;
 
     function changeVal() {
-      that.view.modelChangedSubject.notifyObservers();
+      that.view.viewChangedSubject.notifyObservers();
 
       let generalVal = that.model.bank.generalValue;
       const step = that.settings.step;
@@ -95,14 +99,10 @@ export default class Presenter {
       let stepSize = trackSize / stepCount;
       let thumbPos = that.view.thumbPos;
       let thumbPosSecond = that.view.thumbPosSecond;
-      that.model.bank.currentValue = that.model.setCurrentValue(thumbPos, stepSize, step);
-      that.model.bank.currentValueSecond = that.model.setCurrentValue(
-        thumbPosSecond,
-        stepSize,
-        step
-      );
+      that.model.bank.from = that.model.setCurrentValue(thumbPos, stepSize, step);
+      that.model.bank.to = that.model.setCurrentValue(thumbPosSecond, stepSize, step);
 
-      that.view.modelChangedSubject.notifyObservers();
+      that.view.viewChangedSubject.notifyObservers();
     }
     changeVal();
 

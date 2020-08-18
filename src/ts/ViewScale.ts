@@ -32,8 +32,6 @@ export default class Scale implements IScale {
   }
 
   setCountOfLines(settings: IsettingsTypes) {
-    const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -50,6 +48,7 @@ export default class Scale implements IScale {
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
     let trackSize: number = parseInt(getComputedStyle(track)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
+
     let stepSize = +(trackSize / stepCount).toFixed(1);
 
     let posCountSmallPercent = thumbSize / 2;

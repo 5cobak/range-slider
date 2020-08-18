@@ -4,7 +4,7 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale, IThumb } from './globals';
 
 export default class ViewDoubleVertical {
   settings: IsettingsTypes;
@@ -48,7 +48,7 @@ export default class ViewDoubleVertical {
     const stepCount = generalVal / settings.step;
     let stepSize = +(trackSize / stepCount);
     let from: number = this.settings.from;
-    let to: number = this.settings.to;
+    let to = this.settings.to as number;
 
     let min = settings.min;
     let max = settings.max;
@@ -57,21 +57,16 @@ export default class ViewDoubleVertical {
       to = to - min;
     }
 
-    if (settings.from < min || settings.to < min) {
+    if (settings.from < min || (settings.to as number) < min) {
       throw Error('from or to must be equal or more then min');
-    } else if (settings.from > max || settings.to > max) {
+    } else if (settings.from > max || (settings.to as number) > max) {
       throw Error('from or to must be equal or less then max');
     }
-    if (settings.from !== 0 && settings.to !== 0) {
-      if (settings.from < settings.step || settings.to < settings.step) {
-        throw Error('from or to must be euqal of zero or equal of step or more then step');
-      }
-    }
+    const isAliquotFloatFrom = ((settings.from * 10) % (settings.step * 10)) / 10;
+    if (isAliquotFloatFrom) throw Error('from must be aliquot of step');
+    const isAliquotFloatTo = ((settings.to! * 10) % (settings.step * 10)) / 10;
+    if (isAliquotFloatTo) throw Error('to must be aliquot of step');
 
-    const isAliquotFloatFrom = (settings.from % (settings.step * 10)) / 10;
-    const isAliquotFloatTo = (settings.from % (settings.step * 10)) / 10;
-    if (!isAliquotFloatFrom) throw Error('from must be aliquot of step');
-    if (!isAliquotFloatTo) throw Error('to must be aliquot of step');
     from = stepSize * (from / this.settings.step);
     to = stepSize * (to / this.settings.step);
 
@@ -93,15 +88,11 @@ export default class ViewDoubleVertical {
     this.secondThumb = new ViewThumb(this.settings);
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
     this.secondThumb.el.classList.add('range-slider__thumb_second');
-    this.secondThumb.setPosition = (settings: IsettingsTypes) => {
-      this.secondThumb.el.style.top = `${this.track.el.offsetHeight / 1.5}px`;
-      this.secondFlag.el.className = 'range-slider__flag range-slider__flag_second';
-    };
   }
 
   // add all elements in view
   addElements() {
-    this.$el.replaceWith(this.track.el);
+    this.$el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
 
@@ -116,7 +107,7 @@ export default class ViewDoubleVertical {
     this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
       const $this = this;
 
-      this.thumb.moveDoubleType(e, this.settings, this.settings.step);
+      this.thumb.moveDoubleType(e, this.settings);
       this.thumb.onClickDoubleType(e, this.settings);
       this.inner.setPosition(this.settings);
     });
