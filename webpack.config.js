@@ -66,9 +66,12 @@ const jsLoaders = () => {
 	const loaders = [{
 		loader: 'babel-loader',
 		options: babelOptions(),
-	}]
+	}];
+	const eslintLoader = {
+		loader: 'eslint-loader'
+	}
 	if (isDev) {
-		loaders.push('eslint-loader')
+		loaders.push(eslintLoader)
 	}
 	return loaders
 }

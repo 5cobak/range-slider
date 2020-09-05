@@ -3,18 +3,25 @@ import ViewDouble from './ViewDouble';
 import ViewDoubleVertical from './ViewDoubleVertical';
 import ViewSingleVertical from './ViewSingleVertical';
 import MakeObservableSubject from './Observer';
-import { IView, IsettingsTypes, ISubView, IPanel, IObserver } from './globals';
+import { IView, IsettingsTypes, ISubView, IObserver } from './globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
   settings: IsettingsTypes;
+
   el: HTMLElement;
+
   type: ISubView;
-  panel: IPanel;
+
   viewChangedSubject: IObserver;
+
   thumbSize: number;
+
   thumbPos!: number;
+
   trackSize: number;
+
   thumbPosSecond!: number;
+
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.el = element;
     this.settings = settings;
@@ -35,8 +42,8 @@ export default class View implements IView {
     this.viewChangedSubject.addObservers(() => {
       const coord = this.settings.type.match('vertical') ? 'top' : 'left';
 
-      this.setThumbPos(settings);
-      this.setSecondThumbPos(settings);
+      this.setThumbPos();
+      this.setSecondThumbPos();
       this.type.thumb.el.style[coord] = `${this.thumbPos}px`;
 
       if (this.type.secondThumb) this.type.secondThumb.el.style[coord] = `${this.thumbPosSecond}px`;
@@ -44,22 +51,30 @@ export default class View implements IView {
     this.viewChangedSubject.notifyObservers();
   }
 
-  setThumbPos(settings: IsettingsTypes) {
+  setThumbPos(): void {
     const coord = this.settings.type.match('vertical') ? 'top' : 'left';
     this.thumbPos = parseFloat(getComputedStyle(this.type.thumb.el)[coord]);
   }
 
-  chooseViewType(settings: IsettingsTypes) {
-    let _modelType: object;
+  chooseViewType(settings: IsettingsTypes): ISubView {
+    let modelType: ISubView;
     if (settings.type === 'single') {
-      return (_modelType = new ViewSingle(this.el, this.settings));
-    } else if (settings.type === 'double') {
-      return (_modelType = new ViewDouble(this.el, this.settings));
-    } else if (settings.type === 'double-vertical') {
-      return (_modelType = new ViewDoubleVertical(this.el, this.settings));
-    } else return (_modelType = new ViewSingleVertical(this.el, this.settings));
+      modelType = new ViewSingle(this.el, this.settings);
+      return modelType;
+    }
+    if (settings.type === 'double') {
+      modelType = new ViewDouble(this.el, this.settings);
+      return modelType;
+    }
+    if (settings.type === 'double-vertical') {
+      modelType = new ViewDoubleVertical(this.el, this.settings);
+      return modelType;
+    }
+    modelType = new ViewSingleVertical(this.el, this.settings);
+    return modelType;
   }
-  setSecondThumbPos(settings: IsettingsTypes) {
+
+  setSecondThumbPos(): void {
     const coord = this.settings.type.match('vertical') ? 'top' : 'left';
 
     if (this.type.secondThumb) {

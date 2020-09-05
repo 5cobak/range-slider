@@ -1,61 +1,69 @@
-import { IInput } from './globals';
-
 export default class Panel {
-  el: HTMLElement;
-  flag: HTMLElement;
+  el!: HTMLElement;
+
+  flag!: HTMLInputElement;
+
+  scale!: HTMLInputElement;
+
+  inputs!: HTMLLabelElement[]
+
   constructor(labelsArray: any[]) {
-    this.el = this.createPanel();
-    this.el.append(...this.createInput(labelsArray));
-    this.flag = this.el.querySelector('.input-flag') as HTMLElement;
+    this.createPanel();
+    this.createInput(labelsArray);
+    this.flag = this.createCheckbox('flag') as HTMLInputElement;
+    this.scale = this.createCheckbox('scale') as HTMLInputElement;
   }
 
-  createPanel() {
+  private createPanel() {
     const panel = document.createElement('form');
     panel.className = 'panel';
-    return panel;
+    this.el = panel;
   }
 
-  createInput(labelsArray: any[]) {
-    const labels: HTMLLabelElement[] = [];
-    labelsArray.map((obj) => {
+  private createInput(labelsArray: any[]) {
+    let labels: HTMLLabelElement[] = [];
+    labels = labelsArray.map((obj) => {
       const input = document.createElement('input');
       input.className = `panel__input ${obj.class}`;
-      for (let key in obj.attr) {
-        input.setAttribute(key, obj.attr[key]);
+      const keys: string[] = Object.keys(obj.attr);
+      const values: string[] = Object.values(obj.attr);
+
+      for (let i = 0; i < keys.length; i += 1) {
+        input.setAttribute(keys[i], values[i]);
       }
       const label = document.createElement('label');
       const title = document.createElement('span');
       title.className = 'panel__input-title';
+      label.className = 'panel__label';
       title.innerHTML = obj.title;
       label.append(title, input);
-      labels.push(label);
+      // labels.push(label);
+      return label;
     });
-    return labels;
+    this.el.append(...labels);
   }
 
-  onChangeVal(option: string, value: number) {
+  private createCheckbox(name: string) {
+    const checkbox = this.el.querySelector(`.input-${name}`);
+    return checkbox;
+  }
+
+  onChangeVal(option: string, value: number):void {
     const inputCurrentVal = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
     inputCurrentVal.value = `${value}`;
   }
 
-  onInput(option: string, func: Function) {
+  onInput(option: string, func: (val: string)=>void): void {
     const input = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
 
-    input.onchange = (e: Event) => {
+    input.onchange = () => {
       func(input.value);
     };
   }
-  onChangeSecondVal(value: number) {
+
+  onChangeSecondVal(value: number):void {
     const inputCurrentVal = this.el.querySelector('.input-second-value') as HTMLInputElement;
     inputCurrentVal.value = `${value}`;
-  }
-  setStepOnInput(value: number) {
-    const inputStep = this.el.querySelector('.input-step') as HTMLInputElement;
-    inputStep.value = `${value}`;
-  }
-  setFlagCheck(boo: boolean) {
-    const inputFlag = this.el.querySelector('.input-flag') as HTMLInputElement;
-    inputFlag.checked = boo;
   }
 }
 
@@ -77,8 +85,32 @@ export const panelFirst = new Panel([
     },
   },
   {
+    title: 'Минимальное значение',
+    class: 'input-min',
+    attr: {
+      type: 'text',
+      placeholder: 'Минимальное значение',
+    },
+  },
+  {
+    title: 'Максимальное значение',
+    class: 'input-max',
+    attr: {
+      type: 'text',
+      placeholder: 'Максимальное значение',
+    },
+  },
+  {
     class: 'input-flag',
     title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+  {
+    class: 'input-scale',
+    title: 'Шкала',
     attr: {
       type: 'checkbox',
       placeholder: '',
@@ -88,11 +120,11 @@ export const panelFirst = new Panel([
 
 export const panelSecond = new Panel([
   {
-    title: 'От',
+    title: 'от',
     class: 'input-from',
     attr: {
       type: 'text',
-      placeholder: 'от',
+      placeholder: 'Текущее значение',
     },
   },
   {
@@ -100,7 +132,7 @@ export const panelSecond = new Panel([
     class: 'input-to',
     attr: {
       type: 'text',
-      placeholder: 'до',
+      placeholder: 'Текущее значение',
     },
   },
   {
@@ -109,6 +141,22 @@ export const panelSecond = new Panel([
     attr: {
       type: 'text',
       placeholder: 'Шаг',
+    },
+  },
+  {
+    title: 'Минимальное значение',
+    class: 'input-min',
+    attr: {
+      type: 'text',
+      placeholder: 'Минимальное значение',
+    },
+  },
+  {
+    title: 'Максимальное значение',
+    class: 'input-max',
+    attr: {
+      type: 'text',
+      placeholder: 'Максимальное значение',
     },
   },
   {
@@ -119,15 +167,23 @@ export const panelSecond = new Panel([
       placeholder: '',
     },
   },
+  {
+    class: 'input-scale',
+    title: 'Шкала',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
 ]);
 
 export const panelThird = new Panel([
   {
-    title: 'От',
+    title: 'от',
     class: 'input-from',
     attr: {
       type: 'text',
-      placeholder: 'от',
+      placeholder: 'Текущее значение',
     },
   },
   {
@@ -135,7 +191,7 @@ export const panelThird = new Panel([
     class: 'input-to',
     attr: {
       type: 'text',
-      placeholder: 'до',
+      placeholder: 'Текущее значение',
     },
   },
   {
@@ -147,8 +203,32 @@ export const panelThird = new Panel([
     },
   },
   {
+    title: 'Минимальное значение',
+    class: 'input-min',
+    attr: {
+      type: 'text',
+      placeholder: 'Минимальное значение',
+    },
+  },
+  {
+    title: 'Максимальное значение',
+    class: 'input-max',
+    attr: {
+      type: 'text',
+      placeholder: 'Максимальное значение',
+    },
+  },
+  {
     class: 'input-flag',
     title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+  {
+    class: 'input-scale',
+    title: 'Шкала',
     attr: {
       type: 'checkbox',
       placeholder: '',

@@ -1,21 +1,23 @@
 import { IsettingsTypes } from './globals';
 
 export default class ViewTrack {
-  el: HTMLElement;
-  _type!: string;
+  el!: HTMLElement;
+
+  type!: string;
 
   constructor(settings: IsettingsTypes) {
-    this.el = this.createElement();
+    this.createElement();
     this.type = settings.type as string;
+    this.setType(this.type)
   }
 
-  createElement() {
+  createElement():void {
     const el = document.createElement('div');
     el.className = 'range-slider';
-    return el;
+    this.el = el;
   }
 
-  set type(type) {
+  setType(type: string):void {
     if (type === 'single') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_single';
@@ -32,10 +34,5 @@ export default class ViewTrack {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_double range-slider_vertical';
     }
-    this._type = type;
-  }
-
-  get type() {
-    return this._type;
   }
 }

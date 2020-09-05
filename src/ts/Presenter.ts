@@ -1,11 +1,14 @@
 import View from './View';
 import Model from './Model';
-import { IModel, IsettingsTypes } from './globals';
+import { IModel, IsettingsTypes, IView } from './globals';
 
 export default class Presenter {
-  view: any;
+  view: IView;
+
   model: IModel;
+
   settings: IsettingsTypes;
+
   constructor(settings: IsettingsTypes, $this: HTMLElement) {
     this.settings = settings;
     this.view = new View($this, settings);
@@ -16,6 +19,7 @@ export default class Presenter {
     this.view.viewChangedSubject.notifyObservers();
     this.model.modelChangedSubject.notifyObservers();
   }
+
   private addObserversInView(settings: IsettingsTypes) {
     const flag = this.view.type.flag.el;
     const track = this.view.type.track.el;
@@ -23,95 +27,108 @@ export default class Presenter {
     this.view.viewChangedSubject.addObservers(() => {
       if (settings.type === 'single' || settings.type === 'single-vertical') {
         const from = this.model.bank.from;
-        flag.innerHTML = from;
-        track.dataset.from = from;
+        flag.innerHTML = `${from}`;
+        track.dataset.from = `${from}`;
       } else if (settings.type === 'double' || settings.type === 'double-vertical') {
+        if (!this.view.type.secondFlag) return;
         const secondFlag = this.view.type.secondFlag.el;
         const from = this.model.bank.from;
         const to = this.model.bank.to;
-        flag.innerHTML = from;
+        flag.innerHTML = `${from}`;
 
-        track.dataset.from = from;
-        track.dataset.to = to;
+        track.dataset.from = `${from}`;
+        track.dataset.to = `${to}`;
 
-        secondFlag.innerHTML = to;
+        secondFlag.innerHTML = `${to}`;
       }
     });
   }
+
   private addObserversInModel(settings: IsettingsTypes) {
     if (settings.type === 'single') {
       this.model.modelChangedSubject.addObservers(() => {
-        this.changeSingleValue('width', 'left');
+        this.changeSingleValue(settings);
       });
     } else if (settings.type === 'double') {
       this.model.modelChangedSubject.addObservers(() => {
-        this.changeDoubleValue('width', 'left');
+        this.changeDoubleValue(settings);
       });
     } else if (settings.type === 'single-vertical') {
       this.model.modelChangedSubject.addObservers(() => {
-        this.changeSingleValue('height', 'top');
+        this.changeSingleValue(settings);
       });
     } else if (settings.type === 'double-vertical') {
       this.model.modelChangedSubject.addObservers(() => {
-        this.changeDoubleValue('height', 'top');
+        this.changeDoubleValue(settings);
       });
     }
   }
-  private changeSingleValue(offset: string, pos: string) {
-    let that = this;
+
+  private changeSingleValue(settings: IsettingsTypes) {
+    const view = this.view;
+    const model = this.model;
 
     function changeVal() {
-      that.view.viewChangedSubject.notifyObservers();
-      that.model.bank.from = that.settings.from;
-      let generalVal = that.model.bank.generalValue;
-      const step = that.settings.step;
-      const trackSize = that.view.trackSize;
+      view.viewChangedSubject.notifyObservers();
+      model.bank.from = settings.from;
+      const generalVal = model.bank.generalValue;
+      const step = settings.step;
+      const trackSize = view.trackSize;
       const stepCount = generalVal / step;
-      let stepSize = trackSize / stepCount;
+      const stepSize = trackSize / stepCount;
 
-      let thumbPos = that.view.thumbPos;
+      const thumbPos = view.thumbPos;
 
-      that.model.bank.from = that.model.setCurrentValue(thumbPos, stepSize, step);
+      model.bank.from = model.setCurrentValue(thumbPos, stepSize, step);
 
-      that.view.viewChangedSubject.notifyObservers();
+      view.viewChangedSubject.notifyObservers();
     }
     changeVal();
 
-    this.view.type.track.el.addEventListener('mousedown', (e: MouseEvent) => {
+    function onMove() {
       changeVal();
       document.addEventListener('mousemove', changeVal);
-      document.addEventListener('mouseup', () => {
+      function onMouseUp() {
         document.removeEventListener('mousemove', changeVal);
-      });
-    });
+      }
+
+      document.addEventListener('mouseup', onMouseUp)
+    }
+
+    this.view.type.track.el.addEventListener('mousedown', onMove);
   }
 
-  private changeDoubleValue(offset: string, pos: string) {
-    let that = this;
+  private changeDoubleValue(settings: IsettingsTypes) {
+    const view = this.view;
+    const model = this.model;
 
     function changeVal() {
-      that.view.viewChangedSubject.notifyObservers();
+      view.viewChangedSubject.notifyObservers();
 
-      let generalVal = that.model.bank.generalValue;
-      const step = that.settings.step;
-      const trackSize = that.view.trackSize;
+      const generalVal = model.bank.generalValue;
+      const step = settings.step;
+      const trackSize = view.trackSize;
       const stepCount = generalVal / step;
-      let stepSize = trackSize / stepCount;
-      let thumbPos = that.view.thumbPos;
-      let thumbPosSecond = that.view.thumbPosSecond;
-      that.model.bank.from = that.model.setCurrentValue(thumbPos, stepSize, step);
-      that.model.bank.to = that.model.setCurrentValue(thumbPosSecond, stepSize, step);
+      const stepSize = trackSize / stepCount;
+      const thumbPos = view.thumbPos;
+      const thumbPosSecond = view.thumbPosSecond;
+      model.bank.from = model.setCurrentValue(thumbPos, stepSize, step);
+      model.bank.to = model.setCurrentValue(thumbPosSecond, stepSize, step);
 
-      that.view.viewChangedSubject.notifyObservers();
+      view.viewChangedSubject.notifyObservers();
     }
     changeVal();
 
-    this.view.type.track.el.addEventListener('mousedown', (e: MouseEvent) => {
+    function onMove() {
       changeVal();
       document.addEventListener('mousemove', changeVal);
-      document.addEventListener('mouseup', () => {
+      function onMouseUp() {
         document.removeEventListener('mousemove', changeVal);
-      });
-    });
+      }
+
+      document.addEventListener('mouseup', onMouseUp)
+    }
+
+    this.view.type.track.el.addEventListener('mousedown', onMove);
   }
 }

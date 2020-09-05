@@ -1,6 +1,4 @@
-import { types } from '@babel/core';
-
-interface IsettingsTypes {
+export interface IsettingsTypes {
   min: number;
   max: number;
   type: string;
@@ -13,22 +11,20 @@ interface IsettingsTypes {
   secondValue?: number;
 }
 
-interface IClassProperties {
+export interface IClassProperties {
   el: HTMLElement;
   setPosition(settings: IsettingsTypes): void;
 }
-interface ITrack {
+export interface ITrack {
   el: HTMLElement;
 }
 
-interface IClassFlag {
+export interface IFlag {
   el: HTMLElement;
-  setPosition(settings: IsettingsTypes): any;
+  setPosition(settings: IsettingsTypes): void;
 }
 
-type $MouseDown = JQuery.MouseDownEvent<HTMLElement, null, HTMLElement, HTMLElement>;
-
-interface IThumb {
+export interface IThumb {
   el: HTMLElement;
   moveSingleType(e: MouseEvent, settings: IsettingsTypes, step: number): void;
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
@@ -36,67 +32,69 @@ interface IThumb {
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
 }
 
-interface IClassPropertiesJquery {
+export interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;
 }
 
-interface IObserver {
-  addObservers(o: Function): void;
+export interface IObserver {
+  addObservers(o: ()=>void): void;
   notifyObservers(): void;
-  removeObserver(o: Function): void;
+  removeObserver(o: ()=>void): void;
 }
-interface IBankModel {
+export interface IBankModel {
   from?: number;
   to?: number;
   generalValue: number;
-  fromValue: number;
-  toValue: number;
+  fromValue?: number;
+  toValue?: number;
 }
-interface IBankView {
+export interface IBankView {
   trackSize: number;
   thumbSize: number;
   thumbPos: number;
   thumbPosSecond?: number;
   setSecondThumbPos?(settings: IsettingsTypes): number;
 }
-interface IModel {
-  modelChangedSubject: IObserver;
-  bank: IBankModel;
-  type: ISubModel;
-  setCurrentValue(pos: number, stepSize: number, step: number): number;
-  // getGeneralValue(settings: IsettingsTypes): number;
-  // validateStep(settings: IsettingsTypes): void;
-}
-interface IView {
-  modelChangedSubject: IObserver;
-  type: ISubView;
-}
-interface ISubModel {}
-
-interface ISubView {
-  track: ITrack;
-  thumb: IThumb;
-  secondThumb?: IThumb;
-  scale: IScale;
-}
-
-interface IScale {
+export interface IScale {
   el: HTMLElement;
   writeMinAndMaxValues(settings: IsettingsTypes): void;
   setCountOfLines(settings: IsettingsTypes): void;
 }
-
-interface IMethods {
-  update(options: IsettingsTypes): void;
+export interface ISubView {
+  track: ITrack;
+  thumb: IThumb;
+  secondThumb?: IThumb;
+  scale: IScale;
+  flag: IFlag;
+  secondFlag?: IFlag;
+}
+export interface IModel {
+  modelChangedSubject: IObserver;
+  bank: IBankModel;
+  setCurrentValue(pos: number, stepSize: number, step: number): number;
+  // getGeneralValue(settings: IsettingsTypes): number;
+  // validateStep(settings: IsettingsTypes): void;
+}
+export interface IView {
+  viewChangedSubject: IObserver;
+  type: ISubView;
+  trackSize: number;
+  thumbPos: number;
+  thumbPosSecond: number
 }
 
-interface IInput {
+export interface IMethods {
+  [x: string]: ()=>void;
+  update(): void;
+  init(): void;
+}
+
+export interface IAttr {
+  type: string;
+  placeholder: string;
+}
+export interface IInput {
   title: string;
   class: string;
   attr: IAttr;
-}
-
-interface IAttr {
-  type: string;
-  placeholder: string;
 }

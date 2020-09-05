@@ -1,20 +1,23 @@
 export default class MakeObservableSubject {
-  private observers: Function[];
+  private observers: Array<()=>void>;
+
   constructor() {
     this.observers = [];
   }
-  addObservers(o: Function) {
+
+  addObservers(o: ()=>void):void {
     for (let i = 0, ilen = this.observers.length; i < ilen; i += 1) {
-      let observer = this.observers[i];
+      const observer = this.observers[i];
       if (observer === o) {
         throw new Error('observer already in the list');
       }
     }
     this.observers.push(o);
   }
-  removeObserver(o: Function) {
+
+  removeObserver(o: ()=>void): void {
     for (let i = 0, ilen = this.observers.length; i < ilen; i += 1) {
-      let observer = this.observers[i];
+      const observer = this.observers[i];
       if (observer === o) {
         this.observers.splice(i, 1);
         return;
@@ -24,10 +27,10 @@ export default class MakeObservableSubject {
     throw new Error('could not find observer in list of observers');
   }
 
-  notifyObservers() {
+  notifyObservers(): void {
     // Make a copy of observer list in case the list
     // is mutated during the notifications.
-    let observersSnapshot = this.observers.slice(0);
+    const observersSnapshot = this.observers.slice(0);
     for (let i = 0, ilen = observersSnapshot.length; i < ilen; i += 1) {
       observersSnapshot[i]();
     }

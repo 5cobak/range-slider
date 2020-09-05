@@ -3,10 +3,13 @@
   background-color: $darkGreen;
   margin-bottom: rem(50);
   display: flex;
+  flex-wrap: wrap;
+  &__label {
+    margin-right: 1rem;
+  }
 
   &__input {
     border: 1px solid #000;
-    margin-right: 1rem;
   }
   &__input-title {
     display: block;

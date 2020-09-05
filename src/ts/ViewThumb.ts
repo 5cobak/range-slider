@@ -1,19 +1,24 @@
-/// <reference path="globals.d.ts" />
-
-import { IClassProperties, IsettingsTypes, IThumb } from './globals';
+/* eslint-disable no-unused-expressions */
+import { IsettingsTypes, IThumb } from './globals';
 
 export default class ViewThumb implements IThumb {
   settings: IsettingsTypes;
-  el: HTMLElement;
+
+  el!: HTMLElement;
+
+  thumbPos!: number;
+
+  secondThumbPos!: number;
+
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
-    this.el = this.createElem();
+    this.createElem();
   }
 
-  private createElem(): HTMLElement {
+  private createElem():void {
     const thumb: HTMLElement = document.createElement('span');
     thumb.className = 'range-slider__thumb range-slider__thumb_first';
-    return thumb;
+    this.el = thumb;
   }
 
   // -------------------------------------------------------------  events for X type range
@@ -24,55 +29,56 @@ export default class ViewThumb implements IThumb {
     const thumb = target.closest('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
     if (!thumb) return;
-    thumb.ondragstart = function (): boolean {
-      return false;
-    };
+    thumb.ondragstart = () => false
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
     const halfSizeThumb = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(thumb).height) / 2
-      : parseInt(getComputedStyle(thumb).width) / 2;
+      ? parseFloat(getComputedStyle(thumb).height) / 2
+      : parseFloat(getComputedStyle(thumb).width) / 2;
     const thumbSize: number = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(thumb).height)
-      : parseInt(getComputedStyle(thumb).width);
-    let trackWidth: number = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(track).height) - thumbSize
-      : parseInt(getComputedStyle(track).width) - thumbSize;
+      ? parseFloat(getComputedStyle(thumb).height)
+      : parseFloat(getComputedStyle(thumb).width);
+    const trackWidth: number = settings.type.match('vertical')
+      ? parseFloat(getComputedStyle(track).height) - thumbSize
+      : parseFloat(getComputedStyle(track).width) - thumbSize;
     const stepCount = generalVal / step;
-    let stepSize = trackWidth / stepCount;
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+    const stepSize = trackWidth / stepCount;
 
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
     function moveAt(pageXorY: number) {
-      let newPos = pageXorY - track[offset] - halfSizeThumb;
+      const newPos = pageXorY - track[offset] - halfSizeThumb;
 
-      let posPercent = Math.round(newPos / stepSize) * stepSize;
+      const posPercent = Math.round(newPos / stepSize) * stepSize;
 
       thumb.style[coord] = `${posPercent}px`;
-      if (parseInt(getComputedStyle(thumb)[coord]) <= 0) {
+      if (parseFloat(getComputedStyle(thumb)[coord]) <= 0) {
         thumb.style[coord] = `${0}px`;
-      } else if (parseInt(getComputedStyle(thumb)[coord]) >= trackWidth) {
+      } else if (parseFloat(getComputedStyle(thumb)[coord]) >= trackWidth) {
         thumb.style[coord] = `${trackWidth}px`;
       }
 
-      inner.style[size] = `${parseInt(getComputedStyle(thumb)[coord]) + halfSizeThumb}px`;
+      inner.style[size] = `${parseFloat(getComputedStyle(thumb)[coord]) + halfSizeThumb}px`;
     }
+    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+
     function onMouseMove(e: MouseEvent) {
       settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
     }
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', () => {
+    function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
-    });
+    }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', removeEventListeners);
+
+    this.thumbPos = parseFloat(getComputedStyle(thumb)[coord])
   }
 
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes) {
+  moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
@@ -90,62 +96,65 @@ export default class ViewThumb implements IThumb {
     }
     targetThumb.style.zIndex = '100';
     targetSecondThumb.style.zIndex = '50';
-    targetThumb.ondragstart = function (): boolean {
-      return false;
-    };
+    targetThumb.ondragstart = () => false
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
     const halfSizeThumb = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(targetThumb).height) / 2
-      : parseInt(getComputedStyle(targetThumb).width) / 2;
+      ? parseFloat(getComputedStyle(targetThumb).height) / 2
+      : parseFloat(getComputedStyle(targetThumb).width) / 2;
     const thumbSize: number = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(targetThumb).height)
-      : parseInt(getComputedStyle(targetThumb).width);
-    let trackSize: number = settings.type.match('vertical')
-      ? parseInt(getComputedStyle(track).height) - thumbSize
-      : parseInt(getComputedStyle(track).width) - thumbSize;
+      ? parseFloat(getComputedStyle(targetThumb).height)
+      : parseFloat(getComputedStyle(targetThumb).width);
+    const trackSize: number = settings.type.match('vertical')
+      ? parseFloat(getComputedStyle(track).height) - thumbSize
+      : parseFloat(getComputedStyle(track).width) - thumbSize;
     const stepCount = generalVal / settings.step;
 
-    let stepSize = trackSize / stepCount;
+    const stepSize = trackSize / stepCount;
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
     const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
     function moveAt(pageXorY: number): void {
       if (!track) return;
-      let newLeft = pageXorY - track[offset] - halfSizeThumb;
-      let posPercent = Math.round(newLeft / stepSize) * stepSize;
+      const newLeft = pageXorY - track[offset] - halfSizeThumb;
+      const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       // if (settings.type.match('vertical')) {
       targetThumb.style[coord] = `${posPercent}px`;
       /// min position
-      if (parseInt(getComputedStyle(targetThumb)[coord]) <= 0) {
+      if (parseFloat(getComputedStyle(targetThumb)[coord]) <= 0) {
         targetThumb.style[coord] = `${0}px`;
-      } else if (parseInt(getComputedStyle(targetThumb)[coord]) >= trackSize) {
+      } else if (parseFloat(getComputedStyle(targetThumb)[coord]) >= trackSize) {
         targetThumb.style[coord] = `${trackSize}px`;
       }
 
       if (targetThumb === firstThumb && targetThumb[offset] >= targetSecondThumb[offset]) {
-        targetThumb.style[coord] = `${parseInt(getComputedStyle(targetSecondThumb)[coord])}px`;
+        targetThumb.style[coord] = `${parseFloat(getComputedStyle(targetSecondThumb)[coord])}px`;
       } else if (targetThumb === secondThumb && targetThumb[offset] <= targetSecondThumb[offset]) {
-        targetThumb.style[coord] = `${parseInt(getComputedStyle(targetSecondThumb)[coord])}px`;
+        targetThumb.style[coord] = `${parseFloat(getComputedStyle(targetSecondThumb)[coord])}px`;
       }
       inner.style[coord] = `${firstThumb[offset] + firstThumb[offseSize] / 2}px`;
       inner.style[size] = `${
-        parseInt(getComputedStyle(secondThumb)[coord]) -
-        parseInt(getComputedStyle(firstThumb)[coord])
+        parseFloat(getComputedStyle(secondThumb)[coord]) -
+        parseFloat(getComputedStyle(firstThumb)[coord])
       }px`;
     }
     settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+
     function onMouseMove(e: MouseEvent) {
       settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
     }
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', (e) => {
+    function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
-    });
+    }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', removeEventListeners);
+
+    this.thumbPos = parseFloat(getComputedStyle(firstThumb)[coord])
+    this.secondThumbPos = parseFloat(getComputedStyle(secondThumb)[coord])
   }
 
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void {
@@ -161,45 +170,50 @@ export default class ViewThumb implements IThumb {
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
     const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
-    const halfThumb = parseInt(getComputedStyle(thumb)[size]) / 2;
-    const thumbWidth: number = parseInt(getComputedStyle(thumb)[size]);
-    let trackWidth: number = parseInt(getComputedStyle(track)[size]) - thumbWidth;
+    const halfThumb = parseFloat(getComputedStyle(thumb)[size]) / 2;
+    const thumbWidth: number = parseFloat(getComputedStyle(thumb)[size]);
+    const trackWidth: number = parseFloat(getComputedStyle(track)[size]) - thumbWidth;
     const stepCount = generalVal / settings.step;
-    let stepSize = trackWidth / stepCount;
+    const stepSize = trackWidth / stepCount;
 
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
-    function setCurrentValue(pos: number, stepSize: number, step: number) {
-      const currentVal = settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
-      return currentVal;
-    }
     function moveAt(pageXorY: number) {
-      let newLeft = pageXorY - track[offsetCoord] - halfThumb;
-      let posPercent = Math.round(newLeft / stepSize) * stepSize;
+      const newLeft = pageXorY - track[offsetCoord] - halfThumb;
+      const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
-      thumb.style[coord] = posPercent + 'px';
-      if (parseInt(getComputedStyle(thumb)[coord]) <= 0) thumb.style[coord] = `${0}px`;
-      if (parseInt(getComputedStyle(thumb)[coord]) > trackWidth) {
+      thumb.style[coord] = `${posPercent}px`;
+      if (parseFloat(getComputedStyle(thumb)[coord]) <= 0) thumb.style[coord] = `${0}px`;
+      if (parseFloat(getComputedStyle(thumb)[coord]) > trackWidth) {
         thumb.style[coord] = `${trackWidth}px`;
       }
       inner.style[size] = getComputedStyle(thumb)[coord];
     }
+    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+
+    this.thumbPos = parseFloat(getComputedStyle(thumb)[coord])
   }
 
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const clientX = e.clientX;
+    const clientXorY = settings.type.match('vertical') ? e.clientY : e.clientX
     const thumbs = track.querySelectorAll('.range-slider__thumb');
     const firstThumb = thumbs[0] as HTMLElement;
     const secondThumb = thumbs[1] as HTMLElement;
 
-    let firstDifference = thumbs[0].getBoundingClientRect().right - clientX;
-    let secondDifference = thumbs[1].getBoundingClientRect().left - clientX;
+    const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
+    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
+    const coord = settings.type.match('vertical') ? 'top' : 'left';
+    const size = settings.type.match('vertical') ? 'height' : 'width';
+
+    const firstThumbCoord = settings.type.match('vertical') ? thumbs[0].getBoundingClientRect().bottom : thumbs[0].getBoundingClientRect().right;
+    const secondThumbCoord = settings.type.match('vertical') ? thumbs[0].getBoundingClientRect().top : thumbs[0].getBoundingClientRect().left;
+
+    let firstDifference = firstThumbCoord - clientXorY;
+    let secondDifference = secondThumbCoord - clientXorY;
     let movedThumb: HTMLElement;
     if (target.closest('.range-slider__thumb')) return;
 
@@ -212,42 +226,40 @@ export default class ViewThumb implements IThumb {
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
-    const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
-    const coord = settings.type.match('vertical') ? 'top' : 'left';
-    const size = settings.type.match('vertical') ? 'height' : 'width';
-
-    const halfThumb = parseInt(getComputedStyle(movedThumb)[size]) / 2;
-    const thumbSize: number = parseInt(getComputedStyle(movedThumb)[size]);
-    let trackSize: number = parseInt(getComputedStyle(track)[size]) - thumbSize;
+    const halfThumb = parseFloat(getComputedStyle(movedThumb)[size]) / 2;
+    const thumbSize: number = parseFloat(getComputedStyle(movedThumb)[size]);
+    const trackSize: number = parseFloat(getComputedStyle(track)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
-    let stepSize = trackSize / stepCount;
+    const stepSize = trackSize / stepCount;
 
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
-
-    function moveAt(pageX: number) {
-      let newLeft = pageX - track[offsetCoord] - halfThumb;
-      let posPercent = Math.round(newLeft / stepSize) * stepSize;
+    function moveAt(pageXorY: number) {
+      const newLeft = pageXorY - track[offsetCoord] - halfThumb;
+      const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       movedThumb.style[coord] = `${posPercent}px`;
-      if (parseInt(getComputedStyle(movedThumb)[coord]) <= 0) movedThumb.style[coord] = `${0}px`;
-      if (parseInt(getComputedStyle(movedThumb)[coord]) > trackSize) {
+      if (parseFloat(getComputedStyle(movedThumb)[coord]) <= 0) movedThumb.style[coord] = `${0}px`;
+      if (parseFloat(getComputedStyle(movedThumb)[coord]) > trackSize) {
         movedThumb.style[coord] = `${trackSize}px`;
       }
       if (movedThumb === firstThumb && firstThumb[offsetCoord] >= secondThumb[offsetCoord]) {
-        movedThumb.style[coord] = `${parseInt(getComputedStyle(secondThumb)[coord])}px`;
+        movedThumb.style[coord] = `${parseFloat(getComputedStyle(secondThumb)[coord])}px`;
       } else if (
         movedThumb === secondThumb &&
         secondThumb[offsetCoord] <= firstThumb[offsetCoord]
       ) {
-        movedThumb.style[coord] = `${parseInt(getComputedStyle(firstThumb)[coord])}px`;
+        movedThumb.style[coord] = `${parseFloat(getComputedStyle(firstThumb)[coord])}px`;
       }
 
       inner.style[coord] = `${firstThumb[offsetCoord] + firstThumb[offsetSize] / 2}px`;
       inner.style[size] = `${
-        parseInt(getComputedStyle(secondThumb)[coord]) -
-        parseInt(getComputedStyle(firstThumb)[coord])
+        parseFloat(getComputedStyle(secondThumb)[coord]) -
+        parseFloat(getComputedStyle(firstThumb)[coord])
       }px`;
     }
+
+    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+
+    this.thumbPos = parseFloat(getComputedStyle( thumbs[0])[coord]);
+    this.secondThumbPos = parseFloat(getComputedStyle( thumbs[1])[coord]);
   }
 }

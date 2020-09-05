@@ -4,16 +4,23 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IClassFlag, IScale, IThumb } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb } from './globals';
 // VIEW class
 export default class ViewSingleVertical {
   settings: IsettingsTypes;
+
   $el: HTMLElement;
+
   track: ITrack;
+
   thumb: IThumb;
+
   inner: IClassProperties;
-  flag: IClassFlag;
+
+  flag: IFlag;
+
   scale: IScale;
+
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.settings = settings;
     this.$el = element;
@@ -30,7 +37,7 @@ export default class ViewSingleVertical {
   // add second thumb, if it needed
 
   // add all elements in view
-  addElements() {
+  addElements():void {
     this.$el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
@@ -38,39 +45,40 @@ export default class ViewSingleVertical {
   }
 
   // add view events
-  addEvents() {
-    this.track.el.addEventListener('mousedown', (e: MouseEvent) => {
-      const $this = this;
-
-      this.thumb.moveSingleType(e, this.settings, this.settings.step);
-      this.thumb.onClickSingleType(e, this.settings);
-    });
+  addEvents():void {
+    const thumb = this.thumb;
+    const settings = this.settings;
+    function onMove(e: MouseEvent) {
+      thumb.moveSingleType(e, settings, settings.step);
+    }
+    function onClick(e: MouseEvent) {
+      thumb.onClickSingleType(e, settings);
+    }
+    this.track.el.addEventListener('mousedown', onMove);
+    this.track.el.addEventListener('mousedown', onClick);
   }
 
   private setThumbPosOnInit(settings: IsettingsTypes) {
-    const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
     if (this.settings.min > 0 && this.settings.min < settings.step) {
-      settings.step = this.settings.min;
-    } else if (this.settings.min < 0 && this.settings.min < settings.step)
-      settings.step = -this.settings.min;
+      this.settings.step = this.settings.min;
+    } else if (this.settings.min < 0 && this.settings.min < settings.step) { this.settings.step = -this.settings.min; }
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-    const thumbSize = parseInt(getComputedStyle(this.thumb.el)[size]);
-    const trackSize = parseInt(getComputedStyle(this.track.el)[size]) - thumbSize;
+    const thumbSize = parseFloat(getComputedStyle(this.thumb.el)[size]);
+    const trackSize = parseFloat(getComputedStyle(this.track.el)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
-    let stepSize = +(trackSize / stepCount);
+    const stepSize = +(trackSize / stepCount);
     let from: number = this.settings.from;
 
-    let min = settings.min;
-    let max = settings.max;
+    const min = settings.min;
+    const max = settings.max;
     if (min !== 0) {
-      from = from - min;
+      from -= min;
     }
 
     if (settings.from < min) {
@@ -93,7 +101,7 @@ export default class ViewSingleVertical {
   }
 
   // inicialize view, set position for elements
-  init() {
+  init():void {
     this.setThumbPosOnInit(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
