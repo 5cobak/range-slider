@@ -60,7 +60,7 @@ export default class ViewSingle {
     this.track.el.addEventListener('mousedown', onClick);
   }
 
-  private setThumbPos(settings: IsettingsTypes, currentValue?: number) {
+  private setThumbPos(settings: IsettingsTypes) {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -73,15 +73,14 @@ export default class ViewSingle {
     const stepCount = generalVal / settings.step;
     const stepSize = +(trackSize / stepCount);
     let from: number = this.settings.from as number;
-    if (currentValue) from = currentValue;
 
     const min = settings.min;
-    if (!from) from = min;
+
     if (min !== 0) {
       from -= min;
     }
 
-    from = stepSize * (from / this.settings.step);
+    from = stepSize * Math.round(from / this.settings.step);
 
     this.thumb.el.style[coord] = `${from}px`;
     this.inner.setPosition(settings);

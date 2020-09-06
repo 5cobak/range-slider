@@ -11,6 +11,7 @@ import { IsettingsTypes, IMethods } from './globals';
       const settings: IsettingsTypes = $.extend(
         {
           // default options object
+          $el: this,
           type: 'single',
           min: 0,
           max: 1000,
@@ -39,9 +40,10 @@ import { IsettingsTypes, IMethods } from './globals';
           const dataObj = $($this).data();
 
           updatedOptions = $.extend(dataObj, options);
-          setData(updatedOptions);
+
           $(this).children().remove();
           new Presenter(updatedOptions, $this);
+          setData(updatedOptions);
         },
         init: () => {
           new Presenter(updatedOptions, $this);

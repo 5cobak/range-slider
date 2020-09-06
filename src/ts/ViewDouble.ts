@@ -74,7 +74,7 @@ export default class ViewDouble {
     this.track.el.addEventListener('mousedown', onClick);
   }
 
-  private setThumbPosOnInit(settings: IsettingsTypes) {
+  private setThumbPos(settings: IsettingsTypes) {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -95,8 +95,8 @@ export default class ViewDouble {
       to -= min;
     }
 
-    from = stepSize * (from / this.settings.step);
-    to = stepSize * (to / this.settings.step);
+    from = stepSize * Math.round(from / this.settings.step);
+    to = stepSize * Math.round(to / this.settings.step);
 
     from = Number.isNaN(from) ? 0 : from;
     to = Number.isNaN(to) ? trackSize : to;
@@ -108,7 +108,7 @@ export default class ViewDouble {
 
   // inicialize view, set position for elements
   init():void {
-    this.setThumbPosOnInit(this.settings);
+    this.setThumbPos(this.settings);
     if (this.settings.flag) {
       this.flag.setPosition(this.settings);
       this.secondFlag.setPosition(this.settings);

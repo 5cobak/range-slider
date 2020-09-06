@@ -254,8 +254,32 @@ export const panelFourth = new Panel([
     },
   },
   {
+    title: 'Минимальное значение',
+    class: 'input-min',
+    attr: {
+      type: 'text',
+      placeholder: 'Минимальное значение',
+    },
+  },
+  {
+    title: 'Максимальное значение',
+    class: 'input-max',
+    attr: {
+      type: 'text',
+      placeholder: 'Максимальное значение',
+    },
+  },
+  {
     class: 'input-flag',
     title: 'Флаг',
+    attr: {
+      type: 'checkbox',
+      placeholder: '',
+    },
+  },
+  {
+    class: 'input-scale',
+    title: 'Шкала',
     attr: {
       type: 'checkbox',
       placeholder: '',

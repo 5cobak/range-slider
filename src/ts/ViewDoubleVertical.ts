@@ -61,8 +61,8 @@ export default class ViewDoubleVertical {
       to -= min;
     }
 
-    from = stepSize * (from / this.settings.step);
-    to = stepSize * (to / this.settings.step);
+    from = stepSize * Math.round(from / this.settings.step);
+    to = stepSize * Math.round(to / this.settings.step);
 
     from = Number.isNaN(from) ? 0 : from;
     to = Number.isNaN(to) ? trackSize : to;

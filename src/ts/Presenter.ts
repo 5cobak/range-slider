@@ -11,13 +11,13 @@ export default class Presenter {
 
   constructor(settings: IsettingsTypes, $this: HTMLElement) {
     this.settings = settings;
-    this.view = new View($this, settings);
     this.model = new Model(settings);
+    this.view = new View($this, settings);
     this.addObserversInView(settings);
     this.addObserversInModel(settings);
     this.settings = settings;
-    this.view.viewChangedSubject.notifyObservers();
     this.model.modelChangedSubject.notifyObservers();
+    this.view.viewChangedSubject.notifyObservers();
   }
 
   private addObserversInView(settings: IsettingsTypes) {

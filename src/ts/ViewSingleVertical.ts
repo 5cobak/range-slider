@@ -61,9 +61,6 @@ export default class ViewSingleVertical {
   private setThumbPosOnInit(settings: IsettingsTypes) {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
-    if (this.settings.min > 0 && this.settings.min < settings.step) {
-      this.settings.step = this.settings.min;
-    } else if (this.settings.min < 0 && this.settings.min < settings.step) { this.settings.step = -this.settings.min; }
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
@@ -81,21 +78,7 @@ export default class ViewSingleVertical {
       from -= min;
     }
 
-    if (settings.from < min) {
-      throw Error('from must be equal or more then min');
-    } else if (settings.from > max) {
-      throw Error('from must be equal or less then max');
-    }
-    if (settings.from !== 0) {
-      if (settings.from < settings.step) {
-        throw Error('from must be euqal of zero or equal of step or more then step');
-      }
-    }
-
-    const isAliquotFloatFrom = ((settings.from * 10) % (settings.step * 10)) / 10;
-    if (isAliquotFloatFrom) throw Error('from must be aliquot of step');
-
-    from = stepSize * (from / this.settings.step);
+    from = stepSize * Math.round(from / this.settings.step);
 
     this.thumb.el.style[coord] = `${from}px`;
   }
@@ -105,7 +88,9 @@ export default class ViewSingleVertical {
     this.setThumbPosOnInit(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
-    if (this.settings.scale) this.scale.setCountOfLines(this.settings);
-    this.scale.writeMinAndMaxValues(this.settings);
+    if (this.settings.scale) {
+      this.scale.setCountOfLines(this.settings);
+      this.scale.writeMinAndMaxValues(this.settings);
+    }
   }
 }

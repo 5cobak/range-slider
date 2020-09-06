@@ -17,7 +17,7 @@ export default class Model implements IModel {
     this.bank.fromValue = this.settings.from ? this.settings.from : this.settings.min;
     this.bank.toValue = this.settings.to ? this.settings.to : this.settings.max;
     this.getGeneralValue(settings);
-    // this.validateStep(settings);
+    this.validate()
   }
 
   private getGeneralValue(settings: IsettingsTypes) {
@@ -34,7 +34,11 @@ export default class Model implements IModel {
     return currentVal;
   }
 
-  validate() {
-
+  private validate() {
+    if (this.settings.from < this.settings.min) this.settings.from = this.settings.min;
+    if (this.settings.from > this.settings.max) this.settings.from = this.settings.max;
+    if (!this.settings.to) return;
+    if (this.settings.to < this.settings.min) this.settings.to = this.settings.min;
+    if (this.settings.to > this.settings.max) this.settings.to = this.settings.max;
   }
 }

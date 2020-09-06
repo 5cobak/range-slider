@@ -196,24 +196,30 @@ export default class ViewThumb implements IThumb {
   }
 
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
+    const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const clientXorY = settings.type.match('vertical') ? e.clientY : e.clientX
+    const clientX = isVertical ? e.clientY : e.clientX;
     const thumbs = track.querySelectorAll('.range-slider__thumb');
     const firstThumb = thumbs[0] as HTMLElement;
     const secondThumb = thumbs[1] as HTMLElement;
 
-    const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
-    const offsetSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
-    const coord = settings.type.match('vertical') ? 'top' : 'left';
-    const size = settings.type.match('vertical') ? 'height' : 'width';
+    const offsetCoord = isVertical ? 'offsetTop' : 'offsetLeft';
+    const offsetSize = isVertical ? 'offsetHeight' : 'offsetWidth';
+    const coord = isVertical ? 'top' : 'left';
+    const size = isVertical ? 'height' : 'width';
 
-    const firstThumbCoord = settings.type.match('vertical') ? thumbs[0].getBoundingClientRect().bottom : thumbs[0].getBoundingClientRect().right;
-    const secondThumbCoord = settings.type.match('vertical') ? thumbs[0].getBoundingClientRect().top : thumbs[0].getBoundingClientRect().left;
+    let firstDifference: number;
+    let secondDifference: number;
+    if (isVertical) {
+      firstDifference = thumbs[0].getBoundingClientRect().bottom - clientX;
+      secondDifference = thumbs[1].getBoundingClientRect().top - clientX;
+    } else {
+      firstDifference = thumbs[0].getBoundingClientRect().right - clientX;
+      secondDifference = thumbs[1].getBoundingClientRect().left - clientX;
+    }
 
-    let firstDifference = firstThumbCoord - clientXorY;
-    let secondDifference = secondThumbCoord - clientXorY;
     let movedThumb: HTMLElement;
     if (target.closest('.range-slider__thumb')) return;
 
@@ -232,8 +238,8 @@ export default class ViewThumb implements IThumb {
     const stepCount = generalVal / settings.step;
     const stepSize = trackSize / stepCount;
 
-    function moveAt(pageXorY: number) {
-      const newLeft = pageXorY - track[offsetCoord] - halfThumb;
+    function moveAt(pageX: number) {
+      const newLeft = pageX - track[offsetCoord] - halfThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       movedThumb.style[coord] = `${posPercent}px`;
