@@ -26,10 +26,12 @@ export interface IFlag {
 
 export interface IThumb {
   el: HTMLElement;
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes, step: number): void;
+  moveSingleType(e: MouseEvent, settings: IsettingsTypes): void;
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void;
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
+  thumbPos: number;
+
 }
 
 export interface IClassPropertiesJquery {
@@ -83,6 +85,9 @@ export interface IView {
   thumbPosSecond: number
 }
 
+export interface IViewSingle {
+  el: HTMLElement
+}
 export interface IMethods {
   [x: string]: ()=>void;
   update(): void;

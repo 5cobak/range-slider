@@ -70,7 +70,8 @@ export default class ViewDouble {
     function onClick(e:MouseEvent) {
       thumb.onClickDoubleType(e, settings);
     }
-    this.track.el.addEventListener('mousedown', onMove);
+    this.thumb.el.addEventListener('mousedown', onMove);
+    this.secondThumb.el.addEventListener('mousedown', onMove);
     this.track.el.addEventListener('mousedown', onClick);
   }
 

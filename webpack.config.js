@@ -50,11 +50,8 @@ const cssLoaders = (extra) => {
 const babelOptions = (preset) => {
 	const opts = {
 		presets: [
-			'@babel/preset-env',
-		],
-		plugins: [
-			'@babel/plugin-proposal-class-properties',
-		],
+			'@babel/preset-env'
+		]
 	}
 	if (preset) {
 		opts.presets.push(preset);

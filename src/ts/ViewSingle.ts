@@ -5,12 +5,12 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IViewSingle } from './globals';
 
-export default class ViewSingle {
+export default class ViewSingle implements IViewSingle {
   settings: IsettingsTypes;
 
-  $el: HTMLElement;
+  el!: HTMLElement;
 
   track: ITrack;
 
@@ -24,7 +24,8 @@ export default class ViewSingle {
 
   constructor(element: HTMLElement, settings: IsettingsTypes) {
     this.settings = settings;
-    this.$el = element;
+    this.el = element;
+
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
@@ -40,7 +41,7 @@ export default class ViewSingle {
 
   // add all elements in view
   addElements():void {
-    this.$el.append(this.track.el);
+    this.el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
     if (this.settings.scale) this.track.el.append(this.scale.el);
@@ -51,12 +52,13 @@ export default class ViewSingle {
     const thumb = this.thumb;
     const settings = this.settings;
     function onMove(e: MouseEvent) {
-      thumb.moveSingleType(e, settings, settings.step);
+      thumb.moveSingleType(e, settings);
     }
     function onClick(e: MouseEvent) {
       thumb.onClickSingleType(e, settings);
     }
-    this.track.el.addEventListener('mousedown', onMove);
+    // this.track.el.addEventListener('mousedown', onMove);
+    this.thumb.el.addEventListener('mousedown', onMove)
     this.track.el.addEventListener('mousedown', onClick);
   }
 

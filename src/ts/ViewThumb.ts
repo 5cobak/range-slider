@@ -22,13 +22,15 @@ export default class ViewThumb implements IThumb {
   }
 
   // -------------------------------------------------------------  events for X type range
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes, step: number): void {
+  moveSingleType(e: MouseEvent, settings: IsettingsTypes): void {
     const target = e.target as HTMLElement;
-
+    const isVertical = settings.type.match('vertical');
     const track = target.closest('.range-slider') as HTMLElement;
     const thumb = target.closest('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
+    const client = isVertical ? 'clientY' : 'clientX';
     if (!thumb) return;
+
     thumb.ondragstart = () => false
 
     let generalVal =
@@ -43,7 +45,7 @@ export default class ViewThumb implements IThumb {
     const trackWidth: number = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(track).height) - thumbSize
       : parseFloat(getComputedStyle(track).width) - thumbSize;
-    const stepCount = generalVal / step;
+    const stepCount = generalVal / settings.step;
     const stepSize = trackWidth / stepCount;
 
     const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
@@ -56,6 +58,7 @@ export default class ViewThumb implements IThumb {
       const posPercent = Math.round(newPos / stepSize) * stepSize;
 
       thumb.style[coord] = `${posPercent}px`;
+
       if (parseFloat(getComputedStyle(thumb)[coord]) <= 0) {
         thumb.style[coord] = `${0}px`;
       } else if (parseFloat(getComputedStyle(thumb)[coord]) >= trackWidth) {
@@ -64,18 +67,16 @@ export default class ViewThumb implements IThumb {
 
       inner.style[size] = `${parseFloat(getComputedStyle(thumb)[coord]) + halfSizeThumb}px`;
     }
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+    moveAt(e[client])
 
     function onMouseMove(e: MouseEvent) {
-      settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+      moveAt(e[client])
     }
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
     }
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', removeEventListeners);
-
-    this.thumbPos = parseFloat(getComputedStyle(thumb)[coord])
   }
 
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
@@ -83,7 +84,7 @@ export default class ViewThumb implements IThumb {
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
     const targetThumb = target.closest('.range-slider__thumb') as HTMLElement;
-    if (!targetThumb) return;
+    if (!targetThumb) return
 
     let targetSecondThumb: HTMLElement;
     const firstThumb = track.querySelector('.range-slider__thumb_first') as HTMLElement;
@@ -158,13 +159,12 @@ export default class ViewThumb implements IThumb {
   }
 
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void {
+    const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const thumb = track.querySelector('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    // const flag = track.querySelector('.range-slider__flag') as HTMLElement;
-    // if (target === flag) return;
-
+    const client = isVertical ? e.clientY : e.clientX;
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
@@ -190,9 +190,9 @@ export default class ViewThumb implements IThumb {
       }
       inner.style[size] = getComputedStyle(thumb)[coord];
     }
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+    settings.type.match('vertical') ? moveAt(client) : moveAt(client);
 
-    this.thumbPos = parseFloat(getComputedStyle(thumb)[coord])
+    this.thumbPos = parseFloat(getComputedStyle(thumb)[coord]);
   }
 
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
@@ -200,7 +200,7 @@ export default class ViewThumb implements IThumb {
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const clientX = isVertical ? e.clientY : e.clientX;
+    const client = isVertical ? 'clentY' : 'clientX';
     const thumbs = track.querySelectorAll('.range-slider__thumb');
     const firstThumb = thumbs[0] as HTMLElement;
     const secondThumb = thumbs[1] as HTMLElement;
@@ -213,11 +213,11 @@ export default class ViewThumb implements IThumb {
     let firstDifference: number;
     let secondDifference: number;
     if (isVertical) {
-      firstDifference = thumbs[0].getBoundingClientRect().bottom - clientX;
-      secondDifference = thumbs[1].getBoundingClientRect().top - clientX;
+      firstDifference = thumbs[0].getBoundingClientRect().bottom - e[client];
+      secondDifference = thumbs[1].getBoundingClientRect().top - e[client];
     } else {
-      firstDifference = thumbs[0].getBoundingClientRect().right - clientX;
-      secondDifference = thumbs[1].getBoundingClientRect().left - clientX;
+      firstDifference = thumbs[0].getBoundingClientRect().right - e[client];
+      secondDifference = thumbs[1].getBoundingClientRect().left - e[client];
     }
 
     let movedThumb: HTMLElement;
@@ -269,3 +269,5 @@ export default class ViewThumb implements IThumb {
     this.secondThumbPos = parseFloat(getComputedStyle( thumbs[1])[coord]);
   }
 }
+
+// module.exports = ViewThumb

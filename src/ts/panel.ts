@@ -37,7 +37,6 @@ export default class Panel {
       label.className = 'panel__label';
       title.innerHTML = obj.title;
       label.append(title, input);
-      // labels.push(label);
       return label;
     });
     this.el.append(...labels);

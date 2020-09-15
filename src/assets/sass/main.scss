@@ -189,10 +189,8 @@ button {
 }
 // Modules
 
-.ranges-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+.range-slider-container {
+  margin-bottom: rem(250);
 }
 
 @import 'modules/range-slider';
