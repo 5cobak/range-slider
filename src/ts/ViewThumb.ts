@@ -28,7 +28,8 @@ export default class ViewThumb implements IThumb {
     const track = target.closest('.range-slider') as HTMLElement;
     const thumb = target.closest('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const client = isVertical ? 'clientY' : 'clientX';
+    const clientCoord = isVertical ? 'clientY' : 'clientX';
+    // const pageCoord = isVertical ? 'pageY' : 'pageX';
     if (!thumb) return;
 
     thumb.ondragstart = () => false
@@ -48,12 +49,12 @@ export default class ViewThumb implements IThumb {
     const stepCount = generalVal / settings.step;
     const stepSize = trackWidth / stepCount;
 
-    const offset = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
     function moveAt(pageXorY: number) {
-      const newPos = pageXorY - track[offset] - halfSizeThumb;
+      const trackCoord = track.getBoundingClientRect()[coord];
+      const newPos = pageXorY - trackCoord - halfSizeThumb;
 
       const posPercent = Math.round(newPos / stepSize) * stepSize;
 
@@ -67,10 +68,10 @@ export default class ViewThumb implements IThumb {
 
       inner.style[size] = `${parseFloat(getComputedStyle(thumb)[coord]) + halfSizeThumb}px`;
     }
-    moveAt(e[client])
+    moveAt(e[clientCoord])
 
     function onMouseMove(e: MouseEvent) {
-      moveAt(e[client])
+      moveAt(e[clientCoord])
     }
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
@@ -80,6 +81,7 @@ export default class ViewThumb implements IThumb {
   }
 
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
+    const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
@@ -118,12 +120,15 @@ export default class ViewThumb implements IThumb {
     const offseSize = settings.type.match('vertical') ? 'offsetHeight' : 'offsetWidth';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
+    const clientCoord = isVertical ? 'clientY' : 'clientX';
     function moveAt(pageXorY: number): void {
+      const trackCoord = isVertical ? track.getBoundingClientRect().top : track.getBoundingClientRect().left;
+      const targetThumbCoord = isVertical ? targetThumb.getBoundingClientRect().top : targetThumb.getBoundingClientRect().left;
+      const targetSecondThumbCoord = isVertical ? targetSecondThumb.getBoundingClientRect().top : targetSecondThumb.getBoundingClientRect().left;
       if (!track) return;
-      const newLeft = pageXorY - track[offset] - halfSizeThumb;
+      const newLeft = pageXorY - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
-      // if (settings.type.match('vertical')) {
       targetThumb.style[coord] = `${posPercent}px`;
       /// min position
       if (parseFloat(getComputedStyle(targetThumb)[coord]) <= 0) {
@@ -132,9 +137,9 @@ export default class ViewThumb implements IThumb {
         targetThumb.style[coord] = `${trackSize}px`;
       }
 
-      if (targetThumb === firstThumb && targetThumb[offset] >= targetSecondThumb[offset]) {
+      if (targetThumb === firstThumb && targetThumbCoord >= targetSecondThumbCoord) {
         targetThumb.style[coord] = `${parseFloat(getComputedStyle(targetSecondThumb)[coord])}px`;
-      } else if (targetThumb === secondThumb && targetThumb[offset] <= targetSecondThumb[offset]) {
+      } else if (targetThumb === secondThumb && targetThumbCoord <= targetSecondThumbCoord) {
         targetThumb.style[coord] = `${parseFloat(getComputedStyle(targetSecondThumb)[coord])}px`;
       }
       inner.style[coord] = `${firstThumb[offset] + firstThumb[offseSize] / 2}px`;
@@ -143,10 +148,10 @@ export default class ViewThumb implements IThumb {
         parseFloat(getComputedStyle(firstThumb)[coord])
       }px`;
     }
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+    moveAt(e[clientCoord])
 
     function onMouseMove(e: MouseEvent) {
-      settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+      moveAt(e[clientCoord]);
     }
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
@@ -164,12 +169,11 @@ export default class ViewThumb implements IThumb {
     const track = target.closest('.range-slider') as HTMLElement;
     const thumb = track.querySelector('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const client = isVertical ? e.clientY : e.clientX;
+    const clientCoord = isVertical ? 'clientY' : 'clientX';
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
-    const offsetCoord = settings.type.match('vertical') ? 'offsetTop' : 'offsetLeft';
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
@@ -179,8 +183,9 @@ export default class ViewThumb implements IThumb {
     const stepCount = generalVal / settings.step;
     const stepSize = trackWidth / stepCount;
 
-    function moveAt(pageXorY: number) {
-      const newLeft = pageXorY - track[offsetCoord] - halfThumb;
+    function moveAt(clientXorY: number) {
+      const trackCoord = track.getBoundingClientRect()[coord];
+      const newLeft = clientXorY - trackCoord - halfThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       thumb.style[coord] = `${posPercent}px`;
@@ -190,7 +195,7 @@ export default class ViewThumb implements IThumb {
       }
       inner.style[size] = getComputedStyle(thumb)[coord];
     }
-    settings.type.match('vertical') ? moveAt(client) : moveAt(client);
+    moveAt(e[clientCoord])
 
     this.thumbPos = parseFloat(getComputedStyle(thumb)[coord]);
   }
@@ -200,7 +205,7 @@ export default class ViewThumb implements IThumb {
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
-    const client = isVertical ? 'clentY' : 'clientX';
+    const clientCoord = isVertical ? 'clientY' : 'clientX';
     const thumbs = track.querySelectorAll('.range-slider__thumb');
     const firstThumb = thumbs[0] as HTMLElement;
     const secondThumb = thumbs[1] as HTMLElement;
@@ -212,13 +217,9 @@ export default class ViewThumb implements IThumb {
 
     let firstDifference: number;
     let secondDifference: number;
-    if (isVertical) {
-      firstDifference = thumbs[0].getBoundingClientRect().bottom - e[client];
-      secondDifference = thumbs[1].getBoundingClientRect().top - e[client];
-    } else {
-      firstDifference = thumbs[0].getBoundingClientRect().right - e[client];
-      secondDifference = thumbs[1].getBoundingClientRect().left - e[client];
-    }
+
+    firstDifference = thumbs[0].getBoundingClientRect()[coord] - e[clientCoord];
+    secondDifference = thumbs[1].getBoundingClientRect()[coord] - e[clientCoord];
 
     let movedThumb: HTMLElement;
     if (target.closest('.range-slider__thumb')) return;
@@ -239,19 +240,24 @@ export default class ViewThumb implements IThumb {
     const stepSize = trackSize / stepCount;
 
     function moveAt(pageX: number) {
-      const newLeft = pageX - track[offsetCoord] - halfThumb;
+      const trackCoord = isVertical ? track.getBoundingClientRect().top : track.getBoundingClientRect().left;
+      const firstThumbCoord = isVertical ? firstThumb.getBoundingClientRect().top : firstThumb.getBoundingClientRect().left;
+      const secondThumbCoord = isVertical ? secondThumb.getBoundingClientRect().top : secondThumb.getBoundingClientRect().left;
+
+      const newLeft = pageX - trackCoord - halfThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       movedThumb.style[coord] = `${posPercent}px`;
+
       if (parseFloat(getComputedStyle(movedThumb)[coord]) <= 0) movedThumb.style[coord] = `${0}px`;
       if (parseFloat(getComputedStyle(movedThumb)[coord]) > trackSize) {
         movedThumb.style[coord] = `${trackSize}px`;
       }
-      if (movedThumb === firstThumb && firstThumb[offsetCoord] >= secondThumb[offsetCoord]) {
+      if (movedThumb === firstThumb && firstThumbCoord >= secondThumbCoord) {
         movedThumb.style[coord] = `${parseFloat(getComputedStyle(secondThumb)[coord])}px`;
       } else if (
         movedThumb === secondThumb &&
-        secondThumb[offsetCoord] <= firstThumb[offsetCoord]
+        secondThumbCoord <= firstThumbCoord
       ) {
         movedThumb.style[coord] = `${parseFloat(getComputedStyle(firstThumb)[coord])}px`;
       }
@@ -263,11 +269,9 @@ export default class ViewThumb implements IThumb {
       }px`;
     }
 
-    settings.type.match('vertical') ? moveAt(e.pageY) : moveAt(e.pageX);
+    moveAt(e[clientCoord])
 
     this.thumbPos = parseFloat(getComputedStyle( thumbs[0])[coord]);
     this.secondThumbPos = parseFloat(getComputedStyle( thumbs[1])[coord]);
   }
 }
-
-// module.exports = ViewThumb
