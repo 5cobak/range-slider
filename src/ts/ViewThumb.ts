@@ -29,14 +29,12 @@ export default class ViewThumb implements IThumb {
     const thumb = target.closest('.range-slider__thumb') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
     const clientCoord = isVertical ? 'clientY' : 'clientX';
-    // const pageCoord = isVertical ? 'pageY' : 'pageX';
-    if (!thumb) return;
 
     thumb.ondragstart = () => false
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    generalVal += settings.step - (generalVal % settings.step);
     const halfSizeThumb = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(thumb).height) / 2
       : parseFloat(getComputedStyle(thumb).width) / 2;
@@ -86,7 +84,6 @@ export default class ViewThumb implements IThumb {
     const track = target.closest('.range-slider') as HTMLElement;
     const inner = track.querySelector('.range-slider__inner') as HTMLElement;
     const targetThumb = target.closest('.range-slider__thumb') as HTMLElement;
-    if (!targetThumb) return
 
     let targetSecondThumb: HTMLElement;
     const firstThumb = track.querySelector('.range-slider__thumb_first') as HTMLElement;
@@ -102,7 +99,7 @@ export default class ViewThumb implements IThumb {
     targetThumb.ondragstart = () => false
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    generalVal += settings.step - (generalVal % settings.step);
 
     const halfSizeThumb = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(targetThumb).height) / 2
@@ -125,7 +122,7 @@ export default class ViewThumb implements IThumb {
       const trackCoord = isVertical ? track.getBoundingClientRect().top : track.getBoundingClientRect().left;
       const targetThumbCoord = isVertical ? targetThumb.getBoundingClientRect().top : targetThumb.getBoundingClientRect().left;
       const targetSecondThumbCoord = isVertical ? targetSecondThumb.getBoundingClientRect().top : targetSecondThumb.getBoundingClientRect().left;
-      if (!track) return;
+
       const newLeft = pageXorY - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
@@ -142,6 +139,7 @@ export default class ViewThumb implements IThumb {
       } else if (targetThumb === secondThumb && targetThumbCoord <= targetSecondThumbCoord) {
         targetThumb.style[coord] = `${parseFloat(getComputedStyle(targetSecondThumb)[coord])}px`;
       }
+
       inner.style[coord] = `${firstThumb[offset] + firstThumb[offseSize] / 2}px`;
       inner.style[size] = `${
         parseFloat(getComputedStyle(secondThumb)[coord]) -
@@ -172,7 +170,7 @@ export default class ViewThumb implements IThumb {
     const clientCoord = isVertical ? 'clientY' : 'clientX';
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    generalVal += settings.step - (generalVal % settings.step);
 
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
@@ -193,6 +191,7 @@ export default class ViewThumb implements IThumb {
       if (parseFloat(getComputedStyle(thumb)[coord]) > trackWidth) {
         thumb.style[coord] = `${trackWidth}px`;
       }
+
       inner.style[size] = getComputedStyle(thumb)[coord];
     }
     moveAt(e[clientCoord])
@@ -222,7 +221,7 @@ export default class ViewThumb implements IThumb {
     secondDifference = thumbs[1].getBoundingClientRect()[coord] - e[clientCoord];
 
     let movedThumb: HTMLElement;
-    if (target.closest('.range-slider__thumb')) return;
+    // if (target.closest('.range-slider__thumb')) return;
 
     if (firstDifference < 0) firstDifference = -firstDifference;
     if (secondDifference < 0) secondDifference = -secondDifference;
@@ -231,7 +230,7 @@ export default class ViewThumb implements IThumb {
 
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    generalVal += settings.step - (generalVal % settings.step);
 
     const halfThumb = parseFloat(getComputedStyle(movedThumb)[size]) / 2;
     const thumbSize: number = parseFloat(getComputedStyle(movedThumb)[size]);
