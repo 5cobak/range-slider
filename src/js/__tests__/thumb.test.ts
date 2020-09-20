@@ -15,10 +15,14 @@ describe('test single type thumb', () => {
     max: 10000,
     from: 0,
     to: 10000,
-    step: 100,
+    step: 150,
     scale: true,
     flag: true,
   };
+
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
     const event = new MouseEvent(eventType, {
@@ -34,15 +38,15 @@ describe('test single type thumb', () => {
   // ---------------------- tests
 
   function onMove(e: MouseEvent) {
-    thumb.moveSingleType(e, settings);
+    thumb.moveSingleType(e, settings, generalVal);
   }
 
   function onClick(e: MouseEvent) {
-    thumb.onClickSingleType(e, settings);
+    thumb.onClickSingleType(e, settings, generalVal);
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
+    thumb = new ViewThumb();
     thumb.el.className = 'range-slider__thumb range-slider__thumb-first'
     parent.style.position = 'relative';
     parent.style.width = '400px';
@@ -78,10 +82,14 @@ describe('test single type thumb', () => {
 
   test('thumbPos must be defined and must be a number by mousemove', () => {
     thumb.el.addEventListener('mousedown', onMove);
+    parent.addEventListener('mousedown', onMove);
+
     triggerMouseEvent(thumb.el, 'mousedown');
+    triggerMouseEvent(parent, 'mousedown');
     expect(parseFloat(thumb.el.style.left)).not.toBeUndefined();
     expect(thumb.el.style.left).toMatch(/px/);
     thumb.el.removeEventListener('mousedown', onMove);
+    parent.removeEventListener('mousedown', onMove);
   });
 
   test('thumbPos must be more then 0', () => {
@@ -150,10 +158,13 @@ describe('test double type thumb', () => {
     max: 10000,
     from: 0,
     to: 10000,
-    step: 100,
+    step: 150,
     scale: true,
     flag: true,
   };
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
     const event = new MouseEvent(eventType, {
@@ -170,16 +181,16 @@ describe('test double type thumb', () => {
   // ---------------------- tests
 
   function onMove(e: MouseEvent) {
-    thumb.moveDoubleType(e, settings);
+    thumb.moveDoubleType(e, settings, generalVal);
   }
 
   function onClick(e: MouseEvent) {
-    thumb.onClickDoubleType(e, settings);
+    thumb.onClickDoubleType(e, settings, generalVal);
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    secondThumb = new ViewThumb(settings);
+    thumb = new ViewThumb();
+    secondThumb = new ViewThumb();
     thumb.el.className = 'range-slider__thumb range-slider__thumb_first';
     secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
     parent.style.position = 'relative';
@@ -373,14 +384,17 @@ describe('test double type thumb', () => {
   test('thumbPos must be defined and must be a number by mousemove', () => {
     thumb.el.addEventListener('mousemove', onMove);
     secondThumb.el.addEventListener('mousemove', onMove);
+    parent.addEventListener('mousemove', onMove);
     triggerMouseEvent(thumb.el, 'mousemove');
     triggerMouseEvent(secondThumb.el, 'mousemove');
+    triggerMouseEvent(parent, 'mousemove');
     expect(parseFloat(thumb.el.style.left)).not.toBeUndefined();
     expect(parseFloat(secondThumb.el.style.left)).not.toBeUndefined();
     expect(thumb.el.style.left).toMatch(/px/);
     expect(secondThumb.el.style.left).toMatch(/px/);
     thumb.el.removeEventListener('mousemove', onMove);
     secondThumb.el.removeEventListener('mousemove', onMove);
+    parent.removeEventListener('mousemove', onMove);
   });
 
   test('thumbPos must be more then 0', () => {
@@ -528,7 +542,7 @@ describe('test double type thumb', () => {
 
 // ------------ test single vertical
 
-describe('test single type thumb', () => {
+describe('test single-vertical type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
   parent.className = 'range-slider';
@@ -541,10 +555,13 @@ describe('test single type thumb', () => {
     max: 10000,
     from: 0,
     to: 10000,
-    step: 100,
+    step: 150,
     scale: true,
     flag: true,
   };
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
     const event = new MouseEvent(eventType, {
@@ -560,11 +577,11 @@ describe('test single type thumb', () => {
   // ---------------------- tests
 
   function onMove(e: MouseEvent) {
-    thumb.moveSingleType(e, settings);
+    thumb.moveSingleType(e, settings, generalVal);
   }
 
   function onClick(e: MouseEvent) {
-    thumb.onClickSingleType(e, settings);
+    thumb.onClickSingleType(e, settings, generalVal);
   }
 
   beforeEach(() => {
@@ -578,7 +595,10 @@ describe('test single type thumb', () => {
       scale: true,
       flag: true,
     };
-    thumb = new ViewThumb(settings);
+    let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+    thumb = new ViewThumb();
     thumb.el.className = 'range-slider__thumb range-slider__thumb-first'
     parent.style.position = 'relative';
     parent.style.height = '400px';
@@ -674,7 +694,7 @@ describe('test single type thumb', () => {
 
 // -------------------------------- test double-vertical type
 
-describe('test double type thumb', () => {
+describe('test double-vertical type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
   parent.className = 'range-slider';
@@ -687,10 +707,13 @@ describe('test double type thumb', () => {
     max: 10000,
     from: 0,
     to: 10000,
-    step: 100,
+    step: 150,
     scale: true,
     flag: true,
   };
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
     const event = new MouseEvent(eventType, {
@@ -707,16 +730,16 @@ describe('test double type thumb', () => {
   // ---------------------- tests
 
   function onMove(e: MouseEvent) {
-    thumb.moveDoubleType(e, settings);
+    thumb.moveDoubleType(e, settings, generalVal);
   }
 
   function onClick(e: MouseEvent) {
-    thumb.onClickDoubleType(e, settings);
+    thumb.onClickDoubleType(e, settings, generalVal);
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    secondThumb = new ViewThumb(settings);
+    thumb = new ViewThumb();
+    secondThumb = new ViewThumb();
     thumb.el.className = 'range-slider__thumb range-slider__thumb_first';
     secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
     parent.style.position = 'relative';
@@ -824,6 +847,34 @@ describe('test double type thumb', () => {
     parent.addEventListener('mousedown', onClick);
     triggerMouseEvent(parent, 'mousedown');
     expect(thumb.el.className).toMatch(/first/);
+    parent.removeEventListener('mousedown', onClick);
+  });
+  test('test general val', () => {
+    function triggerMouseEvent(node: Element, eventType: string) {
+      const settings = {
+        type: 'double-vertical',
+        min: 0,
+        max: 10000,
+        from: 0,
+        to: 10000,
+        step: 150,
+        scale: true,
+        flag: true,
+      };
+      let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+      if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+      const event = new MouseEvent(eventType, {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+        clientY: 100,
+      });
+      node.dispatchEvent(event);
+    }
+    parent.addEventListener('mousedown', onClick);
+    triggerMouseEvent(parent, 'mousedown');
+
     parent.removeEventListener('mousedown', onClick);
   });
 

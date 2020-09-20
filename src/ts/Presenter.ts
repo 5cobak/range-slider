@@ -12,7 +12,7 @@ export default class Presenter {
   constructor(settings: IsettingsTypes, $this: HTMLElement) {
     this.settings = settings;
     this.model = new Model(settings);
-    this.view = new View($this, settings);
+    this.view = new View($this, settings, this.model.bank.generalValue);
     this.addObserversInView(settings);
     this.addObserversInModel(settings);
     this.settings = settings;

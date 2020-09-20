@@ -26,10 +26,10 @@ export interface IFlag {
 
 export interface IThumb {
   el: HTMLElement;
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes): void;
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
-  onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void;
-  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void;
+  moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
+  moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
+  onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
+  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   thumbPos: number;
 
 }

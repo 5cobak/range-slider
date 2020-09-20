@@ -22,18 +22,18 @@ export default class ViewSingle implements IViewSingle {
 
   scale: IScale;
 
-  constructor(element: HTMLElement, settings: IsettingsTypes) {
+  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
 
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb(this.settings);
+    this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag(this.settings);
     this.scale = new ViewScale(this.settings);
 
     this.addElements();
-    this.addEvents();
+    this.addEvents(generalVal);
     this.init();
   }
 
@@ -48,17 +48,17 @@ export default class ViewSingle implements IViewSingle {
   }
 
   // add view events
-  addEvents():void {
+  addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
     function onMove(e: MouseEvent) {
-      thumb.moveSingleType(e, settings);
+      thumb.moveSingleType(e, settings, generalVal);
     }
     function onClick(e: MouseEvent) {
-      thumb.onClickSingleType(e, settings);
+      thumb.onClickSingleType(e, settings, generalVal);
     }
-    // this.track.el.addEventListener('mousedown', onMove);
-    this.thumb.el.addEventListener('mousedown', onMove)
+
+    this.track.el.addEventListener('mousedown', onMove);
     this.track.el.addEventListener('mousedown', onClick);
   }
 

@@ -21,7 +21,7 @@ export default class ViewSingleVertical {
 
   scale: IScale;
 
-  constructor(element: HTMLElement, settings: IsettingsTypes) {
+  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.$el = element;
     this.track = new ViewTrack(this.settings);
@@ -30,7 +30,7 @@ export default class ViewSingleVertical {
     this.flag = new ViewFlag(this.settings);
     this.scale = new ViewScale(this.settings);
     this.addElements();
-    this.addEvents();
+    this.addEvents(generalVal);
     this.init();
   }
 
@@ -45,14 +45,14 @@ export default class ViewSingleVertical {
   }
 
   // add view events
-  addEvents():void {
+  addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
     function onMove(e: MouseEvent) {
-      thumb.moveSingleType(e, settings, settings.step);
+      thumb.moveSingleType(e, settings, generalVal);
     }
     function onClick(e: MouseEvent) {
-      thumb.onClickSingleType(e, settings);
+      thumb.onClickSingleType(e, settings, generalVal);
     }
     this.track.el.addEventListener('mousedown', onMove);
     this.track.el.addEventListener('mousedown', onClick);
@@ -73,7 +73,6 @@ export default class ViewSingleVertical {
     let from: number = this.settings.from;
 
     const min = settings.min;
-    const max = settings.max;
     if (min !== 0) {
       from -= min;
     }

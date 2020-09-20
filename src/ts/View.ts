@@ -22,10 +22,10 @@ export default class View implements IView {
 
   thumbPosSecond!: number;
 
-  constructor(element: HTMLElement, settings: IsettingsTypes) {
+  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.el = element;
     this.settings = settings;
-    this.type = this.chooseViewType(settings);
+    this.type = this.chooseViewType(settings, generalVal);
 
     this.thumbSize = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(this.type.thumb.el).height)
@@ -56,21 +56,21 @@ export default class View implements IView {
     this.thumbPos = parseFloat(getComputedStyle(this.type.thumb.el)[coord]);
   }
 
-  chooseViewType(settings: IsettingsTypes): ISubView {
+  chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
     let modelType: ISubView;
     if (settings.type === 'single') {
-      modelType = new ViewSingle(this.el, this.settings);
+      modelType = new ViewSingle(this.el, this.settings, generalVal);
       return modelType;
     }
     if (settings.type === 'double') {
-      modelType = new ViewDouble(this.el, this.settings);
+      modelType = new ViewDouble(this.el, this.settings, generalVal);
       return modelType;
     }
     if (settings.type === 'double-vertical') {
-      modelType = new ViewDoubleVertical(this.el, this.settings);
+      modelType = new ViewDoubleVertical(this.el, this.settings, generalVal);
       return modelType;
     }
-    modelType = new ViewSingleVertical(this.el, this.settings);
+    modelType = new ViewSingleVertical(this.el, this.settings, generalVal);
     return modelType;
   }
 

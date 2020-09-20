@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.73% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/22</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.73% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>16/22</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,33 +103,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -153,21 +153,21 @@ export default class ViewTrack {
   }
 &nbsp;
   setType(type: string):void {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (type === 'single') {
+    if (type === 'single') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_single';
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (type === 'single-vertical') {
-<span class="cstat-no" title="statement not covered" >      this.el.className = '';</span>
-<span class="cstat-no" title="statement not covered" >      this.el.className = 'range-slider range-slider_single range-slider_vertical';</span>
+    if (type === 'single-vertical') {
+      this.el.className = '';
+      this.el.className = 'range-slider range-slider_single range-slider_vertical';
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (type === 'double') {
-<span class="cstat-no" title="statement not covered" >      this.el.className = '';</span>
-<span class="cstat-no" title="statement not covered" >      this.el.className = 'range-slider range-slider_double';</span>
+    if (type === 'double') {
+      this.el.className = '';
+      this.el.className = 'range-slider range-slider_double';
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (type === 'double-vertical') {
-<span class="cstat-no" title="statement not covered" >      this.el.className = '';</span>
-<span class="cstat-no" title="statement not covered" >      this.el.className = 'range-slider range-slider_double range-slider_vertical';</span>
+    if (type === 'double-vertical') {
+      this.el.className = '';
+      this.el.className = 'range-slider range-slider_double range-slider_vertical';
     }
   }
 }
@@ -178,7 +178,7 @@ export default class ViewTrack {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Sep 10 2020 17:11:49 GMT+0400 (Самарское стандартное время)
+                at Sun Sep 20 2020 21:04:22 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="prettify.js"></script>
