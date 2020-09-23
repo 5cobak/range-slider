@@ -59,8 +59,8 @@ export interface IBankView {
 }
 export interface IScale {
   el: HTMLElement;
-  writeMinAndMaxValues(settings: IsettingsTypes): void;
-  setCountOfLines(settings: IsettingsTypes): void;
+  writeMinAndMaxValues(settings: IsettingsTypes, generalVal:number): void;
+  setCountOfLines(settings: IsettingsTypes, generalVal: number): void;
 }
 export interface ISubView {
   track: ITrack;

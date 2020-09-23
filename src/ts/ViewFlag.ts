@@ -1,10 +1,9 @@
-/// <reference path="globals.d.ts" />
-
 import { IsettingsTypes } from './globals';
 
 export default class ViewFlag {
   el: HTMLElement;
-  constructor(settings: IsettingsTypes) {
+
+  constructor() {
     this.el = this.createFlag();
   }
 
@@ -14,20 +13,18 @@ export default class ViewFlag {
     return flag;
   }
 
-  setPosition(settings: IsettingsTypes) {
+  setPosition(settings: IsettingsTypes):void {
     const thumb = this.el.parentElement as HTMLElement;
-    const halfWidthThumb = parseInt(getComputedStyle(thumb).width) / 2;
-    const halfWidthFlag = parseInt(getComputedStyle(this.el).width) / 2;
-    const borderThumbWidth = parseInt(getComputedStyle(thumb).borderWidth);
-    const halfHeightThumb = parseInt(getComputedStyle(thumb).height) / 2;
-    const halfHeightFlag = parseInt(getComputedStyle(this.el).height) / 2;
+    const halfWidthThumb = parseFloat(getComputedStyle(thumb).width) / 2;
+    const halfWidthFlag = parseFloat(getComputedStyle(this.el).width) / 2;
+    const borderThumbWidth = parseFloat(getComputedStyle(thumb).borderWidth);
+    const halfHeightThumb = parseFloat(getComputedStyle(thumb).height) / 2;
+    const halfHeightFlag = parseFloat(getComputedStyle(this.el).height) / 2;
 
-    if (settings.type === 'single' || settings.type === 'double') {
-      this.el.style.left = `${-halfWidthFlag + halfWidthThumb + -borderThumbWidth}px`;
-    } else if (settings.type === 'single-vertical' || settings.type === 'double-vertical') {
-      if (halfHeightFlag > halfHeightThumb) {
-        this.el.style.top = `${-halfHeightFlag + halfHeightThumb - borderThumbWidth}px`;
-      } else this.el.style.top = `${0}px`;
-    }
+    if (!settings.type.match('vertical')) {
+      this.el.style.left = `${-halfWidthFlag + halfWidthThumb - borderThumbWidth}px`;
+    } else if (halfHeightFlag > halfHeightThumb) {
+      this.el.style.top = `${-halfHeightFlag + halfHeightThumb - borderThumbWidth}px`;
+    } else this.el.style.top = `${0}px`;
   }
 }

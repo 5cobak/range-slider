@@ -29,8 +29,8 @@ export default class ViewSingle implements IViewSingle {
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
-    this.flag = new ViewFlag(this.settings);
-    this.scale = new ViewScale(this.settings);
+    this.flag = new ViewFlag();
+    this.scale = new ViewScale(this.settings, generalVal);
 
     this.addElements();
     this.addEvents(generalVal);
@@ -89,7 +89,7 @@ export default class ViewSingle implements IViewSingle {
   }
 
   // inicialize single-view, set position for all required elements of single-view
-  init() :void{
+  init():void{
     this.setThumbPos(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);

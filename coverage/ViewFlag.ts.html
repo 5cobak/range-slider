@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for ViewInner.ts</title>
+    <title>Code coverage report for ViewFlag.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> ViewInner.ts</h1>
+        <h1><a href="index.html">All files</a> ViewFlag.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -89,85 +89,67 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from './globals';
 &nbsp;
-export default class ViewInner {
-  settings: IsettingsTypes;
-&nbsp;
+export default class ViewFlag {
   el: HTMLElement;
 &nbsp;
-  constructor(settings: IsettingsTypes) {
-    this.settings = settings;
-    this.el = this.createInner();
+  constructor() {
+    this.el = this.createFlag();
   }
 &nbsp;
-  createInner():HTMLElement {
-    const inner = document.createElement('div');
-    inner.classList.add('range-slider__inner');
-    return inner;
+  private createFlag() {
+    const flag = document.createElement('span');
+    flag.className = 'range-slider__flag range-slider__flag_first';
+    return flag;
   }
 &nbsp;
   setPosition(settings: IsettingsTypes):void {
-    const track = this.el.parentElement as HTMLElement;
-    const thumbFirst = track.querySelector('.range-slider__thumb_first') as HTMLElement;
-    const thumbSecond = track.querySelector('.range-slider__thumb_second') as HTMLElement;
-    const heightThumb = parseFloat(getComputedStyle(thumbFirst).height);
-    const widthThumb = parseFloat(getComputedStyle(thumbFirst).width);
+    const thumb = this.el.parentElement as HTMLElement;
+    const halfWidthThumb = parseFloat(getComputedStyle(thumb).width) / 2;
+    const halfWidthFlag = parseFloat(getComputedStyle(this.el).width) / 2;
+    const borderThumbWidth = parseFloat(getComputedStyle(thumb).borderWidth);
+    const halfHeightThumb = parseFloat(getComputedStyle(thumb).height) / 2;
+    const halfHeightFlag = parseFloat(getComputedStyle(this.el).height) / 2;
 &nbsp;
-    if (settings.type === 'single') {
-      this.el.style.width = `${parseFloat(getComputedStyle(thumbFirst).left) + widthThumb / 2}px`;
-    } else if (settings.type === 'double') {
-      this.el.style.left = `${thumbFirst.offsetLeft + widthThumb / 2}px`;
-      this.el.style.width = `${thumbSecond.offsetLeft - thumbFirst.offsetLeft}px`;
-    } else if (settings.type === 'single-vertical') {
-      this.el.style.height = `${parseFloat(getComputedStyle(thumbFirst).top) + heightThumb / 2}px`;
-    } else {
-      this.el.style.top = `${thumbFirst.offsetTop + heightThumb / 2}px`;
-      this.el.style.height = `${thumbSecond.offsetTop - thumbFirst.offsetTop}px`;
+    if (settings.type === 'single' || settings.type === 'double') {
+      this.el.style.left = `${-halfWidthFlag + halfWidthThumb - borderThumbWidth}px`;
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (settings.type.match('vertical')) {
+      if (halfHeightFlag &gt; halfHeightThumb) {
+        this.el.style.top = `${-halfHeightFlag + halfHeightThumb - borderThumbWidth}px`;
+      } else this.el.style.top = `${0}px`;
     }
   }
 }
@@ -178,7 +160,7 @@ export default class ViewInner {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Sep 23 2020 17:26:23 GMT+0400 (Самарское стандартное время)
+                at Wed Sep 23 2020 14:45:33 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="prettify.js"></script>

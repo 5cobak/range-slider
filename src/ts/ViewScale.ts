@@ -5,7 +5,7 @@ export default class Scale implements IScale {
 
   el: HTMLElement;
 
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: IsettingsTypes, generalVal:number) {
     this.settings = settings;
     this.el = this.createElement();
   }
@@ -16,11 +16,7 @@ export default class Scale implements IScale {
     return scale;
   }
 
-  writeMinAndMaxValues(settings: IsettingsTypes):void {
-    let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-
+  writeMinAndMaxValues(settings: IsettingsTypes, generalVal: number):void {
     const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
     const min = document.createElement('div');
 

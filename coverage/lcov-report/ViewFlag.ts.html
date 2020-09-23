@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/20</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/20</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -87,49 +87,42 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/// &lt;reference path="globals.d.ts" /&gt;
-&nbsp;
-import { IsettingsTypes } from './globals';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from './globals';
 &nbsp;
 export default class ViewFlag {
   el: HTMLElement;
-  constructor(settings: IsettingsTypes) {
+&nbsp;
+  constructor() {
     this.el = this.createFlag();
   }
 &nbsp;
@@ -139,21 +132,19 @@ export default class ViewFlag {
     return flag;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  setPosition(</span>settings: IsettingsTypes) {
-    const thumb = <span class="cstat-no" title="statement not covered" >this.el.parentElement as HTMLElement;</span>
-    const halfWidthThumb = <span class="cstat-no" title="statement not covered" >parseInt(getComputedStyle(thumb).width) / 2;</span>
-    const halfWidthFlag = <span class="cstat-no" title="statement not covered" >parseInt(getComputedStyle(this.el).width) / 2;</span>
-    const borderThumbWidth = <span class="cstat-no" title="statement not covered" >parseInt(getComputedStyle(thumb).borderWidth);</span>
-    const halfHeightThumb = <span class="cstat-no" title="statement not covered" >parseInt(getComputedStyle(thumb).height) / 2;</span>
-    const halfHeightFlag = <span class="cstat-no" title="statement not covered" >parseInt(getComputedStyle(this.el).height) / 2;</span>
+  setPosition(settings: IsettingsTypes):void {
+    const thumb = this.el.parentElement as HTMLElement;
+    const halfWidthThumb = parseFloat(getComputedStyle(thumb).width) / 2;
+    const halfWidthFlag = parseFloat(getComputedStyle(this.el).width) / 2;
+    const borderThumbWidth = parseFloat(getComputedStyle(thumb).borderWidth);
+    const halfHeightThumb = parseFloat(getComputedStyle(thumb).height) / 2;
+    const halfHeightFlag = parseFloat(getComputedStyle(this.el).height) / 2;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (settings.type === 'single' || settings.type === 'double') {</span>
-<span class="cstat-no" title="statement not covered" >      this.el.style.left = `${-halfWidthFlag + halfWidthThumb + -borderThumbWidth}px`;</span>
-    } else <span class="cstat-no" title="statement not covered" >if (settings.type === 'single-vertical' || settings.type === 'double-vertical') {</span>
-<span class="cstat-no" title="statement not covered" >      if (halfHeightFlag &gt; halfHeightThumb) {</span>
-<span class="cstat-no" title="statement not covered" >        this.el.style.top = `${-halfHeightFlag + halfHeightThumb - borderThumbWidth}px`;</span>
-      } else <span class="cstat-no" title="statement not covered" >this.el.style.top = `${0}px`;</span>
-    }
+    if (!settings.type.match('vertical')) {
+      this.el.style.left = `${-halfWidthFlag + halfWidthThumb - borderThumbWidth}px`;
+    } else if (halfHeightFlag &gt; halfHeightThumb) {
+      this.el.style.top = `${-halfHeightFlag + halfHeightThumb - borderThumbWidth}px`;
+    } else this.el.style.top = `${0}px`;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -163,7 +154,7 @@ export default class ViewFlag {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Sep 10 2020 17:11:49 GMT+0400 (Самарское стандартное время)
+                at Wed Sep 23 2020 17:26:23 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="prettify.js"></script>
