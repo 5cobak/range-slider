@@ -59,7 +59,9 @@ export interface IBankView {
 }
 export interface IScale {
   el: HTMLElement;
-  writeMinAndMaxValues(settings: IsettingsTypes, generalVal:number): void;
+  smallLine: HTMLElement;
+  bigLine: HTMLElement;
+  writeMinAndMaxValues(settings: IsettingsTypes): void;
   setCountOfLines(settings: IsettingsTypes, generalVal: number): void;
 }
 export interface ISubView {
@@ -74,8 +76,7 @@ export interface IModel {
   modelChangedSubject: IObserver;
   bank: IBankModel;
   setCurrentValue(pos: number, stepSize: number, step: number): number;
-  // getGeneralValue(settings: IsettingsTypes): number;
-  // validateStep(settings: IsettingsTypes): void;
+
 }
 export interface IView {
   viewChangedSubject: IObserver;

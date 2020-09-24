@@ -29,21 +29,21 @@ export default class ViewDouble {
     this.settings = settings;
     this.$el = element;
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb(this.settings);
+    this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
-    this.flag = new ViewFlag(this.settings);
-    this.secondFlag = new ViewFlag(this.settings);
+    this.flag = new ViewFlag();
+    this.secondFlag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
     this.addElements();
     this.addEvents(generalVal);
-    this.init();
+    this.init(generalVal);
   }
 
   // add second thumb
 
   addSecondThumb():void {
     // const $this = this;
-    this.secondThumb = new ViewThumb(this.settings);
+    this.secondThumb = new ViewThumb();
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
     this.secondThumb.el.classList.add('range-slider__thumb_second');
   }
@@ -107,7 +107,7 @@ export default class ViewDouble {
   }
 
   // inicialize view, set position for elements
-  init():void {
+  init(generalVal:number):void {
     this.setThumbPos(this.settings);
     if (this.settings.flag) {
       this.flag.setPosition(this.settings);
@@ -116,7 +116,7 @@ export default class ViewDouble {
 
     this.inner.setPosition(this.settings);
     if (this.settings.scale) {
-      this.scale.setCountOfLines(this.settings);
+      this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
     }
   }

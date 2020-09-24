@@ -30,11 +30,11 @@ export default class ViewSingle implements IViewSingle {
     this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
-    this.scale = new ViewScale(this.settings, generalVal);
+    this.scale = new ViewScale(this.settings);
 
     this.addElements();
     this.addEvents(generalVal);
-    this.init();
+    this.init(generalVal);
   }
 
   // add second thumb, if it needed
@@ -62,14 +62,10 @@ export default class ViewSingle implements IViewSingle {
     this.track.el.addEventListener('mousedown', onClick);
   }
 
-  private setThumbPos(settings: IsettingsTypes) {
+  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 
-    let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-
-    if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el)[size]);
     const trackSize = parseFloat(getComputedStyle(this.track.el)[size]) - thumbSize;
     const stepCount = generalVal / settings.step;
@@ -78,9 +74,7 @@ export default class ViewSingle implements IViewSingle {
 
     const min = settings.min;
 
-    if (min !== 0) {
-      from -= min;
-    }
+    from -= min;
 
     from = stepSize * Math.round(from / this.settings.step);
 
@@ -89,12 +83,12 @@ export default class ViewSingle implements IViewSingle {
   }
 
   // inicialize single-view, set position for all required elements of single-view
-  init():void{
-    this.setThumbPos(this.settings);
+  private init(generalVal: number):void{
+    this.setThumbPos(this.settings, generalVal);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
     if (this.settings.scale) {
-      this.scale.setCountOfLines(this.settings);
+      this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
     }
   }

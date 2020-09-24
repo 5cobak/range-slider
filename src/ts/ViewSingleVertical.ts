@@ -25,13 +25,13 @@ export default class ViewSingleVertical {
     this.settings = settings;
     this.$el = element;
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb(this.settings);
+    this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
-    this.flag = new ViewFlag(this.settings);
+    this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
     this.addElements();
     this.addEvents(generalVal);
-    this.init();
+    this.init(generalVal);
   }
 
   // add second thumb, if it needed
@@ -83,12 +83,12 @@ export default class ViewSingleVertical {
   }
 
   // inicialize view, set position for elements
-  init():void {
+  init(generalVal:number):void {
     this.setThumbPosOnInit(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     this.inner.setPosition(this.settings);
     if (this.settings.scale) {
-      this.scale.setCountOfLines(this.settings);
+      this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
     }
   }
