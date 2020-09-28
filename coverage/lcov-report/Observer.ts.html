@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for ViewInner.ts</title>
+    <title>Code coverage report for Observer.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> ViewInner.ts</h1>
+        <h1><a href="index.html">All files</a> Observer.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>26/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>5/5</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/24</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -95,85 +95,79 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
-<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from './globals';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default class MakeObservableSubject {
+  private observers: Array&lt;()=&gt;void&gt;;
 &nbsp;
-export default class ViewInner {
-  settings: IsettingsTypes;
-&nbsp;
-  el: HTMLElement;
-&nbsp;
-  constructor(settings: IsettingsTypes) {
-    this.settings = settings;
-    this.el = this.createInner();
+  constructor() {
+    this.observers = [];
   }
 &nbsp;
-  private createInner():HTMLElement {
-    const inner = document.createElement('div');
-    inner.classList.add('range-slider__inner');
-    return inner;
+  addObservers(o: ()=&gt;void):void {
+    for (let i = 0, ilen = this.observers.length; i &lt; ilen; i += 1) {
+      const observer = this.observers[i];
+      if (observer === o) {
+        throw new Error('observer already in the list');
+      }
+    }
+    this.observers.push(o);
   }
 &nbsp;
-  setPosition(settings: IsettingsTypes):void {
-    const track = this.el.parentElement as HTMLElement;
-    const thumbFirst = track.querySelector('.range-slider__thumb_first') as HTMLElement;
+  removeObserver(o: ()=&gt;void): void {
+    for (let i = 0, ilen = this.observers.length; i &lt; ilen; i += 1) {
+      const observer = this.observers[i];
+      if (observer === o) {
+        this.observers.splice(i, 1);
+        return;
+      }
+    }
 &nbsp;
-    const heightThumb = parseFloat(getComputedStyle(thumbFirst).height);
-    const widthThumb = parseFloat(getComputedStyle(thumbFirst).width);
+    throw new Error('could not find observer in list of observers');
+  }
 &nbsp;
-    if (settings.type === 'single') {
-      this.el.style.width = `${parseFloat(getComputedStyle(thumbFirst).left) + widthThumb / 2}px`;
-    } else if (settings.type === 'double') {
-      const thumbSecond = track.querySelector('.range-slider__thumb_second') as HTMLElement;
-      this.el.style.left = `${thumbFirst.offsetLeft + widthThumb / 2}px`;
-      this.el.style.width = `${thumbSecond.offsetLeft - thumbFirst.offsetLeft}px`;
-    } else if (settings.type === 'single-vertical') {
-      this.el.style.height = `${parseFloat(getComputedStyle(thumbFirst).top) + heightThumb / 2}px`;
-    } else {
-      const thumbSecond = track.querySelector('.range-slider__thumb_second') as HTMLElement;
-      this.el.style.top = `${thumbFirst.offsetTop + heightThumb / 2}px`;
-      this.el.style.height = `${thumbSecond.offsetTop - thumbFirst.offsetTop}px`;
+  notifyObservers(): void {
+    // Make a copy of observer list in case the list
+    // is mutated during the notifications.
+    const observersSnapshot = this.observers.slice(0);
+    for (let i = 0, ilen = observersSnapshot.length; i &lt; ilen; i += 1) {
+      observersSnapshot[i]();
     }
   }
 }
@@ -184,7 +178,7 @@ export default class ViewInner {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Sep 28 2020 20:39:45 GMT+0400 (Самарское стандартное время)
+                at Mon Sep 28 2020 21:02:00 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="prettify.js"></script>

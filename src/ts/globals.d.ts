@@ -79,6 +79,7 @@ export interface IModel {
 
 }
 export interface IView {
+  el: HTMLElement
   viewChangedSubject: IObserver;
   type: ISubView;
   trackSize: number;

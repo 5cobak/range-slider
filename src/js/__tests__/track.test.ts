@@ -12,8 +12,8 @@ describe('test ViewTrack', () => {
     scale: true,
     flag: true,
   };
-  let track = new ViewTrack(settings);
-  test('single', () => {
+  let track: ITrack = new ViewTrack(settings);
+  test('single type track must be defined and match string single in class', () => {
     expect(track.el).not.toBeUndefined();
     expect(track.el.className).toMatch(/single/);
   })
@@ -32,7 +32,7 @@ describe('test ViewTrack', () => {
     expect(track.el.className).toMatch(/vertical/);
     expect(track.el.className).toMatch(/single/);
   })
-  test('double', () => {
+  test('double type track must be defined and match string single in class', () => {
     const settings = {
       type: 'double',
       min: 0,
@@ -46,7 +46,7 @@ describe('test ViewTrack', () => {
     track = new ViewTrack(settings);
     expect(track.el.className).toMatch(/double/);
   })
-  test('double-vertical', () => {
+  test('double-vertical type track must be defined and match string single in class', () => {
     const settings = {
       type: 'double-vertical',
       min: 0,

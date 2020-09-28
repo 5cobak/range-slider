@@ -40,7 +40,7 @@ export default class ViewSingle implements IViewSingle {
   // add second thumb, if it needed
 
   // add all elements in view
-  addElements():void {
+  private addElements():void {
     this.el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
@@ -48,7 +48,7 @@ export default class ViewSingle implements IViewSingle {
   }
 
   // add view events
-  addEvents(generalVal: number):void {
+  private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
     function onMove(e: MouseEvent) {
