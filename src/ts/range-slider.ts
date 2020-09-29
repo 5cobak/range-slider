@@ -16,7 +16,7 @@ import { IsettingsTypes, IMethods } from './globals';
           min: 0,
           max: 1000,
           from: 0,
-          // to: 900,
+          to: 1000,
           flag: true,
           step: 1,
           scale: true,

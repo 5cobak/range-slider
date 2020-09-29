@@ -63,11 +63,8 @@ export default class ViewSingle implements IViewSingle {
   }
 
   private setThumbPos(settings: IsettingsTypes, generalVal: number) {
-    const coord = settings.type.match('vertical') ? 'top' : 'left';
-    const size = settings.type.match('vertical') ? 'height' : 'width';
-
-    const thumbSize = parseFloat(getComputedStyle(this.thumb.el)[size]);
-    const trackSize = parseFloat(getComputedStyle(this.track.el)[size]) - thumbSize;
+    const thumbSize = parseFloat(getComputedStyle(this.thumb.el).width);
+    const trackSize = parseFloat(getComputedStyle(this.track.el).width) - thumbSize;
     const stepCount = generalVal / settings.step;
     const stepSize = +(trackSize / stepCount);
     let from: number = this.settings.from as number;
@@ -78,7 +75,7 @@ export default class ViewSingle implements IViewSingle {
 
     from = stepSize * Math.round(from / this.settings.step);
 
-    this.thumb.el.style[coord] = `${from}px`;
+    this.thumb.el.style.left = `${from}px`;
     this.inner.setPosition(settings);
   }
 

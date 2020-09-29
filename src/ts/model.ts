@@ -14,16 +14,18 @@ export default class Model implements IModel {
     this.bank = {
       generalValue: 0,
     };
-    this.bank.fromValue = this.settings.from ? this.settings.from : this.settings.min;
-    this.bank.toValue = this.settings.to ? this.settings.to : this.settings.max;
-    this.getGeneralValue(settings);
-    this.validate()
+    this.bank.from = this.settings.from;
+    this.bank.to = this.settings.to;
+    this.setGeneralValue(settings);
+    this.validate();
   }
 
-  private getGeneralValue(settings: IsettingsTypes) {
+  private setGeneralValue(settings: IsettingsTypes) {
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+
     this.bank.generalValue = generalVal
   }
 
