@@ -4,6 +4,7 @@ import './Flag.test'
 import './Inner.test'
 import './Scale.test'
 import './Track.test'
+import './Observer.test'
 
 describe('test ViewTrack', () => {
   const settings = {

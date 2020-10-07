@@ -13,9 +13,9 @@ export default class Model implements IModel {
     this.modelChangedSubject = new MakeObservableSubject();
     this.bank = {
       generalValue: 0,
+      from: this.settings.from,
+      to: this.settings.to,
     };
-    this.bank.from = this.settings.from;
-    this.bank.to = this.settings.to;
     this.setGeneralValue(settings);
     this.validate();
   }
@@ -26,14 +26,16 @@ export default class Model implements IModel {
 
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
-    this.bank.generalValue = generalVal
+    this.bank.generalValue = generalVal;
+    this.modelChangedSubject.notifyObservers();
   }
 
-  setCurrentValue(pos: number, stepSize: number, step: number): number {
-    let currentVal = +this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
+  public setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void {
+    let val = +this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
 
-    if (currentVal > this.settings.max) currentVal = this.settings.max;
-    return currentVal;
+    if (val > this.settings.max) val = this.settings.max;
+
+    this.bank[currentVal] = val;
   }
 
   private validate() {

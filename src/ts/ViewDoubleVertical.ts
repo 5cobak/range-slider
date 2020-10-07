@@ -4,7 +4,8 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver } from './globals';
+import MakeObservableSubject from './Observer';
 
 export default class ViewDoubleVertical {
   settings: IsettingsTypes;
@@ -25,6 +26,12 @@ export default class ViewDoubleVertical {
 
   scale: IScale;
 
+  thumbPos!: number;
+
+  secondThumbPos!: number;
+
+  changedSubject: IObserver
+
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
@@ -34,9 +41,15 @@ export default class ViewDoubleVertical {
     this.flag = new ViewFlag();
     this.secondFlag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
+    this.changedSubject = new MakeObservableSubject()
     this.addElements();
     this.addEvents(generalVal);
     this.init(generalVal);
+    this.thumb.thumbChangedSubject.addObservers(() => {
+      this.thumbPos = this.thumb.thumbPos;
+      this.secondThumbPos = this.thumb.secondThumbPos;
+      this.changedSubject.notifyObservers();
+    })
   }
 
   private setThumbPosOnInit(settings: IsettingsTypes, generalVal: number) {
@@ -57,6 +70,7 @@ export default class ViewDoubleVertical {
 
     this.thumb.el.style.top = `${from}px`;
     this.secondThumb.el.style.top = `${to}px`;
+    this.changedSubject.notifyObservers();
   }
 
   // add second thumb

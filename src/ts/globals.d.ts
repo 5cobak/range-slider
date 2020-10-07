@@ -1,4 +1,5 @@
 export interface IsettingsTypes {
+  [x: string]: number | string | boolean | undefined;
   min: number;
   max: number;
   type: string;
@@ -23,14 +24,21 @@ export interface IFlag {
   el: HTMLElement;
   setPosition(settings: IsettingsTypes): void;
 }
+export interface IObserver {
+  addObservers(o: ()=>void): void;
+  notifyObservers(): void;
+  removeObserver(o: ()=>void): void;
+}
 
 export interface IThumb {
+  [x: string]: any;
   el: HTMLElement;
   moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
-  thumbPos: number;
+  positions: {to: number, from: number}
+  changedSubject: IObserver;
 
 }
 
@@ -38,24 +46,18 @@ export interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;
 }
 
-export interface IObserver {
-  addObservers(o: ()=>void): void;
-  notifyObservers(): void;
-  removeObserver(o: ()=>void): void;
-}
 export interface IBankModel {
-  from?: number;
-  to?: number;
+  [x: string]: number | undefined;
+  from: number ;
+  to?: number ;
   generalValue: number;
-  fromValue?: number;
-  toValue?: number;
+
 }
 export interface IBankView {
   trackSize: number;
   thumbSize: number;
   thumbPos: number;
   thumbPosSecond?: number;
-  setSecondThumbPos?(settings: IsettingsTypes): number;
 }
 export interface IScale {
   el: HTMLElement;
@@ -71,20 +73,22 @@ export interface ISubView {
   scale: IScale;
   flag: IFlag;
   secondFlag?: IFlag;
+  changedSubject: IObserver;
+  positions: {to: number, from: number}
+  setThumbPos(settings: IsettingsTypes, generalVal: number, position: string): void;
 }
 export interface IModel {
   modelChangedSubject: IObserver;
   bank: IBankModel;
-  setCurrentValue(pos: number, stepSize: number, step: number): number;
-
+  setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void;
 }
 export interface IView {
   el: HTMLElement
-  viewChangedSubject: IObserver;
+  changedSubject: IObserver;
   type: ISubView;
   trackSize: number;
-  thumbPos: number;
-  thumbPosSecond: number
+  positions: {to: number, from: number}
+
 }
 
 export interface IViewSingle {
@@ -104,4 +108,10 @@ export interface IInput {
   title: string;
   class: string;
   attr: IAttr;
+}
+
+export interface Iposition {
+  [x: string]: number;
+  from: number;
+  to: number;
 }

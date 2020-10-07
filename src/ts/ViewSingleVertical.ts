@@ -4,7 +4,8 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver } from './globals';
+import MakeObservableSubject from './Observer';
 // VIEW class
 export default class ViewSingleVertical {
   settings: IsettingsTypes;
@@ -21,17 +22,27 @@ export default class ViewSingleVertical {
 
   scale: IScale;
 
+  thumbPos!: number;
+
+  changedSubject!: IObserver
+
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
+    this.thumbPos = 0;
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
+    this.changedSubject = new MakeObservableSubject();
     this.addElements();
     this.addEvents(generalVal);
     this.init(generalVal);
+    this.thumb.thumbChangedSubject.addObservers(() => {
+      this.thumbPos = this.thumb.thumbPos;
+      this.changedSubject.notifyObservers();
+    })
   }
 
   // add second thumb, if it needed
@@ -72,6 +83,7 @@ export default class ViewSingleVertical {
     from = stepSize * Math.round(from / this.settings.step);
 
     this.thumb.el.style.top = `${from}px`;
+    this.changedSubject.notifyObservers();
   }
 
   // inicialize view, set position for elements

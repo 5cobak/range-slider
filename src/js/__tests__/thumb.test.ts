@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IThumb } from '../../ts/globals';
 import ViewThumb from '../../ts/ViewThumb';
+import './Observer.test'
 
 describe('test single type thumb', () => {
   const parent = document.createElement('div');

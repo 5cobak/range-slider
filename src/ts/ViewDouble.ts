@@ -4,7 +4,8 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver } from './globals';
+import MakeObservableSubject from './Observer';
 
 export default class ViewDouble {
   settings: IsettingsTypes;
@@ -25,53 +26,32 @@ export default class ViewDouble {
 
   scale: IScale;
 
+  changedSubject: IObserver
+
+  positions: {from: number, to: number}
+
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
+    this.positions = { from: 0, to: 0 }
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.secondFlag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
+    this.changedSubject = new MakeObservableSubject();
+
+    this.thumb.changedSubject.addObservers(() => {
+      this.positions.from = this.thumb.positions.from;
+      this.positions.to = this.thumb.positions.to;
+      this.changedSubject.notifyObservers();
+    });
+
     this.addElements();
+
     this.addEvents(generalVal);
     this.init(generalVal);
-  }
-
-  // add second thumb
-
-  private addSecondThumb():void {
-    // const $this = this;
-    this.secondThumb = new ViewThumb();
-    this.secondThumb.el.classList.remove('range-slider__thumb_first');
-    this.secondThumb.el.classList.add('range-slider__thumb_second');
-  }
-
-  // add all elements in view
-  private addElements():void {
-    this.el.append(this.track.el);
-    this.track.el.append(this.inner.el, this.thumb.el);
-    if (this.settings.flag) this.thumb.el.append(this.flag.el);
-
-    this.addSecondThumb();
-    this.track.el.append(this.secondThumb.el);
-    if (this.settings.flag) this.secondThumb.el.append(this.secondFlag.el);
-    if (this.settings.scale) this.track.el.append(this.scale.el);
-  }
-
-  // add view events
-  private addEvents(generalVal: number):void {
-    const thumb = this.thumb;
-    const settings = this.settings;
-    function onMove(e:MouseEvent) {
-      thumb.moveDoubleType(e, settings, generalVal);
-    }
-    function onClick(e:MouseEvent) {
-      thumb.onClickDoubleType(e, settings, generalVal);
-    }
-    this.track.el.addEventListener('mousedown', onMove);
-    this.track.el.addEventListener('mousedown', onClick);
   }
 
   private setThumbPos(settings: IsettingsTypes, generalVal: number) {
@@ -92,6 +72,45 @@ export default class ViewDouble {
 
     this.thumb.el.style.left = `${from}px`;
     this.secondThumb.el.style.left = `${to}px`;
+
+    this.positions.from = from;
+    this.positions.to = to;
+    this.changedSubject.notifyObservers();
+  }
+
+  // add second thumb
+
+  private addSecondThumb():void {
+    this.secondThumb = new ViewThumb();
+    this.secondThumb.el.classList.remove('range-slider__thumb_first');
+    this.secondThumb.el.classList.add('range-slider__thumb_second');
+  }
+
+  // add all elements in view
+  private addElements():void {
+    this.el.append(this.track.el);
+    this.track.el.append(this.inner.el, this.thumb.el);
+    if (this.settings.flag) this.thumb.el.append(this.flag.el);
+
+    this.addSecondThumb();
+
+    this.track.el.append(this.secondThumb.el);
+    if (this.settings.flag) this.secondThumb.el.append(this.secondFlag.el);
+    if (this.settings.scale) this.track.el.append(this.scale.el);
+  }
+
+  // add view events
+  private addEvents(generalVal: number):void {
+    const thumb = this.thumb;
+    const settings = this.settings;
+    function onMove(e:MouseEvent) {
+      thumb.moveDoubleType(e, settings, generalVal);
+    }
+    function onClick(e:MouseEvent) {
+      thumb.onClickDoubleType(e, settings, generalVal);
+    }
+    this.track.el.addEventListener('mousedown', onMove);
+    this.track.el.addEventListener('mousedown', onClick);
   }
 
   // inicialize view, set position for elements
@@ -107,5 +126,6 @@ export default class ViewDouble {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
     }
+    this.changedSubject.notifyObservers();
   }
 }

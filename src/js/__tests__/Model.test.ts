@@ -26,15 +26,20 @@ describe('test model', () => {
   test('test model must be defined', () => {
     expect(model.bank.generalValue).toBe(10000);
   })
-  test('test method setCurrentValue', () => {
-    expect(model.setCurrentValue(144, 10, 100)).toBe(1400);
-  })
-  test('test bank.from must be settings.from and bank.to must be settings.to', () => {
-    expect(model.bank.from).toBe(settings.from);
-    expect(model.bank.to).toBe(settings.to);
+  test('test model.bank.from and model.bank.to', () => {
+    model.setFrom(144, 10, 100);
+    expect(model.bank.from).toBe(1400);
+    model.setTo(144, 10, 100);
+    expect(model.bank.to).toBe(1400);
   })
   test('test generalVal property', () => {
     expect(model.bank.generalValue).toBe(generalVal);
+  })
+  test('test from and to must be less or equal settings.max', () => {
+    model.setFrom(1440, 10, 100);
+    expect(model.bank.from).toBeLessThanOrEqual(settings.max);
+    model.setTo(1440, 10, 100);
+    expect(model.bank.to).toBeLessThanOrEqual(settings.max);
   })
 })
 
@@ -62,9 +67,9 @@ describe('test model with non-multiple step', () => {
     expect(firstGeneralVal % settings.step).toBeTruthy();
   })
 
-  test('test currentVal if it more then max value', () => {
-    const currentVal = model.setCurrentValue(1440, 10, 100);
-    expect(currentVal).toBeLessThanOrEqual(settings.max);
+  test('test from if it more then max value', () => {
+    model.setTo(1440, 10, 100);
+    expect(model.bank.from).toBeLessThanOrEqual(settings.max);
   })
   test('test from must be equal or less then max', () => {
     expect(model.settings.from).toBeLessThanOrEqual(settings.max);

@@ -1,15 +1,21 @@
 /* eslint-disable no-unused-expressions */
-import { IsettingsTypes, IThumb } from './globals';
+import { IObserver, IsettingsTypes, IThumb, Iposition } from './globals';
+import MakeObservableSubject from './Observer';
 
 export default class ViewThumb implements IThumb {
   el!: HTMLElement;
 
-  thumbPos!: number;
+  positions!: Iposition;
 
-  secondThumbPos!: number;
+  changedSubject!: IObserver;
 
   constructor() {
     this.createElem();
+    this.changedSubject = new MakeObservableSubject();
+    this.positions = {
+      to: 0,
+      from: 0,
+    }
   }
 
   private createElem():void {
@@ -20,6 +26,8 @@ export default class ViewThumb implements IThumb {
 
   // -------------------------------------------------------------  events for X type range
   moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+    const changedSubject = this.changedSubject;
+    const positions = this.positions;
     const target = e.target as HTMLElement;
     const isVertical = settings.type.match('vertical');
     const track = target.closest('.range-slider') as HTMLElement;
@@ -58,6 +66,9 @@ export default class ViewThumb implements IThumb {
       }
 
       inner.style[size] = `${parseFloat(getComputedStyle(thumb)[coord]) + halfSizeThumb}px`;
+      positions.from = parseFloat(thumb.style[coord]);
+
+      changedSubject.notifyObservers();
     }
     moveAt(e[clientCoord])
 
@@ -72,6 +83,8 @@ export default class ViewThumb implements IThumb {
   }
 
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+    const position = this.positions;
+    const changedObject = this.changedSubject;
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -136,6 +149,12 @@ export default class ViewThumb implements IThumb {
         parseFloat(getComputedStyle(secondThumb)[coord]) -
         parseFloat(getComputedStyle(firstThumb)[coord])
       }px`;
+      position.from = parseFloat(firstThumb.style[coord])
+      position.to = parseFloat(secondThumb.style[coord]);
+      console.log(position.from);
+      console.log(position.to);
+
+      changedObject.notifyObservers();
     }
     moveAt(e[clientCoord])
 
@@ -147,9 +166,13 @@ export default class ViewThumb implements IThumb {
     }
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', removeEventListeners);
+    // this.positions.from = parseFloat(firstThumb.style[coord]);
+    // this.positions.to = parseFloat(secondThumb.style[coord]);
+    // this.changedSubject.notifyObservers();
   }
 
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+    const changedSubject = this.changedSubject;
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -178,11 +201,16 @@ export default class ViewThumb implements IThumb {
       }
 
       inner.style[size] = getComputedStyle(thumb)[coord];
+      changedSubject.notifyObservers();
     }
     moveAt(e[clientCoord])
+    // this.thumbPos = parseFloat(thumb.style[coord]);
+    // this.thumbChangedSubject.notifyObservers();
   }
 
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+    const position = this.positions;
+    const changedObject = this.changedSubject;
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -204,7 +232,6 @@ export default class ViewThumb implements IThumb {
     secondDifference = thumbs[1].getBoundingClientRect()[coord] - e[clientCoord];
 
     let movedThumb: HTMLElement;
-    // if (target.closest('.range-slider__thumb')) return;
 
     if (firstDifference < 0) firstDifference = -firstDifference;
     if (secondDifference < 0) secondDifference = -secondDifference;
@@ -245,8 +272,15 @@ export default class ViewThumb implements IThumb {
         parseFloat(getComputedStyle(secondThumb)[coord]) -
         parseFloat(getComputedStyle(firstThumb)[coord])
       }px`;
+
+      position.from = parseFloat(firstThumb.style[coord])
+      position.to = parseFloat(secondThumb.style[coord])
+      changedObject.notifyObservers();
     }
 
     moveAt(e[clientCoord])
+    // this.thumbPos = parseFloat(firstThumb.style[coord]);
+    // this.secondThumbPos = parseFloat(secondThumb.style[coord]);
+    // this.thumbChangedSubject.notifyObservers();
   }
 }

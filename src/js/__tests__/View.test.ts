@@ -38,8 +38,8 @@ describe('test main view class with type double ', () => {
     expect(view).not.toBeUndefined();
     expect(view.el).toBeInstanceOf(HTMLElement)
   })
-  test('test type must be ViewDouble', () => {
-    expect(view.type).toEqual(new ViewDouble(parent, settings, generalVal))
+  test('test type must be instace of ViewDouble', () => {
+    expect(view.type).toBeInstanceOf(ViewDouble);
   })
 })
 
@@ -65,8 +65,8 @@ describe('test main view class with type single ', () => {
     expect(view).not.toBeUndefined();
     expect(view.el).toBeInstanceOf(HTMLElement)
   })
-  test('test type must be ViewDouble', () => {
-    expect(view.type).toEqual(new ViewSingle(parent, settings, generalVal))
+  test('test type must be instance of ViewSingle', () => {
+    expect(view.type).toBeInstanceOf(ViewSingle);
   })
 })
 
@@ -92,8 +92,8 @@ describe('test main view class with type single ', () => {
     expect(view).not.toBeUndefined();
     expect(view.el).toBeInstanceOf(HTMLElement)
   })
-  test('test type must be ViewDouble', () => {
-    expect(view.type).toEqual(new ViewDoubleVertical(parent, settings, generalVal))
+  test('test type must be instance of ViewDouble', () => {
+    expect(view.type).toBeInstanceOf(ViewDoubleVertical)
   })
 })
 
@@ -119,7 +119,7 @@ describe('test main view class with type single ', () => {
     expect(view).not.toBeUndefined();
     expect(view.el).toBeInstanceOf(HTMLElement)
   })
-  test('test type must be ViewDouble', () => {
-    expect(view.type).toEqual(new ViewSingleVertical(parent, settings, generalVal))
+  test('test type must be equal class ViewSingleVertical', () => {
+    expect(view.type).toBeInstanceOf(ViewSingleVertical)
   })
 })

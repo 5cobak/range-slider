@@ -1,6 +1,4 @@
 import Presenter from '../../ts/Presenter'
-import View from '../../ts/View'
-import Model from '../../ts/Model'
 import { IsettingsTypes } from '../../ts/globals';
 
 import './Thumb.test'
@@ -29,6 +27,11 @@ describe('test class Presenter with single type', () => {
       step: 1,
       scale: true,
     }
+
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   const presenter = new Presenter(settings, parent );
 
@@ -69,7 +72,10 @@ describe('test class Presenter with double type', () => {
       step: 1,
       scale: true,
     }
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
   const presenter = new Presenter(settings, parent );
 
   test('test presenter must be defined', () => {
@@ -89,7 +95,33 @@ describe('test class Presenter with double-vertical type', () => {
       step: 1,
       scale: true,
     }
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
+  const presenter = new Presenter(settings, parent );
+
+  test('test presenter must be defined', () => {
+    expect(presenter).not.toBeUndefined();
+  })
+})
+describe('test class Presenter without', () => {
+  const parent = document.createElement('div');
+  const settings: IsettingsTypes =
+    {
+      type: 'double-vertical',
+      min: 0,
+      max: 1000,
+      from: 0,
+      to: 1000,
+      flag: true,
+      step: 1,
+      scale: true,
+    }
+  let generalVal =
+      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+
+  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
   const presenter = new Presenter(settings, parent );
 
   test('test presenter must be defined', () => {

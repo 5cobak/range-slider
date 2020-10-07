@@ -12,45 +12,30 @@ export default class View implements IView {
 
   type: ISubView;
 
-  viewChangedSubject: IObserver;
+  changedSubject!: IObserver;
 
-  thumbSize: number;
+  thumbSize!: number;
 
-  thumbPos!: number;
+  trackSize!: number;
 
-  trackSize: number;
-
-  thumbPosSecond!: number;
+  positions: {to: number, from: number}
 
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.el = element;
     this.settings = settings;
     this.type = this.chooseViewType(settings, generalVal);
-
-    this.thumbSize = settings.type.match('vertical')
-      ? parseFloat(getComputedStyle(this.type.thumb.el).height)
-      : parseFloat(getComputedStyle(this.type.thumb.el).width);
-
-    this.trackSize = settings.type.match('vertical')
-      ? parseFloat(getComputedStyle(this.type.track.el).height) -
-        parseFloat(getComputedStyle(this.type.thumb.el).height)
-      : parseFloat(getComputedStyle(this.type.track.el).width) -
-        parseFloat(getComputedStyle(this.type.thumb.el).width);
-
-    this.viewChangedSubject = new MakeObservableSubject();
-
-    this.viewChangedSubject.addObservers(() => {
-      this.getThumbsPos();
-    });
-    this.viewChangedSubject.notifyObservers();
+    this.positions = { to: 0, from: 0 };
+    this.init(settings);
   }
 
   private getThumbsPos(): void {
-    const coord = this.settings.type.match('vertical') ? 'top' : 'left';
-    this.thumbPos = parseFloat(getComputedStyle(this.type.thumb.el)[coord]);
+    this.positions.from = this.type.positions.from;
+
     if (this.type.secondThumb) {
-      this.thumbPosSecond = parseFloat(getComputedStyle(this.type.secondThumb.el)[coord]);
+      this.positions.to = this.type.positions.to as number;
     }
+
+    this.changedSubject.notifyObservers();
   }
 
   private chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
@@ -69,5 +54,24 @@ export default class View implements IView {
     }
     modelType = new ViewSingleVertical(this.el, this.settings, generalVal);
     return modelType;
+  }
+
+  private init(settings: IsettingsTypes) {
+    this.thumbSize = settings.type.match('vertical')
+      ? parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.thumb.el).width);
+
+    this.trackSize = settings.type.match('vertical')
+      ? parseFloat(getComputedStyle(this.type.track.el).height) -
+        parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.track.el).width) -
+        parseFloat(getComputedStyle(this.type.thumb.el).width);
+
+    this.changedSubject = new MakeObservableSubject();
+
+    this.type.changedSubject.addObservers(() => {
+      this.getThumbsPos();
+    });
+    this.type.changedSubject.notifyObservers();
   }
 }
