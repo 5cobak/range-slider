@@ -35,7 +35,7 @@ export default class ViewDouble {
     this.el = element;
     this.positions = { from: 0, to: 0 }
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb();
+    this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.secondFlag = new ViewFlag();
@@ -45,6 +45,7 @@ export default class ViewDouble {
     this.thumb.changedSubject.addObservers(() => {
       this.positions.from = this.thumb.positions.from;
       this.positions.to = this.thumb.positions.to;
+      this.inner.setPosition(settings);
       this.changedSubject.notifyObservers();
     });
 
@@ -81,7 +82,7 @@ export default class ViewDouble {
   // add second thumb
 
   private addSecondThumb():void {
-    this.secondThumb = new ViewThumb();
+    this.secondThumb = new ViewThumb(this.settings);
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
     this.secondThumb.el.classList.add('range-slider__thumb_second');
   }

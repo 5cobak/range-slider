@@ -31,12 +31,12 @@ export interface IObserver {
 }
 
 export interface IThumb {
-  [x: string]: any;
   el: HTMLElement;
   moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
+  isVertical: RegExpMatchArray | null;
   positions: {to: number, from: number}
   changedSubject: IObserver;
 
@@ -48,8 +48,8 @@ export interface IClassPropertiesJquery {
 
 export interface IBankModel {
   [x: string]: number | undefined;
-  from: number ;
-  to?: number ;
+  from: number;
+  to?: number;
   generalValue: number;
 
 }

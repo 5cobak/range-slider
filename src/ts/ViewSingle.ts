@@ -32,7 +32,7 @@ export default class ViewSingle implements IViewSingle {
     this.el = element;
     this.positions = { to: 0, from: 0 };
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb();
+    this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
@@ -41,6 +41,7 @@ export default class ViewSingle implements IViewSingle {
 
     this.thumb.changedSubject.addObservers(() => {
       this.positions.from = this.thumb.positions.from;
+      this.inner.setPosition(settings);
       this.changedSubject.notifyObservers();
     });
 

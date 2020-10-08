@@ -9,67 +9,67 @@ const rangeFirst = $('.js-range-slider-1').rangeSlider({
   step: 1,
 });
 
-// rangeFirst.after(panelFirst.el);
+rangeFirst.after(panelFirst.el);
 
-// panelFirst.onChangeVal('from', rangeFirst.data('from'));
-// panelFirst.onChangeVal('step', rangeFirst.data('step'));
-// panelFirst.onChangeVal('min', rangeFirst.data('min'));
-// panelFirst.onChangeVal('max', rangeFirst.data('max'));
+panelFirst.onChangeVal('from', rangeFirst.data('from'));
+panelFirst.onChangeVal('step', rangeFirst.data('step'));
+panelFirst.onChangeVal('min', rangeFirst.data('min'));
+panelFirst.onChangeVal('max', rangeFirst.data('max'));
 
-// function onMove(e) {
-//   const target = e.target;
-//   const track = target.closest('.range-slider');
-//   if (!track ) return;
-//   function changeVal() {
-//     panelFirst.onChangeVal('from', +track.dataset.from);
-//   }
-//   function updateVal() {
-//     rangeFirst.rangeSlider('update', { from: +track.dataset.from });
-//   }
-//   function removeEventListeners() {
-//     setTimeout(()=>{
-//       document.removeEventListener('mousemove', changeVal);
-//     document.removeEventListener('mouseup', updateVal);
-//     },100);
-//   }
-//   changeVal();
-//   document.addEventListener('mousemove', changeVal);
-//   document.addEventListener('mouseup', updateVal);
-//   document.addEventListener('mouseup', removeEventListeners);
-// }
+function onMove(e) {
+  const target = e.target;
+  const track = target.closest('.range-slider');
+  if (!track ) return;
+  function changeVal() {
+    panelFirst.onChangeVal('from', +track.dataset.from);
+  }
+  function updateVal() {
+    rangeFirst.rangeSlider('update', { from: +track.dataset.from });
+  }
+  function removeEventListeners() {
+    setTimeout(()=>{
+      document.removeEventListener('mousemove', changeVal);
+    document.removeEventListener('mouseup', updateVal);
+    },100);
+  }
+  changeVal();
+  document.addEventListener('mousemove', changeVal);
+  document.addEventListener('mouseup', updateVal);
+  document.addEventListener('mouseup', removeEventListeners);
+}
 
-// rangeFirst.on('mousedown', onMove);
+rangeFirst.on('mousedown', onMove);
 
-// panelFirst.onInput('from', (value) => {
-//   rangeFirst.rangeSlider('update', { from: +value });
-//   panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
-// });
+panelFirst.onInput('from', (value) => {
+  rangeFirst.rangeSlider('update', { from: +value });
+  panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
+});
 
-// panelFirst.onInput('min', (value) => {
-//   rangeFirst.rangeSlider('update', { min: +value });
-//   panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
-// });
+panelFirst.onInput('min', (value) => {
+  rangeFirst.rangeSlider('update', { min: +value });
+  panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
+});
 
-// panelFirst.onInput('max', (value) => {
-//   rangeFirst.rangeSlider('update', { max: +value });
-//   panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
-// });
+panelFirst.onInput('max', (value) => {
+  rangeFirst.rangeSlider('update', { max: +value });
+  panelFirst.onChangeVal('from', +rangeFirst.data('$el').data('from'));
+});
 
-// panelFirst.onInput('step', (value) => {
-//   rangeFirst.rangeSlider('update', { step: +value });
-// });
+panelFirst.onInput('step', (value) => {
+  rangeFirst.rangeSlider('update', { step: +value });
+});
 
-// panelFirst.flag.checked = rangeFirst.data('flag')
-// panelFirst.scale.checked = rangeFirst.data('scale')
+panelFirst.flag.checked = rangeFirst.data('flag')
+panelFirst.scale.checked = rangeFirst.data('scale')
 
-// panelFirst.flag.onchange = () => {
-//   rangeFirst.rangeSlider('update', { flag: panelFirst.flag.checked });
+panelFirst.flag.onchange = () => {
+  rangeFirst.rangeSlider('update', { flag: panelFirst.flag.checked });
 
-// };
+};
 
-// panelFirst.scale.onchange = () => {
-//   rangeFirst.rangeSlider('update', { scale: panelFirst.scale.checked });
-// };
+panelFirst.scale.onchange = () => {
+  rangeFirst.rangeSlider('update', { scale: panelFirst.scale.checked });
+};
 // /* ----------------------------------------------- second slider with panel -------------------------- */
 
 const rangeSecond = $('.js-range-slider-2').rangeSlider({
@@ -156,14 +156,14 @@ const rangeSecond = $('.js-range-slider-2').rangeSlider({
 
 // /* ----------------------------------------------- third slider with panel -------------------------- */
 
-// const rangeThird = $('.js-range-slider-3').rangeSlider({
-//   type: 'double-vertical',
-//   min: 0,
-//   max: 10000,
-//   from: 0,
-//   to: 10000,
-//   step: 1000
-// });
+const rangeThird = $('.js-range-slider-3').rangeSlider({
+  type: 'double-vertical',
+  min: 0,
+  max: 10000,
+  from: 0,
+  to: 10000,
+  step: 1000
+});
 
 // rangeThird.after(panelThird.el);
 
@@ -240,14 +240,14 @@ const rangeSecond = $('.js-range-slider-2').rangeSlider({
 
 // /* ----------------------------------------------- fourth slider with panel -------------------------- */
 
-// const rangeFourth = $('.js-range-slider-4').rangeSlider({
-//   type: 'single-vertical',
-//   min: 0,
-//   max: 10000,
-//   from: 0,
-//   to: 10000,
-//   step: 1000
-// });
+const rangeFourth = $('.js-range-slider-4').rangeSlider({
+  type: 'single-vertical',
+  min: 0,
+  max: 10000,
+  from: 0,
+  to: 10000,
+  step: 1000
+});
 
 // rangeFourth.after(panelFourth.el);
 

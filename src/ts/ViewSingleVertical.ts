@@ -4,7 +4,7 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver } from './globals';
+import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, Iposition } from './globals';
 import MakeObservableSubject from './Observer';
 // VIEW class
 export default class ViewSingleVertical {
@@ -26,10 +26,12 @@ export default class ViewSingleVertical {
 
   changedSubject!: IObserver
 
+  positions: Iposition;
+
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
-    this.thumbPos = 0;
+    this.positions = { from: 0, to: 0 };
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb();
     this.inner = new ViewInner(this.settings);
@@ -39,8 +41,9 @@ export default class ViewSingleVertical {
     this.addElements();
     this.addEvents(generalVal);
     this.init(generalVal);
-    this.thumb.thumbChangedSubject.addObservers(() => {
-      this.thumbPos = this.thumb.thumbPos;
+    this.thumb.changedSubject.addObservers(() => {
+      this.positions.from = this.thumb.positions.from;
+      this.inner.setPosition(this.settings);
       this.changedSubject.notifyObservers();
     })
   }
@@ -69,28 +72,30 @@ export default class ViewSingleVertical {
     this.track.el.addEventListener('mousedown', onClick);
   }
 
-  private setThumbPosOnInit(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
     const stepCount = generalVal / settings.step;
     const stepSize = +(trackSize / stepCount);
-    let from: number = this.settings.from;
+    let from: number = settings.from;
 
     const min = settings.min;
 
     from -= min;
 
-    from = stepSize * Math.round(from / this.settings.step);
+    from = stepSize * Math.round(from / settings.step);
 
     this.thumb.el.style.top = `${from}px`;
+
+    this.positions.from = from;
+
     this.changedSubject.notifyObservers();
   }
 
   // inicialize view, set position for elements
   private init(generalVal:number):void {
-    this.setThumbPosOnInit(this.settings, generalVal);
+    this.setThumbPos(this.settings, generalVal);
     if (this.settings.flag) this.flag.setPosition(this.settings);
-    this.inner.setPosition(this.settings);
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
