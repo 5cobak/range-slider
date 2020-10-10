@@ -7,8 +7,7 @@ export default class ViewTrack {
 
   constructor(settings: IsettingsTypes) {
     this.createElement();
-    this.type = settings.type as string;
-    this.setType(this.type)
+    this.setType(settings.type)
   }
 
   createElement():void {
@@ -21,16 +20,13 @@ export default class ViewTrack {
     if (type === 'single') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_single';
-    }
-    if (type === 'single-vertical') {
+    } else if (type === 'single-vertical') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_single range-slider_vertical';
-    }
-    if (type === 'double') {
+    } else if (type === 'double') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_double';
-    }
-    if (type === 'double-vertical') {
+    } else if (type === 'double-vertical') {
       this.el.className = '';
       this.el.className = 'range-slider range-slider_double range-slider_vertical';
     }

@@ -15,7 +15,7 @@ export default class Presenter {
     this.settings = settings;
     this.isDouble = settings.type.match('double');
     this.model = new Model(settings);
-    this.view = new View($this, settings, this.model.bank.generalValue);
+    this.view = new View($this, this.model.settings, this.model.bank.generalValue);
 
     this.view.changedSubject.addObservers(() => {
       const flag = this.view.type.flag.el;

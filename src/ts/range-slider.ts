@@ -11,7 +11,7 @@ import { IsettingsTypes, IMethods } from './globals';
       const settings: IsettingsTypes = $.extend(
         {
           // default options object
-          // $el: this,
+          $el: this,
           type: 'single',
           min: 0,
           max: 1000,

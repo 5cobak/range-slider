@@ -52,11 +52,11 @@ export default class Panel {
     inputCurrentVal.value = `${value}`;
   }
 
-  onInput(option: string, func: (val: string)=>void): void {
+  onInput(option: string, func: (val: string)=>number): void {
     const input = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
 
     input.onchange = () => {
-      func(input.value);
+      input.value = `${func(input.value)}`;
     };
   }
 

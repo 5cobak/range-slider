@@ -75,7 +75,6 @@ export interface ISubView {
   secondFlag?: IFlag;
   changedSubject: IObserver;
   positions: {to: number, from: number}
-  setThumbPos(settings: IsettingsTypes, generalVal: number, position: string): void;
 }
 export interface IModel {
   modelChangedSubject: IObserver;

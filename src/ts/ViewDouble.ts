@@ -63,6 +63,7 @@ export default class ViewDouble {
     let from: number = settings.from;
     let to = settings.to as number;
 
+    // if (from > to) return;
     const min = settings.min;
 
     from -= min;

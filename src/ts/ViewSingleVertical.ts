@@ -33,7 +33,7 @@ export default class ViewSingleVertical {
     this.el = element;
     this.positions = { from: 0, to: 0 };
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb();
+    this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);

@@ -82,7 +82,7 @@ export default class ViewDoubleVertical {
 
   // add second thumb
   private addSecondThumb():void {
-    this.secondThumb = new ViewThumb();
+    this.secondThumb = new ViewThumb(this.settings);
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
     this.secondThumb.el.classList.add('range-slider__thumb_second');
   }
