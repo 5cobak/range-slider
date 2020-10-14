@@ -57,6 +57,7 @@ describe('test ViewTrack', () => {
       scale: true,
       flag: true,
     };
+
     track = new ViewTrack(settings);
     expect(track.el.className).toMatch(/double/);
     expect(track.el.className).toMatch(/vertical/);

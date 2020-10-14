@@ -27,18 +27,18 @@ describe('test model', () => {
     expect(model.bank.generalValue).toBe(10000);
   })
   test('test model.bank.from and model.bank.to', () => {
-    model.setFrom(144, 10, 100);
+    model.setCurrentVal(144, 10, 100, 'from');
     expect(model.bank.from).toBe(1400);
-    model.setTo(144, 10, 100);
+    model.setCurrentVal(144, 10, 100, 'to');
     expect(model.bank.to).toBe(1400);
   })
   test('test generalVal property', () => {
     expect(model.bank.generalValue).toBe(generalVal);
   })
   test('test from and to must be less or equal settings.max', () => {
-    model.setFrom(1440, 10, 100);
+    model.setCurrentVal(1440, 10, 100, 'from');
     expect(model.bank.from).toBeLessThanOrEqual(settings.max);
-    model.setTo(1440, 10, 100);
+    model.setCurrentVal(144, 10, 100, 'to');
     expect(model.bank.to).toBeLessThanOrEqual(settings.max);
   })
 })
@@ -68,7 +68,7 @@ describe('test model with non-multiple step', () => {
   })
 
   test('test from if it more then max value', () => {
-    model.setTo(1440, 10, 100);
+    model.setCurrentVal(144, 10, 100, 'to');
     expect(model.bank.from).toBeLessThanOrEqual(settings.max);
   })
   test('test from must be equal or less then max', () => {
@@ -92,11 +92,6 @@ describe('test model with non-multiple step', () => {
 
   const model = new Model(settings);
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-
-  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-
   test('test from must be equal or less then max', () => {
     expect(model.settings.from).toBeLessThanOrEqual(settings.max);
   })
@@ -118,11 +113,6 @@ describe('test from and to if they greater then max', () => {
   };
 
   const model = new Model(settings);
-
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-
-  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   test('test from must be equal or less then max', () => {
     expect(model.settings.from).toBeLessThanOrEqual(settings.max);
@@ -146,11 +136,6 @@ describe('test from and to if they less then min', () => {
 
   const model = new Model(settings);
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-
-  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-
   test('test from must be equal or less then max', () => {
     expect(model.settings.from).toBeLessThanOrEqual(settings.min);
   })
@@ -165,19 +150,36 @@ describe('test from and to if they less then min', () => {
     max: 10000,
     from: -1000,
     // to: -12000,
-    step: 1,
+    step: -1,
     scale: true,
     flag: true,
   };
 
   const model = new Model(settings);
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
-
-  if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
-
   test('test to must be undefined', () => {
     expect(model.settings.to).toBeUndefined();
+  })
+  test('step must not be negative', () => {
+    expect(model.settings.step).toBeGreaterThan(0);
+  })
+})
+
+describe('test step if it is be zero', () => {
+  const settings: IsettingsTypes = {
+    type: 'double',
+    min: 0,
+    max: 10000,
+    from: -1000,
+    // to: -12000,
+    step: 0,
+    scale: true,
+    flag: true,
+  };
+
+  const model = new Model(settings);
+
+  test('step must not be negative', () => {
+    expect(model.settings.step).toBeGreaterThan(0);
   })
 })

@@ -63,7 +63,6 @@ export default class ViewDouble {
     let from: number = settings.from;
     let to = settings.to as number;
 
-    // if (from > to) return;
     const min = settings.min;
 
     from -= min;
@@ -77,6 +76,14 @@ export default class ViewDouble {
 
     this.positions.from = from;
     this.positions.to = to;
+
+    if (from > to) {
+      this.thumb.el.style.left = `${to}px`;
+      this.secondThumb.el.style.left = `${from}px`;
+      this.positions.from = to;
+      this.positions.to = from;
+    }
+
     this.changedSubject.notifyObservers();
   }
 

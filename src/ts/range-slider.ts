@@ -5,13 +5,13 @@ import { IsettingsTypes, IMethods } from './globals';
 
 (($) => {
   $.fn.extend({
-    rangeSlider(method: string, options: IsettingsTypes) {
+    rangeSlider(options: IsettingsTypes, method: string) {
       const $this = this as HTMLElement;
 
       const settings: IsettingsTypes = $.extend(
         {
           // default options object
-          $el: this,
+          $el: $this,
           type: 'single',
           min: 0,
           max: 1000,
@@ -21,16 +21,16 @@ import { IsettingsTypes, IMethods } from './globals';
           step: 1,
           scale: true,
         },
-        method,
+        options,
       ); // custom options object
 
       function setData(obj: IsettingsTypes) {
         const keys = Object.keys(obj);
-        const values = Object.values(obj)
+        const values = Object.values(obj);
 
         for (let i = 0; i < keys.length; i += 1) {
-          const attr: string | number | boolean = $($this).data(`${keys[i]}`);
-          if (!attr) $($this).data(`${keys[i]}`, values[i]);
+          const attr = $($this).data(`${keys[i]}`);
+          if (!attr) $($this).data(keys[i], values[i]);
         }
       }
 
@@ -42,12 +42,12 @@ import { IsettingsTypes, IMethods } from './globals';
           updatedOptions = $.extend(dataObj, options);
 
           $(this).children().remove();
-          new Presenter(updatedOptions, $this);
-          setData(updatedOptions);
+          const presenter = new Presenter(updatedOptions, $this);
+          setData(presenter.model.settings);
         },
         init: () => {
-          new Presenter(updatedOptions, $this);
-          setData(updatedOptions);
+          const presenter = new Presenter(updatedOptions, $this);
+          setData(presenter.model.settings);
         },
       };
 

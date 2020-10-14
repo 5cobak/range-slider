@@ -24,7 +24,7 @@ function onMove(e) {
     panelFirst.onChangeVal('from', +track.dataset.from);
   }
   function updateVal() {
-    rangeFirst.rangeSlider('update', { from: +track.dataset.from });
+    rangeFirst.rangeSlider( { from: +track.dataset.from },'update');
   }
   function removeEventListeners() {
     setTimeout(()=>{
@@ -41,22 +41,22 @@ function onMove(e) {
 rangeFirst.on('mousedown', onMove);
 
 panelFirst.onInput('from', (value) => {
-  rangeFirst.rangeSlider('update', { from: +value });
+  rangeFirst.rangeSlider({ from: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
 });
 
 panelFirst.onInput('min', (value) => {
-  rangeFirst.rangeSlider('update', { min: +value });
+  rangeFirst.rangeSlider({ min: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
 });
 
 panelFirst.onInput('max', (value) => {
-  rangeFirst.rangeSlider('update', { max: +value });
+  rangeFirst.rangeSlider( { max: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
 });
 
 panelFirst.onInput('step', (value) => {
-  rangeFirst.rangeSlider('update', { step: value });
+  rangeFirst.rangeSlider({ step: value },'update');
   const track = rangeFirst.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
   const to = track.dataset.to;
@@ -69,12 +69,12 @@ panelFirst.flag.checked = rangeFirst.data('flag')
 panelFirst.scale.checked = rangeFirst.data('scale')
 
 panelFirst.flag.onchange = () => {
-  rangeFirst.rangeSlider('update', { flag: panelFirst.flag.checked });
+  rangeFirst.rangeSlider({ flag: panelFirst.flag.checked },'update');
 
 };
 
 panelFirst.scale.onchange = () => {
-  rangeFirst.rangeSlider('update', { scale: panelFirst.scale.checked });
+  rangeFirst.rangeSlider({ scale: panelFirst.scale.checked },'update');
 };
 // /* ----------------------------------------------- second slider with panel -------------------------- */
 
@@ -85,14 +85,15 @@ const rangeSecond = $('.js-range-slider-2').rangeSlider({
   min: -2000,
   max: 10000,
   from: 1000,
-  to: 1000,
+  to: -1000,
   step: 1
 });
 
 rangeSecond.after(panelSecond.el);
 
-panelSecond.onChangeVal('from',rangeSecond.data('from'));
-panelSecond.onChangeVal('to',rangeSecond.data('to'));
+const trackDouble = rangeSecond.data('$el')[0].querySelector('.range-slider');
+panelSecond.onChangeVal('from',trackDouble.dataset.from);
+panelSecond.onChangeVal('to',trackDouble.dataset.to);
 panelSecond.onChangeVal('step',rangeSecond.data('step'));
 panelSecond.onChangeVal('min',rangeSecond.data('min'));
 panelSecond.onChangeVal('max',rangeSecond.data('max'));
@@ -106,8 +107,8 @@ function onMoveSec(e) {
     panelSecond.onChangeVal('to', +track.dataset.to);
   }
   function updateVal() {
-    rangeSecond.rangeSlider('update', { from: track.dataset.from });
-    rangeSecond.rangeSlider('update', { to: track.dataset.to });
+    rangeSecond.rangeSlider({ from: +track.dataset.from },'update');
+    rangeSecond.rangeSlider( { to: +track.dataset.to },'update');
   }
   function removeEventListeners() {
     setTimeout(()=>{
@@ -118,41 +119,51 @@ function onMoveSec(e) {
   changeVal();
   document.addEventListener('mousemove', changeVal);
   document.addEventListener('mouseup', updateVal);
-  document.addEventListener('mouseup', removeEventListeners);
+  // document.addEventListener('mouseup', removeEventListeners);
 }
 
 rangeSecond.on('mousedown', onMoveSec);
 
 panelSecond.onInput('from', (value) => {
-  rangeSecond.rangeSlider('update', { from: +value });
+  rangeSecond.rangeSlider({ from: +value },'update');
   panelSecond.onChangeVal('from', +rangeSecond.data('from'));
+  panelSecond.onChangeVal('to', +rangeSecond.data('to'));
   const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const from = track.dataset.from;
+  const to = track.dataset.to;
+  panelSecond.el.querySelector('.input-from').value = from;
+  panelSecond.el.querySelector('.input-to').value = to;
   return track.dataset.from;
 });
 
 panelSecond.onInput('to', (value) => {
-  rangeSecond.rangeSlider('update', { to: +value });
+  rangeSecond.rangeSlider( { to: +value },'update');
+  panelSecond.onChangeVal('from', +rangeSecond.data('from'));
   panelSecond.onChangeVal('to', +rangeSecond.data('to'));
   const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const to = track.dataset.to;
+  const from = track.dataset.from;
+  panelSecond.el.querySelector('.input-to').value = to;
+  panelSecond.el.querySelector('.input-from').value = from;
   return track.dataset.to;
 });
 
 panelSecond.onInput('min', (value) => {
-  rangeSecond.rangeSlider('update', { min: value });
+  rangeSecond.rangeSlider( { min: value },'update');
   panelSecond.onChangeVal('from', +rangeSecond.data('from'));
   panelSecond.onChangeVal('to', +rangeSecond.data('to'));
   return rangeSecond.data('min');
 });
 
 panelSecond.onInput('max', (value) => {
-  rangeSecond.rangeSlider('update', { max: +value });
+  rangeSecond.rangeSlider({ max: +value },'update');
   panelSecond.onChangeVal('from', +rangeSecond.data('from'));
   panelSecond.onChangeVal('to', +rangeSecond.data('to'));
   return rangeSecond.data('max');
 });
 
 panelSecond.onInput('step', (value) => {
-  rangeSecond.rangeSlider('update', { step: +value });
+  rangeSecond.rangeSlider({ step: +value },'update');
   const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
   const to = track.dataset.to;
@@ -165,28 +176,30 @@ panelSecond.flag.checked = rangeSecond.data('flag')
 panelSecond.scale.checked = rangeSecond.data('scale')
 
 panelSecond.flag.onchange = () => {
-  rangeSecond.rangeSlider('update', { flag: panelSecond.flag.checked });
+  rangeSecond.rangeSlider({ flag: panelSecond.flag.checked },'update', );
 };
 
 panelSecond.scale.onchange = () => {
-  rangeSecond.rangeSlider('update', { scale: panelSecond.scale.checked });
+  rangeSecond.rangeSlider({ scale: panelSecond.scale.checked },'update', );
 };
 
 // /* ----------------------------------------------- third slider with panel -------------------------- */
 
 const rangeThird = $('.js-range-slider-3').rangeSlider({
   type: 'double-vertical',
-  min: 0,
+  min: -2000,
   max: 10000,
   from: 0,
-  to: 10000,
+  to: -2000,
   step: 1000
 });
 
 rangeThird.after(panelThird.el);
 
-panelThird.onChangeVal('from',rangeThird.data('from'));
-panelThird.onChangeVal('to',rangeThird.data('to'));
+const trackDoubeVert = rangeThird.data('$el')[0].querySelector('.range-slider');
+
+panelThird.onChangeVal('from',trackDoubeVert.dataset.from);
+panelThird.onChangeVal('to',trackDoubeVert.dataset.to);
 panelThird.onChangeVal('step',rangeThird.data('step'));
 panelThird.onChangeVal('min',rangeThird.data('min'));
 panelThird.onChangeVal('max',rangeThird.data('max'));
@@ -201,8 +214,8 @@ function onMoveThird(e) {
 
   }
   function updateVal() {
-    rangeThird.rangeSlider('update', { from: track.dataset.from });
-    rangeThird.rangeSlider('update', { to: track.dataset.to });
+    rangeThird.rangeSlider({ from: track.dataset.from },'update' );
+    rangeThird.rangeSlider({ to: track.dataset.to },'update');
   }
   function removeEventListeners() {
     setTimeout(()=>{
@@ -219,36 +232,45 @@ function onMoveThird(e) {
 rangeThird.on('mousedown', onMoveThird);
 
 panelThird.onInput('from', (value) => {
-  rangeThird.rangeSlider('update', { from: +value });
+  rangeThird.rangeSlider({ from: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('from'));
-  const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  panelThird.onChangeVal('to', +rangeThird.data('to'));
+  const track = rangeThird.data('$el')[0].querySelector('.range-slider');
+  const from = track.dataset.from;
+  const to = track.dataset.to;
+  panelThird.el.querySelector('.input-from').value = from;
+  panelThird.el.querySelector('.input-to').value = to;
   return track.dataset.from;
-  
 });
 
 panelThird.onInput('to', (value) => {
-  rangeThird.rangeSlider('update', { to: +value });
+  rangeThird.rangeSlider( { to: +value },'update');
+  panelThird.onChangeVal('from', +rangeThird.data('from'));
   panelThird.onChangeVal('to', +rangeThird.data('to'));
-  const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const track = rangeThird.data('$el')[0].querySelector('.range-slider');
+  const to = track.dataset.to;
+  const from = track.dataset.from;
+  panelThird.el.querySelector('.input-to').value = to;
+  panelThird.el.querySelector('.input-from').value = from;
   return track.dataset.to;
 });
 
 panelThird.onInput('min', (value) => {
-  rangeThird.rangeSlider('update', { min: value });
+  rangeThird.rangeSlider({ min: value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('from'));
   panelThird.onChangeVal('to', +rangeThird.data('to'));
   return rangeThird.data('min');
 });
 
 panelThird.onInput('max', (value) => {
-  rangeThird.rangeSlider('update', { max: +value });
+  rangeThird.rangeSlider({ max: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('from'));
   panelThird.onChangeVal('to', +rangeThird.data('to'));
   return rangeThird.data('max')
 });
 
 panelThird.onInput('step', (value) => {
-  rangeThird.rangeSlider('update', { step: +value });
+  rangeThird.rangeSlider({ step: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('step'));
   const track = rangeThird.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
@@ -262,11 +284,11 @@ panelThird.flag.checked = rangeThird.data('flag')
 panelThird.scale.checked = rangeThird.data('scale')
 
 panelThird.flag.onchange = () => {
-  rangeThird.rangeSlider('update', { flag: panelThird.flag.checked });
+  rangeThird.rangeSlider({ flag: panelThird.flag.checked },'update');
 };
 
 panelThird.scale.onchange = () => {
-  rangeThird.rangeSlider('update', { scale: panelThird.scale.checked });
+  rangeThird.rangeSlider({ scale: panelThird.scale.checked },'update');
 };
 
 // /* ----------------------------------------------- fourth slider with panel -------------------------- */
@@ -301,7 +323,7 @@ function onMoveForth(e) {
 
   }
   function updateVal() {
-    rangeFourth.rangeSlider('update', { from: track.dataset.from });
+    rangeFourth.rangeSlider({ from: track.dataset.from },'update');
   }
   function removeEventListeners() {
     setTimeout(()=>{
@@ -318,14 +340,14 @@ function onMoveForth(e) {
 rangeFourth.on('mousedown', onMoveForth);
 
 panelFourth.onInput('from', (value) => {
-  rangeFourth.rangeSlider('update', { from: +value });
+  rangeFourth.rangeSlider({ from: +value },'update');
   panelFourth.onChangeVal('from', +rangeFourth.data('from'));
   const track = rangeFourth.data('$el')[0].querySelector('.range-slider')
   return track.dataset.from;
 });
 
 panelFourth.onInput('step', (value) => {
-  rangeFourth.rangeSlider('update', { step: +value });
+  rangeFourth.rangeSlider({ step: +value },'update');
   const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
   panelFourth.el.querySelector('.input-from').value = from;
@@ -333,7 +355,7 @@ panelFourth.onInput('step', (value) => {
 });
 
 panelFourth.onInput('min', (value) => {
-  rangeFourth.rangeSlider('update', { min: +value });
+  rangeFourth.rangeSlider({ min: +value },'update');
   panelFourth.onChangeVal('from', +rangeFourth.data('from'));
   const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
@@ -342,7 +364,7 @@ panelFourth.onInput('min', (value) => {
 });
 
 panelFourth.onInput('max', (value) => {
-  rangeFourth.rangeSlider('update', { max: +value });
+  rangeFourth.rangeSlider( { max: +value },'update');
   panelFourth.onChangeVal('from', +rangeFourth.data('from'));
   const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
   const from = track.dataset.from;
@@ -354,9 +376,9 @@ panelFourth.flag.checked = rangeFourth.data('flag')
 panelFourth.scale.checked = rangeFourth.data('scale')
 
 panelFourth.flag.onchange = () => {
-  rangeFourth.rangeSlider('update', { flag: panelFourth.flag.checked });
+  rangeFourth.rangeSlider({ flag: panelFourth.flag.checked },'update');
 };
 
 panelFourth.scale.onchange = () => {
-  rangeFourth.rangeSlider('update', { scale: panelFourth.scale.checked });
+  rangeFourth.rangeSlider({ scale: panelFourth.scale.checked },'update');
 };

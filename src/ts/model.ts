@@ -39,6 +39,12 @@ export default class Model implements IModel {
   }
 
   private validate() {
+    const from = this.settings.from;
+    const to = this.settings.to as number;
+    if (this.settings.type.match('double') && from > to) {
+      this.settings.from = to;
+      this.settings.to = from;
+    }
     if (this.settings.step < 0) this.settings.step = -this.settings.step;
     if (this.settings.step === 0) this.settings.step = 1;
     if (this.settings.from < this.settings.min) this.settings.from = this.settings.min;

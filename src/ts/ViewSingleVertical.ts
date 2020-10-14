@@ -28,27 +28,32 @@ export default class ViewSingleVertical {
 
   positions: Iposition;
 
+  // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
+    // this property we'll pass by observer to high level, this store thumbs positions for model
     this.positions = { from: 0, to: 0 };
+    // init track, thumb, inner, scale, flag
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
+    // make observable subject
     this.changedSubject = new MakeObservableSubject();
+    // add all elements in DOM
     this.addElements();
+    // add needed events for single-vertical type of slider
     this.addEvents(generalVal);
     this.init(generalVal);
+    // add Observer to thumb and get postion of thumb and notify hight level
     this.thumb.changedSubject.addObservers(() => {
       this.positions.from = this.thumb.positions.from;
       this.inner.setPosition(this.settings);
       this.changedSubject.notifyObservers();
     })
   }
-
-  // add second thumb, if it needed
 
   // add all elements in view
   private addElements():void {
@@ -95,6 +100,7 @@ export default class ViewSingleVertical {
   // inicialize view, set position for elements
   private init(generalVal:number):void {
     this.setThumbPos(this.settings, generalVal);
+    this.inner.setPosition(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);

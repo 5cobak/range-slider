@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 export function validateCoordsByClick(movedThumb: HTMLElement, trackSize: number, firstThumb: HTMLElement, secondThumb:HTMLElement, isVertical:RegExpMatchArray | null): void {
-  const firstThumbCoord = isVertical ? firstThumb.getBoundingClientRect().top : firstThumb.getBoundingClientRect().left;
-  const secondThumbCoord = isVertical ? secondThumb.getBoundingClientRect().top : secondThumb.getBoundingClientRect().left;
   const coord = isVertical ? 'top' : 'left';
+  const firstThumbCoord = firstThumb.getBoundingClientRect()[coord];
+  const secondThumbCoord = secondThumb.getBoundingClientRect()[coord];
 
   if (parseFloat(getComputedStyle(movedThumb)[coord]) <= 0) movedThumb.style[coord] = `${0}px`;
   else if (parseFloat(getComputedStyle(movedThumb)[coord]) > trackSize) {
@@ -75,11 +75,6 @@ export function getValues(isVertical: RegExpMatchArray | null, e: MouseEvent ):
       targetSecondThumb = secondThumb;
     } else {
       targetSecondThumb = firstThumb;
-    }
-
-    if (targetSecondThumb) {
-      targetThumb.style.zIndex = '100';
-      targetSecondThumb.style.zIndex = '50';
     }
   }
 

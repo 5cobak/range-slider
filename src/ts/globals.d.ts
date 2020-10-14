@@ -1,15 +1,14 @@
 export interface IsettingsTypes {
-  [x: string]: number | string | boolean | undefined;
+  [x: string]: number | string | boolean | HTMLElement | null;
+  $el: HTMLElement,
   min: number;
   max: number;
   type: string;
   from: number;
-  to?: number;
+  to: number | null;
   flag: boolean;
   scale: boolean;
   step: number;
-  firstValue?: number;
-  secondValue?: number;
 }
 
 export interface IClassProperties {
@@ -47,18 +46,13 @@ export interface IClassPropertiesJquery {
 }
 
 export interface IBankModel {
-  [x: string]: number | undefined;
+  [x: string]: number | null;
   from: number;
-  to?: number;
+  to: number | null;
   generalValue: number;
 
 }
-export interface IBankView {
-  trackSize: number;
-  thumbSize: number;
-  thumbPos: number;
-  thumbPosSecond?: number;
-}
+
 export interface IScale {
   el: HTMLElement;
   smallLine: HTMLElement;
@@ -80,6 +74,7 @@ export interface IModel {
   modelChangedSubject: IObserver;
   bank: IBankModel;
   setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void;
+  settings: IsettingsTypes;
 }
 export interface IView {
   el: HTMLElement

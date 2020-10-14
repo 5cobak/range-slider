@@ -77,6 +77,14 @@ export default class ViewDoubleVertical {
 
     this.positions.from = from;
     this.positions.to = to;
+
+    if (from > to) {
+      this.thumb.el.style.top = `${to}px`;
+      this.secondThumb.el.style.top = `${from}px`;
+      this.positions.from = to;
+      this.positions.to = from;
+    }
+
     this.changedSubject.notifyObservers();
   }
 
