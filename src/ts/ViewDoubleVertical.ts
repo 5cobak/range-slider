@@ -34,20 +34,27 @@ export default class ViewDoubleVertical {
 
   positions!: Iposition
 
+  // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
+    // this property we'll pass by observer to high level, this store thumbs positions for model
     this.positions = { from: 0, to: 0 };
+    // init track, thumb, inner, scale, flag
     this.track = new ViewTrack(this.settings);
     this.thumb = new ViewThumb(this.settings);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.secondFlag = new ViewFlag();
     this.scale = new ViewScale(this.settings);
+    // make observable subject
     this.changedSubject = new MakeObservableSubject()
+    // add all elements in track
     this.addElements();
+    // add needed events for double-vertical type of slider
     this.addEvents(generalVal);
     this.init(generalVal);
+    // add Observer to thumb and get postion of thumb and notify hight level
     this.thumb.changedSubject.addObservers(() => {
       this.positions.from = this.thumb.positions.from;
       this.positions.to = this.thumb.positions.to;
@@ -56,6 +63,8 @@ export default class ViewDoubleVertical {
     })
   }
 
+  // this method set thumb position at init slider and notify high level's observers
+  // method used model's settings and general value from presenter across main view
   private setThumbPos(settings: IsettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
@@ -78,17 +87,10 @@ export default class ViewDoubleVertical {
     this.positions.from = from;
     this.positions.to = to;
 
-    if (from > to) {
-      this.thumb.el.style.top = `${to}px`;
-      this.secondThumb.el.style.top = `${from}px`;
-      this.positions.from = to;
-      this.positions.to = from;
-    }
-
     this.changedSubject.notifyObservers();
   }
 
-  // add second thumb
+  // method for addition second thumb
   private addSecondThumb():void {
     this.secondThumb = new ViewThumb(this.settings);
     this.secondThumb.el.classList.remove('range-slider__thumb_first');
@@ -99,15 +101,16 @@ export default class ViewDoubleVertical {
   private addElements():void {
     this.el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
+    // add flag and scale if the user set in options true for them
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
-
+    // add second thumb
     this.addSecondThumb();
     this.track.el.append(this.secondThumb.el);
     if (this.settings.flag) this.secondThumb.el.append(this.secondFlag.el);
     if (this.settings.scale) this.track.el.append(this.scale.el);
   }
 
-  // add view events
+  // add view events drap-and-drop and click on track from thumb
   private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
@@ -125,6 +128,7 @@ export default class ViewDoubleVertical {
   }
 
   // inicialize view, set position for elements
+  // method use methods from flag and scale if it was set true in options by user
   private init(generalVal:number):void {
     this.setThumbPos(this.settings, generalVal);
 

@@ -42,7 +42,7 @@ export default class ViewSingleVertical {
     this.scale = new ViewScale(this.settings);
     // make observable subject
     this.changedSubject = new MakeObservableSubject();
-    // add all elements in DOM
+    // add all elements in track
     this.addElements();
     // add needed events for single-vertical type of slider
     this.addEvents(generalVal);
@@ -50,6 +50,7 @@ export default class ViewSingleVertical {
     // add Observer to thumb and get postion of thumb and notify hight level
     this.thumb.changedSubject.addObservers(() => {
       this.positions.from = this.thumb.positions.from;
+      // set inner's position by move thumb or click on track
       this.inner.setPosition(this.settings);
       this.changedSubject.notifyObservers();
     })
@@ -59,11 +60,12 @@ export default class ViewSingleVertical {
   private addElements():void {
     this.el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
+    // add flag and scale if the user set in options true for them
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
     if (this.settings.scale) this.track.el.append(this.scale.el);
   }
 
-  // add view events
+  // add view events drap-and-drop and click on track from thumb
   private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
@@ -77,6 +79,8 @@ export default class ViewSingleVertical {
     this.track.el.addEventListener('mousedown', onClick);
   }
 
+  // this method set thumb position at init slider and notify high level's observers
+  // method used model's settings and general value from presenter across main view
   private setThumbPos(settings: IsettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
@@ -98,6 +102,7 @@ export default class ViewSingleVertical {
   }
 
   // inicialize view, set position for elements
+  // method use methods from flag and scale if it was set true by user
   private init(generalVal:number):void {
     this.setThumbPos(this.settings, generalVal);
     this.inner.setPosition(this.settings);

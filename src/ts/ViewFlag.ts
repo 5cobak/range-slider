@@ -13,6 +13,7 @@ export default class ViewFlag {
     return flag;
   }
 
+  // set flag's position in center of thumb and method used at mouse events and init slider like inner's method
   setPosition(settings: IsettingsTypes):void {
     const thumb = this.el.parentElement as HTMLElement;
     const halfWidthThumb = parseFloat(getComputedStyle(thumb).width) / 2;

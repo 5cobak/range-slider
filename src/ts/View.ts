@@ -20,14 +20,17 @@ export default class View implements IView {
 
   positions: {to: number, from: number}
 
+  // constructor access first argument jQuery<HTMLElement>, model's settings and general value across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
     this.el = element;
     this.settings = settings;
     this.type = this.chooseViewType(settings, generalVal);
     this.positions = { to: 0, from: 0 };
+    this.changedSubject = new MakeObservableSubject();
     this.init(settings);
   }
 
+  // method for get positons from lower levels and notyfy high levels
   private getThumbsPos(): void {
     this.positions.from = this.type.positions.from;
 
@@ -38,6 +41,7 @@ export default class View implements IView {
     this.changedSubject.notifyObservers();
   }
 
+  // method for choose type of range-slider: single, single-vertical, double, double-vertical
   private chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
     let modelType: ISubView;
     if (settings.type === 'single') {
@@ -56,6 +60,7 @@ export default class View implements IView {
     return modelType;
   }
 
+  // method set trackSize and thumbSize for model's calculation and add observer where get positons of thumbs and
   private init(settings: IsettingsTypes) {
     this.thumbSize = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(this.type.thumb.el).height)
@@ -66,8 +71,6 @@ export default class View implements IView {
         parseFloat(getComputedStyle(this.type.thumb.el).height)
       : parseFloat(getComputedStyle(this.type.track.el).width) -
         parseFloat(getComputedStyle(this.type.thumb.el).width);
-
-    this.changedSubject = new MakeObservableSubject();
 
     this.type.changedSubject.addObservers(() => {
       this.getThumbsPos();

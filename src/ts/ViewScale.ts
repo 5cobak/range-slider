@@ -1,4 +1,5 @@
 import { IScale, IsettingsTypes } from './globals';
+import { getValues, setBigLines, setSmallLines } from './utils/scaleHelpers';
 
 export default class Scale implements IScale {
   settings: IsettingsTypes;
@@ -9,11 +10,14 @@ export default class Scale implements IScale {
 
   bigLine!: HTMLElement
 
+  // constructor acces first argument moles's settings across presenter
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
+    // create thumb element and add class range-slider__thumb
     this.createElement();
   }
 
+  // method for creation scale element and add class range-slider__scale
   private createElement(): void {
     const scale: HTMLElement = document.createElement('div');
     scale.className = 'range-slider__scale';
@@ -28,6 +32,7 @@ export default class Scale implements IScale {
     this.bigLine = bigLine
   }
 
+  // write in scale min and max values
   writeMinAndMaxValues(settings: IsettingsTypes):void {
     const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
     const min = document.createElement('div');
@@ -43,70 +48,18 @@ export default class Scale implements IScale {
   }
 
   setCountOfLines(settings: IsettingsTypes, generalVal: number): void {
-    const coord = settings.type.match('vertical') ? 'top' : 'left';
-    const size = settings.type.match('vertical') ? 'height' : 'width';
-
-    const track = this.el.parentElement as HTMLElement;
-    const thumb = track.querySelector('.range-slider__thumb') as HTMLElement;
-
-    const thumbSize = parseFloat(getComputedStyle(thumb)[size]);
-
-    const trackSize: number = parseFloat(getComputedStyle(track)[size]) - thumbSize;
-    const stepCount = generalVal / settings.step;
-
-    const stepSize = +(trackSize / stepCount).toFixed(1);
-
-    let posCountSmallPercent = thumbSize / 2;
-    let posCountBig = thumbSize / 2;
+    const smallLine = this.smallLine;
+    const scale = this.el;
+    // get values and calculate step size
+    const { thumbSize, trackSize, stepCount, stepSize, posCountSmallPercent } = getValues(settings, generalVal, scale);
+    // get positions for bit and small lines
+    const { posCountBig } = getValues(settings, generalVal, scale);
+    // add small line in scale
     this.el.append(this.smallLine);
-    if (!(stepCount > 50)) {
-      for (let i = 0; i <= stepCount * 3; i += 1) {
-        const smallLineClone = this.smallLine.cloneNode(true);
 
-        this.el.append(smallLineClone);
-        const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
-
-        (smallLineClone as HTMLElement).style[coord] = `${posCountSmallPercent - smallLineSize / 2}px`;
-
-        const excessLinePos = posCountSmallPercent - smallLineSize / 2;
-        if (excessLinePos >= trackSize) break;
-        posCountSmallPercent += stepSize / 2;
-      }
-      this.el.removeChild(this.smallLine)
-    } else {
-      for (let i = 0; i <= stepCount; i += 1) {
-        const smallLineClone = this.smallLine.cloneNode(true);
-
-        this.el.append(smallLineClone);
-        const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
-        const excessLinePos = posCountSmallPercent - smallLineSize / 2;
-
-        if (excessLinePos >= trackSize) break;
-
-        (smallLineClone as HTMLElement).style[coord] = `${posCountSmallPercent}px`;
-        posCountSmallPercent += thumbSize;
-      }
-      this.el.removeChild(this.smallLine);
-      this.el.removeChild(this.el.lastChild as Node);
-    }
-
-    if (!(stepCount > 50)) {
-      for (let i = 0; i <= stepCount; i += 1) {
-        const bigLine: HTMLElement = document.createElement('span');
-        bigLine.className = 'range-slider__big-line';
-        this.el.append(bigLine);
-        const bigLineSize = parseFloat(getComputedStyle(bigLine)[size]);
-        bigLine.style[coord] = `${posCountBig - bigLineSize / 2}px`;
-
-        posCountBig += stepSize;
-      }
-    } else {
-      const firstBigLine: HTMLElement = document.createElement('span');
-      firstBigLine.className = 'range-slider__big-line';
-      const lastBigLine = firstBigLine.cloneNode(true) as HTMLElement;
-      this.el.append(firstBigLine, lastBigLine);
-      firstBigLine.style[coord] = `${posCountBig}px`;
-      lastBigLine.style[coord] = `${trackSize + posCountBig}px`;
-    }
+    // calculate and append small lines in scale
+    setSmallLines(settings, stepCount, posCountSmallPercent, trackSize, thumbSize, stepSize, smallLine, scale);
+    // calculate and append big Lines in scale
+    setBigLines(settings, stepCount, posCountBig, stepSize, trackSize, scale)
   }
 }
