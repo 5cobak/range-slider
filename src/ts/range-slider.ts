@@ -6,12 +6,15 @@ import { IsettingsTypes, IMethods } from './globals';
 (($) => {
   $.fn.extend({
     rangeSlider(options: IsettingsTypes, method: string) {
-      const $this = this as HTMLElement;
-
+      // get html element which was used by user
+      const htmlEl = $(this)[0] as HTMLElement;
+      // get jQuery object
+      const $object = $(this);
+      // set default options for range-slider and extend them by user's options
       const settings: IsettingsTypes = $.extend(
         {
           // default options object
-          $el: $this,
+          el: htmlEl,
           type: 'single',
           min: 0,
           max: 1000,
@@ -24,35 +27,35 @@ import { IsettingsTypes, IMethods } from './globals';
         options,
       ); // custom options object
 
+      // function for set data in jquery data object, data is options used by user
       function setData(obj: IsettingsTypes) {
         const keys = Object.keys(obj);
         const values = Object.values(obj);
 
         for (let i = 0; i < keys.length; i += 1) {
-          const attr = $($this).data(`${keys[i]}`);
-          if (!attr) $($this).data(keys[i], values[i]);
+          const attr = $($object).data(`${keys[i]}`);
+          if (!attr) $($object).data(keys[i], values[i]);
         }
       }
 
       let updatedOptions = settings;
+      // set init and update methods for plugin, which user can use, we use this methods at the bundle with panel
       const methods: IMethods = {
         update: () => {
-          const dataObj = $($this).data();
+          const dataObj = $($object).data();
 
           updatedOptions = $.extend(dataObj, options);
 
           $(this).children().remove();
-          const presenter = new Presenter(updatedOptions, $this);
+          const presenter = new Presenter(updatedOptions, settings.el);
           setData(presenter.model.settings);
         },
         init: () => {
-          const presenter = new Presenter(updatedOptions, $this);
+          const presenter = new Presenter(updatedOptions, settings.el);
           setData(presenter.model.settings);
         },
       };
-
-      // set data
-
+      // default return for each slider
       return $(this).each( (...args) => {
         if (methods[method]) {
           // если запрашиваемый метод существует, мы его вызываем

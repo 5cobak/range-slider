@@ -71,7 +71,7 @@ export default class View implements IView {
         parseFloat(getComputedStyle(this.type.thumb.el).height)
       : parseFloat(getComputedStyle(this.type.track.el).width) -
         parseFloat(getComputedStyle(this.type.thumb.el).width);
-
+    // add observer in type and notify this type in order to get positions from low level
     this.type.changedSubject.addObservers(() => {
       this.getThumbsPos();
     });

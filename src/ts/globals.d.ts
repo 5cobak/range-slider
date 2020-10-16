@@ -1,6 +1,6 @@
 export interface IsettingsTypes {
   [x: string]: number | string | boolean | HTMLElement | null;
-  $el: HTMLElement,
+  el: HTMLElement,
   min: number;
   max: number;
   type: string;
