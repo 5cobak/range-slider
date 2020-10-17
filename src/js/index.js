@@ -11,6 +11,7 @@ const rangeFirst = $('.js-range-slider-1').rangeSlider({
 
 rangeFirst.after(panelFirst.el);
 
+
 panelFirst.onChangeVal('from', rangeFirst.data('from'));
 panelFirst.onChangeVal('step', rangeFirst.data('step'));
 panelFirst.onChangeVal('min', rangeFirst.data('min'));
@@ -43,25 +44,28 @@ rangeFirst.on('mousedown', onMove);
 panelFirst.onInput('from', (value) => {
   rangeFirst.rangeSlider({ from: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
+  const track = rangeFirst.data('el').querySelector('.range-slider')
+  const from = track.dataset.from;
+  return from;
 });
 
 panelFirst.onInput('min', (value) => {
   rangeFirst.rangeSlider({ min: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
+  return rangeFirst.data('min');
 });
 
 panelFirst.onInput('max', (value) => {
   rangeFirst.rangeSlider( { max: +value },'update');
   panelFirst.onChangeVal('from', +rangeFirst.data('from'));
+  return rangeFirst.data('max');
 });
 
 panelFirst.onInput('step', (value) => {
   rangeFirst.rangeSlider({ step: value },'update');
-  const track = rangeFirst.data('$el')[0].querySelector('.range-slider');
+  const track = rangeFirst.data('el').querySelector('.range-slider');
   const from = track.dataset.from;
-  const to = track.dataset.to;
   panelFirst.el.querySelector('.input-from').value = from;
-  panelFirst.el.querySelector('.input-to').value = to;
   return rangeFirst.data('step')
 });
 
@@ -91,9 +95,8 @@ const rangeSecond = $('.js-range-slider-2').rangeSlider({
 
 rangeSecond.after(panelSecond.el);
 
-const trackDouble = rangeSecond.data('$el')[0].querySelector('.range-slider');
-panelSecond.onChangeVal('from',trackDouble.dataset.from);
-panelSecond.onChangeVal('to',trackDouble.dataset.to);
+panelSecond.onChangeVal('from',rangeSecond.data('from'));
+panelSecond.onChangeVal('to', rangeSecond.data('to'));
 panelSecond.onChangeVal('step',rangeSecond.data('step'));
 panelSecond.onChangeVal('min',rangeSecond.data('min'));
 panelSecond.onChangeVal('max',rangeSecond.data('max'));
@@ -128,24 +131,24 @@ panelSecond.onInput('from', (value) => {
   rangeSecond.rangeSlider({ from: +value },'update');
   panelSecond.onChangeVal('from', +rangeSecond.data('from'));
   panelSecond.onChangeVal('to', +rangeSecond.data('to'));
-  const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const track = rangeSecond.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   const to = track.dataset.to;
   panelSecond.el.querySelector('.input-from').value = from;
   panelSecond.el.querySelector('.input-to').value = to;
-  return track.dataset.from;
+  return from;
 });
 
 panelSecond.onInput('to', (value) => {
   rangeSecond.rangeSlider( { to: +value },'update');
   panelSecond.onChangeVal('from', +rangeSecond.data('from'));
   panelSecond.onChangeVal('to', +rangeSecond.data('to'));
-  const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const track = rangeSecond.data('el').querySelector('.range-slider')
   const to = track.dataset.to;
   const from = track.dataset.from;
   panelSecond.el.querySelector('.input-to').value = to;
   panelSecond.el.querySelector('.input-from').value = from;
-  return track.dataset.to;
+  return to;
 });
 
 panelSecond.onInput('min', (value) => {
@@ -164,7 +167,7 @@ panelSecond.onInput('max', (value) => {
 
 panelSecond.onInput('step', (value) => {
   rangeSecond.rangeSlider({ step: +value },'update');
-  const track = rangeSecond.data('$el')[0].querySelector('.range-slider');
+  const track = rangeSecond.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   const to = track.dataset.to;
   panelSecond.el.querySelector('.input-from').value = from;
@@ -196,10 +199,8 @@ const rangeThird = $('.js-range-slider-3').rangeSlider({
 
 rangeThird.after(panelThird.el);
 
-const trackDoubeVert = rangeThird.data('$el')[0].querySelector('.range-slider');
-
-panelThird.onChangeVal('from',trackDoubeVert.dataset.from);
-panelThird.onChangeVal('to',trackDoubeVert.dataset.to);
+panelThird.onChangeVal('from', rangeThird.data('from'));
+panelThird.onChangeVal('to', rangeThird.data('to'));
 panelThird.onChangeVal('step',rangeThird.data('step'));
 panelThird.onChangeVal('min',rangeThird.data('min'));
 panelThird.onChangeVal('max',rangeThird.data('max'));
@@ -235,24 +236,24 @@ panelThird.onInput('from', (value) => {
   rangeThird.rangeSlider({ from: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('from'));
   panelThird.onChangeVal('to', +rangeThird.data('to'));
-  const track = rangeThird.data('$el')[0].querySelector('.range-slider');
+  const track = rangeThird.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   const to = track.dataset.to;
   panelThird.el.querySelector('.input-from').value = from;
   panelThird.el.querySelector('.input-to').value = to;
-  return track.dataset.from;
+  return from;
 });
 
 panelThird.onInput('to', (value) => {
   rangeThird.rangeSlider( { to: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('from'));
   panelThird.onChangeVal('to', +rangeThird.data('to'));
-  const track = rangeThird.data('$el')[0].querySelector('.range-slider');
+  const track = rangeThird.data('el').querySelector('.range-slider')
   const to = track.dataset.to;
   const from = track.dataset.from;
   panelThird.el.querySelector('.input-to').value = to;
   panelThird.el.querySelector('.input-from').value = from;
-  return track.dataset.to;
+  return to;
 });
 
 panelThird.onInput('min', (value) => {
@@ -272,7 +273,7 @@ panelThird.onInput('max', (value) => {
 panelThird.onInput('step', (value) => {
   rangeThird.rangeSlider({ step: +value },'update');
   panelThird.onChangeVal('from', +rangeThird.data('step'));
-  const track = rangeThird.data('$el')[0].querySelector('.range-slider');
+  const track = rangeThird.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   const to = track.dataset.to;
   panelThird.el.querySelector('.input-from').value = from;
@@ -304,10 +305,10 @@ const rangeFourth = $('.js-range-slider-4').rangeSlider({
 
 rangeFourth.after(panelFourth.el);
 
+
 panelFourth.onChangeVal('from',rangeFourth.data('from'));
 panelFourth.onChangeVal('step',rangeFourth.data('step'));
 
-rangeThird.after(panelThird.el);
 
 panelFourth.onChangeVal('from',rangeFourth.data('from'));
 panelFourth.onChangeVal('step',rangeFourth.data('step'));
@@ -342,13 +343,15 @@ rangeFourth.on('mousedown', onMoveForth);
 panelFourth.onInput('from', (value) => {
   rangeFourth.rangeSlider({ from: +value },'update');
   panelFourth.onChangeVal('from', +rangeFourth.data('from'));
-  const track = rangeFourth.data('$el')[0].querySelector('.range-slider')
-  return track.dataset.from;
+  const track = rangeFourth.data('el').querySelector('.range-slider')
+  const from = track.dataset.from;
+  panelFourth.el.querySelector('.input-from').value = from;
+  return from;
 });
 
 panelFourth.onInput('step', (value) => {
   rangeFourth.rangeSlider({ step: +value },'update');
-  const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
+  const track = rangeFourth.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   panelFourth.el.querySelector('.input-from').value = from;
   return rangeFourth.data('step');
@@ -356,8 +359,7 @@ panelFourth.onInput('step', (value) => {
 
 panelFourth.onInput('min', (value) => {
   rangeFourth.rangeSlider({ min: +value },'update');
-  panelFourth.onChangeVal('from', +rangeFourth.data('from'));
-  const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
+  const track = rangeFourth.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   panelFourth.el.querySelector('.input-from').value = from;
   return rangeFourth.data('min');
@@ -366,7 +368,7 @@ panelFourth.onInput('min', (value) => {
 panelFourth.onInput('max', (value) => {
   rangeFourth.rangeSlider( { max: +value },'update');
   panelFourth.onChangeVal('from', +rangeFourth.data('from'));
-  const track = rangeFourth.data('$el')[0].querySelector('.range-slider');
+  const track = rangeFourth.data('el').querySelector('.range-slider')
   const from = track.dataset.from;
   panelFourth.el.querySelector('.input-from').value = from;
   return rangeFourth.data('max')
