@@ -67,7 +67,7 @@ export default class ViewSingle implements IViewSingle {
   private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
-    function onMove(e: MouseEvent) {
+    function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
     }
     function onClick(e: MouseEvent) {
@@ -75,6 +75,7 @@ export default class ViewSingle implements IViewSingle {
     }
 
     this.track.el.addEventListener('mousedown', onMove);
+    this.track.el.addEventListener('touchstart', onMove);
     this.track.el.addEventListener('mousedown', onClick);
   }
 

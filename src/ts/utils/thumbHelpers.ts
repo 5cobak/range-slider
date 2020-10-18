@@ -46,7 +46,7 @@ export function validateCoordsByMove(targetThumb: HTMLElement,
   }
 }
 
-export function getValues(isVertical: RegExpMatchArray | null, e: MouseEvent ):
+export function getValues(isVertical: RegExpMatchArray | null, e: MouseEvent | TouchEvent ):
 {
   secondCoord: string,
   track: HTMLElement,

@@ -36,14 +36,16 @@ export default class ViewThumb implements IThumb {
 
   // -------------------------------------------------------------  events for X type range
   // method for drap-and-drop on single and single-vertical types track
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+    // console.log(e.type);
+
     // get observable subject, positions and isVertical
     const { changedSubject, positions, isVertical } = this;
     // get values of element which we'll use when calculate position of thumb
     // getValues is function you we'll find at ./utils/thumbHelpers.ts
     const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e)
     // choose client.x or client.y for horizontal or vertical slider
-    const clientCoord = isVertical ? 'clientY' : 'clientX';
+
     if (!targetThumb) return;
     // count of steps in track
     const stepCount = generalVal / settings.step;
@@ -53,10 +55,18 @@ export default class ViewThumb implements IThumb {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
 
     // function for move thumb
-    function moveAt(pageXorY: number) {
+    function moveAt(e: MouseEvent | TouchEvent) {
+      let userCoord: number;
+      if (e instanceof MouseEvent) {
+        userCoord = isVertical ? e.clientY : e.clientX;
+      } else {
+        const touch = e.touches[0] || e.changedTouches[0];
+        userCoord = isVertical ? touch.clientY : touch.clientX;
+      }
       const trackCoord = track.getBoundingClientRect()[coord];
       // get coord for click in track
-      const newPos = pageXorY - trackCoord - halfSizeThumb;
+      const newPos = userCoord - trackCoord - halfSizeThumb;
+
       // get and regulation pos of thumb by step size
       const posByStep = Math.round(newPos / stepSize) * stepSize;
       // set thumb pos
@@ -68,14 +78,17 @@ export default class ViewThumb implements IThumb {
       changedSubject.notifyObservers();
     }
     // standart drag-and-drop addition and deletion event's listeners
-    function onMouseMove(e: MouseEvent) {
-      moveAt(e[clientCoord])
+    function onMouseMove(e: MouseEvent | TouchEvent) {
+      moveAt(e)
     }
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('touchmove', onMouseMove);
     }
+    document.addEventListener('touchmove', onMouseMove)
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', removeEventListeners);
+    document.addEventListener('touchend', removeEventListeners);
   }
 
   // looks like method above, besides there is the second thumb element
