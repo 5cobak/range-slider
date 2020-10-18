@@ -65,6 +65,8 @@ export default class ViewSingle implements IViewSingle {
 
   // add view events drap-and-drop and click on track from thumb
   private addEvents(generalVal: number):void {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     const thumb = this.thumb;
     const settings = this.settings;
     function onMove(e: MouseEvent | TouchEvent) {
@@ -74,10 +76,13 @@ export default class ViewSingle implements IViewSingle {
       thumb.onClickSingleType(e, settings, generalVal);
     }
 
-    this.track.el.addEventListener('mousedown', onMove);
-    this.track.el.addEventListener('touchstart', onMove);
-    this.track.el.addEventListener('mousedown', onClick);
-    this.track.el.addEventListener('touchstart', onClick);
+    if (isMobile) {
+      this.track.el.addEventListener('touchstart', onClick);
+      this.track.el.addEventListener('touchstart', onMove);
+    } else {
+      this.track.el.addEventListener('mousedown', onClick);
+      this.track.el.addEventListener('mousedown', onMove);
+    }
   }
 
   // this method set thumb position at init slider and notify high level's observers
