@@ -30,16 +30,19 @@ function onMove(e) {
   function removeEventListeners() {
     setTimeout(()=>{
       document.removeEventListener('mousemove', changeVal);
+      document.removeEventListener('touchmove', changeVal);
     document.removeEventListener('mouseup', updateVal);
     },100);
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
+  document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 
 rangeFirst.on('mousedown', onMove);
+rangeFirst.on('touchmove', onMove);
 
 panelFirst.onInput('from', (value) => {
   rangeFirst.rangeSlider({ from: +value },'update');

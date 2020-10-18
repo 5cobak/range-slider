@@ -16,5 +16,4 @@ module.exports = {
     "node"
   ],
   collectCoverage: true,
-  // coverageReporters: ["html"]
 };
