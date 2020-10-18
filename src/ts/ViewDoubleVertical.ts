@@ -114,17 +114,17 @@ export default class ViewDoubleVertical {
   private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
-    const inner = this.inner;
-    function onMove(e:MouseEvent) {
+    function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveDoubleType(e, settings, generalVal);
-      inner.setPosition(settings);
     }
-    function onClick(e:MouseEvent) {
+    function onClick(e:MouseEvent | TouchEvent) {
       thumb.onClickDoubleType(e, settings, generalVal);
-      inner.setPosition(settings);
     }
+
     this.track.el.addEventListener('mousedown', onMove);
+    this.track.el.addEventListener('touchstart', onMove);
     this.track.el.addEventListener('mousedown', onClick);
+    this.track.el.addEventListener('touchstart', onClick);
   }
 
   // inicialize view, set position for elements

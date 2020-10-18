@@ -69,14 +69,16 @@ export default class ViewSingleVertical {
   private addEvents(generalVal: number):void {
     const thumb = this.thumb;
     const settings = this.settings;
-    function onMove(e: MouseEvent) {
+    function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
     }
-    function onClick(e: MouseEvent) {
+    function onClick(e:MouseEvent | TouchEvent) {
       thumb.onClickSingleType(e, settings, generalVal);
     }
     this.track.el.addEventListener('mousedown', onMove);
+    this.track.el.addEventListener('touchstart', onMove);
     this.track.el.addEventListener('mousedown', onClick);
+    this.track.el.addEventListener('touchstart', onClick);
   }
 
   // this method set thumb position at init slider and notify high level's observers

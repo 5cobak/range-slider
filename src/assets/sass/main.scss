@@ -190,8 +190,11 @@ button {
 // Modules
 
 .range-slider-container {
-  margin-bottom: rem(250);
+  margin-bottom: rem(100);
 }
-
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
 @import 'modules/range-slider';
 @import 'modules/panel';

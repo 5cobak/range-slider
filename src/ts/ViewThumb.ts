@@ -45,8 +45,13 @@ export default class ViewThumb implements IThumb {
     // getValues is function you we'll find at ./utils/thumbHelpers.ts
     const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e)
     // choose client.x or client.y for horizontal or vertical slider
+    const isTouch = e.type === 'touchstart';
 
     if (!targetThumb) return;
+
+    if (isTouch) {
+      document.body.classList.add('stop-scrolling');
+    }
     // count of steps in track
     const stepCount = generalVal / settings.step;
     // step size
@@ -84,6 +89,7 @@ export default class ViewThumb implements IThumb {
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('touchmove', onMouseMove);
+      // document.body.classList.remove('stop-scrolling')
     }
     document.addEventListener('touchmove', onMouseMove)
     document.addEventListener('mousemove', onMouseMove);
@@ -92,8 +98,10 @@ export default class ViewThumb implements IThumb {
   }
 
   // looks like method above, besides there is the second thumb element
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
+
+    const isTouch = e.type === 'touchstart';
 
     const {
       firstThumb,
@@ -105,6 +113,7 @@ export default class ViewThumb implements IThumb {
     } = getValues(isVertical, e);
 
     if (!targetThumb) return;
+    if (isTouch) document.body.classList.add('stop-scrolling')
     // choosed thumb will have more z-index then wasn't choosed thumb
     targetThumb.style.zIndex = '100';
     (targetSecondThumb as HTMLElement).style.zIndex = '50'
@@ -112,12 +121,18 @@ export default class ViewThumb implements IThumb {
 
     const stepSize = trackSize / stepCount;
     const coord = isVertical ? 'top' : 'left';
-    const clientCoord = isVertical ? 'clientY' : 'clientX';
 
-    function moveAt(pageXorY: number): void {
+    function moveAt(e: MouseEvent | TouchEvent): void {
+      let userCoord: number;
+      if (e instanceof MouseEvent) {
+        userCoord = isVertical ? e.clientY : e.clientX;
+      } else {
+        const touch = e.touches[0] || e.changedTouches[0];
+        userCoord = isVertical ? touch.clientY : touch.clientX;
+      }
       const trackCoord = track.getBoundingClientRect()[coord];
 
-      const newLeft = pageXorY - trackCoord - halfSizeThumb;
+      const newLeft = userCoord - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       targetThumb.style[coord] = `${posPercent}px`;
@@ -130,32 +145,41 @@ export default class ViewThumb implements IThumb {
       changedSubject.notifyObservers();
     }
 
-    function onMouseMove(e: MouseEvent) {
-      moveAt(e[clientCoord]);
+    function onMouseMove(e: MouseEvent | TouchEvent) {
+      moveAt(e)
     }
     function removeEventListeners() {
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('touchmove', onMouseMove);
+      document.body.classList.remove('stop-scrolling')
     }
+    document.addEventListener('touchmove', onMouseMove)
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', removeEventListeners);
+    document.addEventListener('touchend', removeEventListeners);
   }
 
   // next methods look like methods above, besides type of event, it is mousedown on track
 
-  onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
-
     const { track, firstThumb, trackSize, halfSizeThumb } = getValues(isVertical, e)
-    const clientCoord = isVertical ? 'clientY' : 'clientX';
 
     const coord = settings.type.match('vertical') ? 'top' : 'left';
 
     const stepCount = generalVal / settings.step;
     const stepSize = trackSize / stepCount;
 
-    function moveAt(clientXorY: number) {
+    function moveAt(e: MouseEvent | TouchEvent) {
+      let userCoord: number;
+      if (e instanceof MouseEvent) {
+        userCoord = isVertical ? e.clientY : e.clientX;
+      } else {
+        const touch = e.touches[0] || e.changedTouches[0];
+        userCoord = isVertical ? touch.clientY : touch.clientX;
+      }
       const trackCoord = track.getBoundingClientRect()[coord];
-      const newLeft = clientXorY - trackCoord - halfSizeThumb;
+      const newLeft = userCoord - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       firstThumb.style[coord] = `${posPercent}px`;
@@ -165,36 +189,42 @@ export default class ViewThumb implements IThumb {
       positions.from = parseFloat(firstThumb.style[coord]);
       changedSubject.notifyObservers();
     }
-    moveAt(e[clientCoord])
+    moveAt(e)
   }
 
-  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this
     const { track, firstThumb, secondThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
     let firstDifference: number;
     let secondDifference: number;
-    const clientCoord = isVertical ? 'clientY' : 'clientX';
     const coord = isVertical ? 'top' : 'left';
     const secondCoord = isVertical ? 'bottom' : 'right';
 
-    firstDifference = firstThumb.getBoundingClientRect()[coord] - e[clientCoord];
-    secondDifference = secondThumb.getBoundingClientRect()[secondCoord] - e[clientCoord];
+    function moveAt(e: MouseEvent | TouchEvent) {
+      let userCoord: number;
+      if (e instanceof MouseEvent) {
+        userCoord = isVertical ? e.clientY : e.clientX;
+      } else {
+        const touch = e.touches[0] || e.changedTouches[0];
+        userCoord = isVertical ? touch.clientY : touch.clientX;
+      }
+      firstDifference = firstThumb.getBoundingClientRect()[coord] - userCoord;
+      secondDifference = secondThumb.getBoundingClientRect()[secondCoord] - userCoord;
 
-    let movedThumb: HTMLElement;
+      let movedThumb: HTMLElement;
 
-    if (firstDifference < 0) firstDifference = -firstDifference;
-    else if (secondDifference < 0) secondDifference = -secondDifference;
+      if (firstDifference < 0) firstDifference = -firstDifference;
+      else if (secondDifference < 0) secondDifference = -secondDifference;
 
-    if (firstDifference > secondDifference) movedThumb = secondThumb;
-    else movedThumb = firstThumb;
+      if (firstDifference > secondDifference) movedThumb = secondThumb;
+      else movedThumb = firstThumb;
 
-    const stepCount = generalVal / settings.step;
-    const stepSize = trackSize / stepCount;
+      const stepCount = generalVal / settings.step;
+      const stepSize = trackSize / stepCount;
 
-    function moveAt(clientCoord: number) {
       const trackCoord = track.getBoundingClientRect()[coord]
 
-      const newLeft = clientCoord - trackCoord - halfSizeThumb;
+      const newLeft = userCoord - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
       movedThumb.style[coord] = `${posPercent}px`;
@@ -206,6 +236,6 @@ export default class ViewThumb implements IThumb {
       changedSubject.notifyObservers();
     }
 
-    moveAt(e[clientCoord])
+    moveAt(e)
   }
 }

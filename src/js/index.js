@@ -42,7 +42,7 @@ function onMove(e) {
 }
 
 rangeFirst.on('mousedown', onMove);
-rangeFirst.on('touchmove', onMove);
+rangeFirst.on('touchstart', onMove);
 
 panelFirst.onInput('from', (value) => {
   rangeFirst.rangeSlider({ from: +value },'update');
@@ -119,16 +119,19 @@ function onMoveSec(e) {
   function removeEventListeners() {
     setTimeout(()=>{
       document.removeEventListener('mousemove', changeVal);
+      document.removeEventListener('touchmove', changeVal);
     document.removeEventListener('mouseup', updateVal);
     },100)
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
+  document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
   // document.addEventListener('mouseup', removeEventListeners);
 }
 
 rangeSecond.on('mousedown', onMoveSec);
+rangeSecond.on('touchstart', onMoveSec);
 
 panelSecond.onInput('from', (value) => {
   rangeSecond.rangeSlider({ from: +value },'update');
@@ -224,16 +227,19 @@ function onMoveThird(e) {
   function removeEventListeners() {
     setTimeout(()=>{
       document.removeEventListener('mousemove', changeVal);
+      document.removeEventListener('touchmove', changeVal);
     document.removeEventListener('mouseup', updateVal);
     },100)
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
+  document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 
 rangeThird.on('mousedown', onMoveThird);
+rangeThird.on('touchstart', onMoveThird);
 
 panelThird.onInput('from', (value) => {
   rangeThird.rangeSlider({ from: +value },'update');
@@ -332,16 +338,19 @@ function onMoveForth(e) {
   function removeEventListeners() {
     setTimeout(()=>{
       document.removeEventListener('mousemove', changeVal);
+      document.removeEventListener('touchmove', changeVal);
     document.removeEventListener('mouseup', updateVal);
     },100)
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
+  document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 
 rangeFourth.on('mousedown', onMoveForth);
+rangeFourth.on('touchstart', onMoveForth);
 
 panelFourth.onInput('from', (value) => {
   rangeFourth.rangeSlider({ from: +value },'update');
