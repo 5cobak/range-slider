@@ -1,7 +1,0 @@
-@import "./utils/fonts.css";
-@import "~normalize.css";
-
-h1 {
-  color: red;
-  font-family: Roboto-Regular, sans-serif;
-}
