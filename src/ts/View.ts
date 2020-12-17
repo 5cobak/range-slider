@@ -6,11 +6,11 @@ import MakeObservableSubject from './Observer';
 import { IView, IsettingsTypes, ISubView, IObserver } from './globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
-  settings: IsettingsTypes;
+  settings!: IsettingsTypes;
 
-  el: HTMLElement;
+  el!: HTMLElement;
 
-  type: ISubView;
+  type!: ISubView;
 
   changedSubject!: IObserver;
 
@@ -18,16 +18,11 @@ export default class View implements IView {
 
   trackSize!: number;
 
-  positions: {to: number, from: number}
+  positions!: { to: number; from: number };
 
   // constructor access first argument jQuery<HTMLElement>, model's settings and general value across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
-    this.el = element;
-    this.settings = settings;
-    this.type = this.chooseViewType(settings, generalVal);
-    this.positions = { to: 0, from: 0 };
-    this.changedSubject = new MakeObservableSubject();
-    this.init(settings);
+    this.init(settings, element, generalVal);
   }
 
   // method for get positons from lower levels and notyfy high levels
@@ -61,16 +56,19 @@ export default class View implements IView {
   }
 
   // method set trackSize and thumbSize for model's calculation and add observer where get positons of thumbs and
-  private init(settings: IsettingsTypes) {
+  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number) {
+    this.el = element;
+    this.settings = settings;
+    this.type = this.chooseViewType(settings, generalVal);
+    this.positions = { to: 0, from: 0 };
+    this.changedSubject = new MakeObservableSubject();
     this.thumbSize = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(this.type.thumb.el).height)
       : parseFloat(getComputedStyle(this.type.thumb.el).width);
 
     this.trackSize = settings.type.match('vertical')
-      ? parseFloat(getComputedStyle(this.type.track.el).height) -
-        parseFloat(getComputedStyle(this.type.thumb.el).height)
-      : parseFloat(getComputedStyle(this.type.track.el).width) -
-        parseFloat(getComputedStyle(this.type.thumb.el).width);
+      ? parseFloat(getComputedStyle(this.type.track.el).height) - parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.track.el).width) - parseFloat(getComputedStyle(this.type.thumb.el).width);
     // add observer in type and notify this type in order to get positions from low level
     this.type.changedSubject.addObservers(() => {
       this.getThumbsPos();

@@ -8,56 +8,33 @@ import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObser
 import MakeObservableSubject from './Observer';
 // VIEW class
 export default class ViewSingleVertical {
-  settings: IsettingsTypes;
+  settings!: IsettingsTypes;
 
-  el: HTMLElement;
+  el!: HTMLElement;
 
-  track: ITrack;
+  track!: ITrack;
 
-  thumb: IThumb;
+  thumb!: IThumb;
 
-  inner: IClassProperties;
+  inner!: IClassProperties;
 
-  flag: IFlag;
+  flag!: IFlag;
 
-  scale: IScale;
+  scale!: IScale;
 
   thumbPos!: number;
 
-  changedSubject!: IObserver
+  changedSubject!: IObserver;
 
-  positions: Iposition;
+  positions!: Iposition;
 
   // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
-    this.settings = settings;
-    this.el = element;
-    // this property we'll pass by observer to high level, this store thumbs positions for model
-    this.positions = { from: 0, to: 0 };
-    // init track, thumb, inner, scale, flag
-    this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb(this.settings);
-    this.inner = new ViewInner(this.settings);
-    this.flag = new ViewFlag();
-    this.scale = new ViewScale(this.settings);
-    // make observable subject
-    this.changedSubject = new MakeObservableSubject();
-    // add all elements in track
-    this.addElements();
-    // add needed events for single-vertical type of slider
-    this.addEvents(generalVal);
-    this.init(generalVal);
-    // add Observer to thumb and get postion of thumb and notify hight level
-    this.thumb.changedSubject.addObservers(() => {
-      this.positions.from = this.thumb.positions.from;
-      // set inner's position by move thumb or click on track
-      this.inner.setPosition(this.settings);
-      this.changedSubject.notifyObservers();
-    })
+    this.init(settings, element, generalVal);
   }
 
   // add all elements in view
-  private addElements():void {
+  private addElements(): void {
     this.el.append(this.track.el);
     this.track.el.append(this.inner.el, this.thumb.el);
     // add flag and scale if the user set in options true for them
@@ -66,7 +43,7 @@ export default class ViewSingleVertical {
   }
 
   // add view events drap-and-drop and click on track from thumb
-  private addEvents(generalVal: number):void {
+  private addEvents(generalVal: number): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     const thumb = this.thumb;
@@ -74,7 +51,7 @@ export default class ViewSingleVertical {
     function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
     }
-    function onClick(e:MouseEvent | TouchEvent) {
+    function onClick(e: MouseEvent | TouchEvent) {
       thumb.onClickSingleType(e, settings, generalVal);
     }
 
@@ -111,7 +88,24 @@ export default class ViewSingleVertical {
 
   // inicialize view, set position for elements
   // method use methods from flag and scale if it was set true by user
-  private init(generalVal:number):void {
+  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number): void {
+    this.settings = settings;
+    this.el = element;
+    // this property we'll pass by observer to high level, this store thumbs positions for model
+    this.positions = { from: 0, to: 0 };
+    // init track, thumb, inner, scale, flag
+    this.track = new ViewTrack(this.settings);
+    this.thumb = new ViewThumb(this.settings);
+    this.inner = new ViewInner(this.settings);
+    this.flag = new ViewFlag();
+    this.scale = new ViewScale(this.settings);
+    // make observable subject
+    this.changedSubject = new MakeObservableSubject();
+    // add all elements in track
+    this.addElements();
+    // add needed events for single-vertical type of slider
+    this.addEvents(generalVal);
+
     this.setThumbPos(this.settings, generalVal);
     this.inner.setPosition(this.settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
@@ -119,5 +113,12 @@ export default class ViewSingleVertical {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);
     }
+    // add Observer to thumb and get postion of thumb and notify hight level
+    this.thumb.changedSubject.addObservers(() => {
+      this.positions.from = this.thumb.positions.from;
+      // set inner's position by move thumb or click on track
+      this.inner.setPosition(this.settings);
+      this.changedSubject.notifyObservers();
+    });
   }
 }

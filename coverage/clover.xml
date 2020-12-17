@@ -1,205 +1,772 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1603019398908" clover="3.2.0">
-  <project timestamp="1603019398908" name="All files">
-    <metrics statements="176" coveredstatements="176" conditionals="54" coveredconditionals="54" methods="26" coveredmethods="26" elements="256" coveredelements="256" complexity="0" loc="176" ncloc="176" packages="2" files="6" classes="6"/>
+<coverage generated="1608188909223" clover="3.2.0">
+  <project timestamp="1608188909223" name="All files">
+    <metrics statements="716" coveredstatements="699" conditionals="226" coveredconditionals="199" methods="104" coveredmethods="104" elements="1046" coveredelements="1002" complexity="0" loc="716" ncloc="716" packages="2" files="15" classes="15"/>
     <package name="ts">
-      <metrics statements="125" coveredstatements="125" conditionals="36" coveredconditionals="36" methods="23" coveredmethods="23"/>
-      <file name="Observer.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\Observer.ts">
+      <metrics statements="624" coveredstatements="607" conditionals="158" coveredconditionals="131" methods="97" coveredmethods="97"/>
+      <file name="Observer.ts" path="C:\range-slider\range-slider\src\ts\Observer.ts">
         <metrics statements="20" coveredstatements="20" conditionals="4" coveredconditionals="4" methods="5" coveredmethods="5"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="5" count="9" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="10" type="stmt"/>
-        <line num="10" count="14" type="stmt"/>
-        <line num="11" count="14" type="cond" truecount="2" falsecount="0"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="15" count="8" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="6" type="stmt"/>
-        <line num="20" count="16" type="stmt"/>
-        <line num="21" count="16" type="cond" truecount="2" falsecount="0"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="33" count="19" type="stmt"/>
-        <line num="34" count="19" type="stmt"/>
-        <line num="35" count="26" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="5" count="638" type="stmt"/>
+        <line num="8" count="9" type="stmt"/>
+        <line num="9" count="105" type="stmt"/>
+        <line num="10" count="63" type="stmt"/>
+        <line num="11" count="63" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="15" count="96" type="stmt"/>
+        <line num="18" count="9" type="stmt"/>
+        <line num="19" count="27" type="stmt"/>
+        <line num="20" count="72" type="stmt"/>
+        <line num="21" count="72" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="18" type="stmt"/>
+        <line num="23" count="18" type="stmt"/>
+        <line num="27" count="9" type="stmt"/>
+        <line num="30" count="9" type="stmt"/>
+        <line num="33" count="895" type="stmt"/>
+        <line num="34" count="895" type="stmt"/>
+        <line num="35" count="236" type="stmt"/>
+        <line num="38" count="9" type="stmt"/>
       </file>
-      <file name="ViewFlag.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\ViewFlag.ts">
-        <metrics statements="19" coveredstatements="19" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="7" count="18" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="18" type="stmt"/>
-        <line num="12" count="18" type="stmt"/>
-        <line num="13" count="18" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="18" count="6" type="stmt"/>
-        <line num="19" count="6" type="stmt"/>
-        <line num="20" count="6" type="stmt"/>
-        <line num="21" count="6" type="stmt"/>
-        <line num="22" count="6" type="stmt"/>
-        <line num="23" count="6" type="stmt"/>
-        <line num="25" count="6" type="cond" truecount="2" falsecount="0"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="27" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-      </file>
-      <file name="ViewInner.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\ViewInner.ts">
-        <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="10" count="4" type="stmt"/>
-        <line num="11" count="4" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="4" type="stmt"/>
-        <line num="17" count="4" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="24" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="27" count="4" type="stmt"/>
-        <line num="29" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-      </file>
-      <file name="ViewScale.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\ViewScale.ts">
-        <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="Presenter.ts" path="C:\range-slider\range-slider\src\ts\Presenter.ts">
+        <metrics statements="53" coveredstatements="53" conditionals="4" coveredconditionals="4" methods="9" coveredmethods="9"/>
+        <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="15" count="4" type="stmt"/>
-        <line num="17" count="4" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
-        <line num="25" count="4" type="stmt"/>
-        <line num="26" count="4" type="stmt"/>
-        <line num="28" count="4" type="stmt"/>
-        <line num="29" count="4" type="stmt"/>
-        <line num="30" count="4" type="stmt"/>
-        <line num="31" count="4" type="stmt"/>
-        <line num="32" count="4" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="37" count="4" type="stmt"/>
-        <line num="38" count="4" type="stmt"/>
-        <line num="40" count="4" type="stmt"/>
-        <line num="41" count="4" type="stmt"/>
-        <line num="43" count="4" type="stmt"/>
-        <line num="44" count="4" type="stmt"/>
-        <line num="46" count="4" type="stmt"/>
-        <line num="47" count="4" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
-        <line num="51" count="10" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="7" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="7" type="stmt"/>
+        <line num="24" count="7" type="stmt"/>
+        <line num="25" count="7" type="stmt"/>
+        <line num="26" count="7" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="29" count="7" type="stmt"/>
+        <line num="31" count="7" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="50" count="3" type="stmt"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="55" count="5" type="stmt"/>
+        <line num="57" count="5" type="stmt"/>
+        <line num="59" count="5" type="stmt"/>
+        <line num="63" count="5" type="stmt"/>
+        <line num="66" count="5" type="stmt"/>
+        <line num="67" count="5" type="stmt"/>
+        <line num="68" count="5" type="stmt"/>
+        <line num="70" count="5" type="stmt"/>
+        <line num="71" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="74" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="78" count="3" type="stmt"/>
+        <line num="79" count="3" type="stmt"/>
+        <line num="81" count="3" type="stmt"/>
+        <line num="82" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="3" type="stmt"/>
+        <line num="86" count="3" type="stmt"/>
+        <line num="90" count="5" type="stmt"/>
+        <line num="91" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="92" count="2" type="stmt"/>
+        <line num="95" count="5" type="stmt"/>
+        <line num="96" count="5" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+      </file>
+      <file name="View.ts" path="C:\range-slider\range-slider\src\ts\View.ts">
+        <metrics statements="36" coveredstatements="36" conditionals="12" coveredconditionals="12" methods="6" coveredmethods="6"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="25" count="13" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="13" type="stmt"/>
+        <line num="32" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="7" type="stmt"/>
+        <line num="36" count="13" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="42" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="46" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="50" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="4" type="stmt"/>
+        <line num="52" count="4" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="59" count="13" type="stmt"/>
+        <line num="60" count="13" type="stmt"/>
+        <line num="61" count="13" type="stmt"/>
+        <line num="62" count="13" type="stmt"/>
+        <line num="63" count="13" type="stmt"/>
+        <line num="64" count="13" type="stmt"/>
+        <line num="65" count="13" type="stmt"/>
+        <line num="69" count="13" type="stmt"/>
+        <line num="73" count="13" type="stmt"/>
+        <line num="74" count="13" type="stmt"/>
+        <line num="76" count="13" type="stmt"/>
+        <line num="78" count="2" type="stmt"/>
+      </file>
+      <file name="ViewDouble.ts" path="C:\range-slider\range-slider\src\ts\ViewDouble.ts">
+        <metrics statements="76" coveredstatements="74" conditionals="12" coveredconditionals="11" methods="10" coveredmethods="10"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="35" count="9" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="9" type="stmt"/>
+        <line num="42" count="9" type="stmt"/>
+        <line num="43" count="9" type="stmt"/>
+        <line num="44" count="9" type="stmt"/>
+        <line num="45" count="9" type="stmt"/>
+        <line num="46" count="9" type="stmt"/>
+        <line num="48" count="9" type="stmt"/>
+        <line num="50" count="9" type="stmt"/>
+        <line num="51" count="9" type="stmt"/>
+        <line num="53" count="9" type="stmt"/>
+        <line num="54" count="9" type="stmt"/>
+        <line num="56" count="9" type="stmt"/>
+        <line num="57" count="9" type="stmt"/>
+        <line num="59" count="9" type="stmt"/>
+        <line num="60" count="9" type="stmt"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
+        <line num="68" count="9" type="stmt"/>
+        <line num="69" count="9" type="stmt"/>
+        <line num="70" count="9" type="stmt"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="9" type="stmt"/>
+        <line num="76" count="9" type="stmt"/>
+        <line num="78" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="9" type="stmt"/>
+        <line num="82" count="9" type="stmt"/>
+        <line num="83" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="84" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="88" count="3" type="stmt"/>
+        <line num="89" count="9" type="stmt"/>
+        <line num="91" count="9" type="stmt"/>
+        <line num="92" count="9" type="stmt"/>
+        <line num="94" count="12" type="stmt"/>
+        <line num="97" count="12" type="stmt"/>
+        <line num="100" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="104" count="9" type="stmt"/>
+        <line num="105" count="9" type="stmt"/>
+        <line num="111" count="9" type="stmt"/>
+        <line num="112" count="9" type="stmt"/>
+        <line num="113" count="9" type="stmt"/>
+        <line num="115" count="9" type="stmt"/>
+        <line num="117" count="9" type="stmt"/>
+        <line num="118" count="9" type="stmt"/>
+        <line num="119" count="9" type="stmt"/>
+        <line num="120" count="9" type="stmt"/>
+        <line num="121" count="9" type="stmt"/>
+        <line num="122" count="9" type="stmt"/>
+        <line num="124" count="9" type="stmt"/>
+        <line num="127" count="9" type="stmt"/>
+        <line num="129" count="9" type="stmt"/>
+        <line num="131" count="9" type="stmt"/>
+        <line num="132" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="133" count="6" type="stmt"/>
+        <line num="134" count="6" type="stmt"/>
+        <line num="137" count="9" type="stmt"/>
+        <line num="138" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="139" count="6" type="stmt"/>
+        <line num="140" count="6" type="stmt"/>
+        <line num="142" count="9" type="stmt"/>
+        <line num="144" count="9" type="stmt"/>
+        <line num="145" count="24" type="stmt"/>
+        <line num="146" count="24" type="stmt"/>
+        <line num="147" count="24" type="stmt"/>
+        <line num="148" count="24" type="stmt"/>
+        <line num="151" count="3" type="stmt"/>
+      </file>
+      <file name="ViewDoubleVertical.ts" path="C:\range-slider\range-slider\src\ts\ViewDoubleVertical.ts">
+        <metrics statements="75" coveredstatements="73" conditionals="12" coveredconditionals="11" methods="10" coveredmethods="10"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="10" type="stmt"/>
+        <line num="46" count="10" type="stmt"/>
+        <line num="47" count="10" type="stmt"/>
+        <line num="48" count="10" type="stmt"/>
+        <line num="49" count="10" type="stmt"/>
+        <line num="50" count="10" type="stmt"/>
         <line num="52" count="10" type="stmt"/>
         <line num="54" count="10" type="stmt"/>
-        <line num="56" count="10" type="stmt"/>
+        <line num="55" count="10" type="stmt"/>
+        <line num="57" count="10" type="stmt"/>
         <line num="58" count="10" type="stmt"/>
+        <line num="60" count="10" type="stmt"/>
         <line num="61" count="10" type="stmt"/>
         <line num="63" count="10" type="stmt"/>
-        <line num="65" count="1" type="stmt"/>
+        <line num="64" count="10" type="stmt"/>
+        <line num="66" count="10" type="stmt"/>
+        <line num="70" count="3" type="stmt"/>
+        <line num="71" count="10" type="stmt"/>
+        <line num="72" count="10" type="stmt"/>
+        <line num="73" count="10" type="stmt"/>
+        <line num="77" count="3" type="stmt"/>
+        <line num="78" count="10" type="stmt"/>
+        <line num="79" count="10" type="stmt"/>
+        <line num="81" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="83" count="10" type="stmt"/>
+        <line num="84" count="10" type="stmt"/>
+        <line num="85" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="90" count="3" type="stmt"/>
+        <line num="91" count="10" type="stmt"/>
+        <line num="93" count="10" type="stmt"/>
+        <line num="94" count="10" type="stmt"/>
+        <line num="96" count="12" type="stmt"/>
+        <line num="99" count="12" type="stmt"/>
+        <line num="102" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="106" count="10" type="stmt"/>
+        <line num="107" count="10" type="stmt"/>
+        <line num="113" count="10" type="stmt"/>
+        <line num="114" count="10" type="stmt"/>
+        <line num="115" count="10" type="stmt"/>
+        <line num="117" count="10" type="stmt"/>
+        <line num="119" count="10" type="stmt"/>
+        <line num="120" count="10" type="stmt"/>
+        <line num="121" count="10" type="stmt"/>
+        <line num="122" count="10" type="stmt"/>
+        <line num="123" count="10" type="stmt"/>
+        <line num="124" count="10" type="stmt"/>
+        <line num="126" count="10" type="stmt"/>
+        <line num="128" count="10" type="stmt"/>
+        <line num="130" count="10" type="stmt"/>
+        <line num="132" count="10" type="stmt"/>
+        <line num="134" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="135" count="7" type="stmt"/>
+        <line num="136" count="7" type="stmt"/>
+        <line num="139" count="10" type="stmt"/>
+        <line num="140" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="141" count="7" type="stmt"/>
+        <line num="142" count="7" type="stmt"/>
+        <line num="145" count="10" type="stmt"/>
+        <line num="146" count="24" type="stmt"/>
+        <line num="147" count="24" type="stmt"/>
+        <line num="148" count="24" type="stmt"/>
+        <line num="149" count="24" type="stmt"/>
+        <line num="152" count="3" type="stmt"/>
       </file>
-      <file name="model.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\model.ts">
-        <metrics statements="30" coveredstatements="30" conditionals="22" coveredconditionals="22" methods="5" coveredmethods="5"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="13" count="7" type="stmt"/>
-        <line num="15" count="7" type="stmt"/>
+      <file name="ViewFlag.ts" path="C:\range-slider\range-slider\src\ts\ViewFlag.ts">
+        <metrics statements="19" coveredstatements="19" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="7" count="182" type="stmt"/>
+        <line num="10" count="7" type="stmt"/>
+        <line num="11" count="182" type="stmt"/>
+        <line num="12" count="182" type="stmt"/>
+        <line num="13" count="182" type="stmt"/>
         <line num="17" count="7" type="stmt"/>
-        <line num="23" count="7" type="stmt"/>
-        <line num="25" count="7" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
+        <line num="18" count="80" type="stmt"/>
+        <line num="19" count="80" type="stmt"/>
+        <line num="20" count="80" type="stmt"/>
+        <line num="21" count="80" type="stmt"/>
+        <line num="22" count="80" type="stmt"/>
+        <line num="23" count="80" type="stmt"/>
+        <line num="25" count="80" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="32" type="stmt"/>
+        <line num="27" count="48" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="14" type="stmt"/>
+        <line num="29" count="34" type="stmt"/>
         <line num="31" count="7" type="stmt"/>
-        <line num="33" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="35" count="7" type="stmt"/>
+      </file>
+      <file name="ViewInner.ts" path="C:\range-slider\range-slider\src\ts\ViewInner.ts">
+        <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="10" count="65" type="stmt"/>
+        <line num="11" count="65" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="65" type="stmt"/>
+        <line num="17" count="65" type="stmt"/>
+        <line num="18" count="65" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="161" type="stmt"/>
+        <line num="24" count="161" type="stmt"/>
+        <line num="26" count="161" type="stmt"/>
+        <line num="27" count="161" type="stmt"/>
+        <line num="29" count="161" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="40" type="stmt"/>
+        <line num="31" count="121" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="40" type="stmt"/>
+        <line num="33" count="40" type="stmt"/>
+        <line num="34" count="40" type="stmt"/>
+        <line num="35" count="81" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="40" type="stmt"/>
+        <line num="38" count="41" type="stmt"/>
+        <line num="39" count="41" type="stmt"/>
+        <line num="40" count="41" type="stmt"/>
+        <line num="43" count="7" type="stmt"/>
+      </file>
+      <file name="ViewScale.ts" path="C:\range-slider\range-slider\src\ts\ViewScale.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="15" count="65" type="stmt"/>
+        <line num="17" count="65" type="stmt"/>
+        <line num="21" count="7" type="stmt"/>
+        <line num="22" count="65" type="stmt"/>
+        <line num="23" count="65" type="stmt"/>
+        <line num="25" count="65" type="stmt"/>
+        <line num="26" count="65" type="stmt"/>
+        <line num="28" count="65" type="stmt"/>
+        <line num="29" count="65" type="stmt"/>
+        <line num="30" count="65" type="stmt"/>
+        <line num="31" count="65" type="stmt"/>
+        <line num="32" count="65" type="stmt"/>
         <line num="36" count="7" type="stmt"/>
-        <line num="43" count="1" type="stmt"/>
-        <line num="44" count="5" type="stmt"/>
-        <line num="46" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="48" count="5" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="53" count="7" type="stmt"/>
-        <line num="54" count="7" type="stmt"/>
-        <line num="55" count="7" type="cond" truecount="4" falsecount="0"/>
-        <line num="56" count="1" type="stmt"/>
-        <line num="57" count="1" type="stmt"/>
-        <line num="59" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="60" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="61" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="62" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="63" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="64" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="65" count="5" type="cond" truecount="2" falsecount="0"/>
-        <line num="67" count="1" type="stmt"/>
+        <line num="37" count="53" type="stmt"/>
+        <line num="38" count="53" type="stmt"/>
+        <line num="40" count="53" type="stmt"/>
+        <line num="41" count="53" type="stmt"/>
+        <line num="43" count="53" type="stmt"/>
+        <line num="44" count="53" type="stmt"/>
+        <line num="46" count="53" type="stmt"/>
+        <line num="47" count="53" type="stmt"/>
+        <line num="50" count="7" type="stmt"/>
+        <line num="51" count="95" type="stmt"/>
+        <line num="52" count="95" type="stmt"/>
+        <line num="54" count="95" type="stmt"/>
+        <line num="56" count="95" type="stmt"/>
+        <line num="58" count="95" type="stmt"/>
+        <line num="61" count="95" type="stmt"/>
+        <line num="63" count="95" type="stmt"/>
+        <line num="65" count="7" type="stmt"/>
+      </file>
+      <file name="ViewSingle.ts" path="C:\range-slider\range-slider\src\ts\ViewSingle.ts">
+        <metrics statements="60" coveredstatements="58" conditionals="10" coveredconditionals="9" methods="9" coveredmethods="9"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="31" count="9" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="36" count="9" type="stmt"/>
+        <line num="37" count="9" type="stmt"/>
+        <line num="39" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="45" count="9" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="48" count="9" type="stmt"/>
+        <line num="50" count="12" type="stmt"/>
+        <line num="53" count="12" type="stmt"/>
+        <line num="56" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="60" count="9" type="stmt"/>
+        <line num="61" count="9" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
+        <line num="68" count="9" type="stmt"/>
+        <line num="69" count="9" type="stmt"/>
+        <line num="70" count="9" type="stmt"/>
+        <line num="71" count="9" type="stmt"/>
+        <line num="72" count="9" type="stmt"/>
+        <line num="74" count="9" type="stmt"/>
+        <line num="76" count="9" type="stmt"/>
+        <line num="78" count="9" type="stmt"/>
+        <line num="80" count="9" type="stmt"/>
+        <line num="82" count="9" type="stmt"/>
+        <line num="84" count="9" type="stmt"/>
+        <line num="89" count="9" type="stmt"/>
+        <line num="90" count="9" type="stmt"/>
+        <line num="91" count="9" type="stmt"/>
+        <line num="93" count="9" type="stmt"/>
+        <line num="95" count="9" type="stmt"/>
+        <line num="96" count="9" type="stmt"/>
+        <line num="97" count="9" type="stmt"/>
+        <line num="98" count="9" type="stmt"/>
+        <line num="99" count="9" type="stmt"/>
+        <line num="101" count="9" type="stmt"/>
+        <line num="103" count="9" type="stmt"/>
+        <line num="104" count="24" type="stmt"/>
+        <line num="106" count="24" type="stmt"/>
+        <line num="107" count="24" type="stmt"/>
+        <line num="110" count="9" type="stmt"/>
+        <line num="112" count="9" type="stmt"/>
+        <line num="114" count="9" type="stmt"/>
+        <line num="115" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="116" count="9" type="stmt"/>
+        <line num="117" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="118" count="6" type="stmt"/>
+        <line num="119" count="6" type="stmt"/>
+        <line num="121" count="9" type="stmt"/>
+        <line num="123" count="3" type="stmt"/>
+      </file>
+      <file name="ViewSingleVertical.ts" path="C:\range-slider\range-slider\src\ts\ViewSingleVertical.ts">
+        <metrics statements="59" coveredstatements="57" conditionals="10" coveredconditionals="9" methods="9" coveredmethods="9"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="33" count="9" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="9" type="stmt"/>
+        <line num="39" count="9" type="stmt"/>
+        <line num="41" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="42" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="49" count="9" type="stmt"/>
+        <line num="50" count="9" type="stmt"/>
+        <line num="52" count="12" type="stmt"/>
+        <line num="55" count="12" type="stmt"/>
+        <line num="58" count="9" type="cond" truecount="1" falsecount="1"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="63" count="9" type="stmt"/>
+        <line num="69" count="3" type="stmt"/>
+        <line num="70" count="9" type="stmt"/>
+        <line num="71" count="9" type="stmt"/>
+        <line num="72" count="9" type="stmt"/>
+        <line num="73" count="9" type="stmt"/>
+        <line num="74" count="9" type="stmt"/>
+        <line num="76" count="9" type="stmt"/>
+        <line num="78" count="9" type="stmt"/>
+        <line num="80" count="9" type="stmt"/>
+        <line num="82" count="9" type="stmt"/>
+        <line num="84" count="9" type="stmt"/>
+        <line num="86" count="9" type="stmt"/>
+        <line num="91" count="9" type="stmt"/>
+        <line num="92" count="9" type="stmt"/>
+        <line num="93" count="9" type="stmt"/>
+        <line num="95" count="9" type="stmt"/>
+        <line num="97" count="9" type="stmt"/>
+        <line num="98" count="9" type="stmt"/>
+        <line num="99" count="9" type="stmt"/>
+        <line num="100" count="9" type="stmt"/>
+        <line num="101" count="9" type="stmt"/>
+        <line num="103" count="9" type="stmt"/>
+        <line num="105" count="9" type="stmt"/>
+        <line num="107" count="9" type="stmt"/>
+        <line num="109" count="9" type="stmt"/>
+        <line num="110" count="9" type="stmt"/>
+        <line num="111" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="112" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="113" count="6" type="stmt"/>
+        <line num="114" count="6" type="stmt"/>
+        <line num="117" count="9" type="stmt"/>
+        <line num="118" count="24" type="stmt"/>
+        <line num="120" count="24" type="stmt"/>
+        <line num="121" count="24" type="stmt"/>
+        <line num="124" count="3" type="stmt"/>
+      </file>
+      <file name="ViewThumb.ts" path="C:\range-slider\range-slider\src\ts\ViewThumb.ts">
+        <metrics statements="118" coveredstatements="109" conditionals="56" coveredconditionals="34" methods="16" coveredmethods="16"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="5" count="7" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="18" count="560" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="560" type="stmt"/>
+        <line num="24" count="560" type="stmt"/>
+        <line num="25" count="560" type="stmt"/>
+        <line num="30" count="7" type="stmt"/>
+        <line num="34" count="104" type="stmt"/>
+        <line num="37" count="104" type="stmt"/>
+        <line num="39" count="104" type="stmt"/>
+        <line num="41" count="104" type="cond" truecount="2" falsecount="0"/>
+        <line num="43" count="49" type="cond" truecount="1" falsecount="1"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="47" count="49" type="stmt"/>
+        <line num="49" count="49" type="stmt"/>
+        <line num="51" count="49" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="126" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="126" type="cond" truecount="2" falsecount="0"/>
+        <line num="59" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="60" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="62" count="126" type="stmt"/>
+        <line num="64" count="126" type="stmt"/>
+        <line num="67" count="126" type="stmt"/>
+        <line num="69" count="126" type="stmt"/>
+        <line num="71" count="126" type="stmt"/>
+        <line num="73" count="126" type="stmt"/>
+        <line num="74" count="126" type="stmt"/>
+        <line num="78" count="126" type="stmt"/>
+        <line num="81" count="252" type="stmt"/>
+        <line num="82" count="252" type="stmt"/>
+        <line num="83" count="252" type="stmt"/>
+        <line num="85" count="49" type="stmt"/>
+        <line num="86" count="49" type="stmt"/>
+        <line num="87" count="49" type="stmt"/>
+        <line num="88" count="49" type="stmt"/>
+        <line num="92" count="7" type="stmt"/>
+        <line num="93" count="185" type="stmt"/>
+        <line num="95" count="185" type="stmt"/>
+        <line num="97" count="185" type="stmt"/>
+        <line num="99" count="185" type="cond" truecount="2" falsecount="0"/>
+        <line num="100" count="154" type="cond" truecount="1" falsecount="1"/>
+        <line num="102" count="154" type="stmt"/>
+        <line num="103" count="154" type="stmt"/>
+        <line num="104" count="154" type="stmt"/>
+        <line num="106" count="154" type="stmt"/>
+        <line num="107" count="154" type="cond" truecount="2" falsecount="0"/>
+        <line num="111" count="287" type="cond" truecount="1" falsecount="1"/>
+        <line num="112" count="287" type="cond" truecount="2" falsecount="0"/>
+        <line num="114" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="115" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="117" count="287" type="stmt"/>
+        <line num="119" count="287" type="stmt"/>
+        <line num="120" count="287" type="stmt"/>
+        <line num="122" count="287" type="stmt"/>
+        <line num="124" count="287" type="stmt"/>
+        <line num="126" count="287" type="stmt"/>
+        <line num="127" count="287" type="stmt"/>
+        <line num="129" count="287" type="stmt"/>
+        <line num="133" count="287" type="stmt"/>
+        <line num="136" count="588" type="stmt"/>
+        <line num="137" count="588" type="stmt"/>
+        <line num="138" count="588" type="stmt"/>
+        <line num="140" count="154" type="stmt"/>
+        <line num="141" count="154" type="stmt"/>
+        <line num="142" count="154" type="stmt"/>
+        <line num="143" count="154" type="stmt"/>
+        <line num="148" count="7" type="stmt"/>
+        <line num="149" count="100" type="stmt"/>
+        <line num="150" count="100" type="stmt"/>
+        <line num="152" count="100" type="cond" truecount="2" falsecount="0"/>
+        <line num="154" count="100" type="stmt"/>
+        <line num="155" count="100" type="stmt"/>
+        <line num="157" count="100" type="cond" truecount="1" falsecount="1"/>
+        <line num="158" count="100" type="cond" truecount="2" falsecount="0"/>
+        <line num="160" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="162" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="165" count="100" type="stmt"/>
+        <line num="166" count="100" type="stmt"/>
+        <line num="167" count="100" type="stmt"/>
+        <line num="169" count="100" type="stmt"/>
+        <line num="171" count="100" type="stmt"/>
+        <line num="173" count="100" type="stmt"/>
+        <line num="174" count="100" type="stmt"/>
+        <line num="176" count="100" type="stmt"/>
+        <line num="179" count="7" type="stmt"/>
+        <line num="180" count="122" type="stmt"/>
+        <line num="181" count="122" type="stmt"/>
+        <line num="184" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="185" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="189" count="122" type="cond" truecount="1" falsecount="1"/>
+        <line num="190" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="192" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="193" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="195" count="122" type="stmt"/>
+        <line num="196" count="122" type="stmt"/>
+        <line num="200" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="201" count="61" type="cond" truecount="2" falsecount="0"/>
+        <line num="203" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="204" count="54" type="stmt"/>
+        <line num="206" count="122" type="stmt"/>
+        <line num="207" count="122" type="stmt"/>
+        <line num="209" count="122" type="stmt"/>
+        <line num="211" count="122" type="stmt"/>
+        <line num="212" count="122" type="stmt"/>
+        <line num="214" count="122" type="stmt"/>
+        <line num="216" count="122" type="stmt"/>
+        <line num="218" count="122" type="stmt"/>
+        <line num="219" count="122" type="stmt"/>
+        <line num="220" count="122" type="stmt"/>
+        <line num="223" count="122" type="stmt"/>
+        <line num="226" count="7" type="stmt"/>
+        <line num="227" count="560" type="stmt"/>
+        <line num="229" count="560" type="stmt"/>
+        <line num="231" count="560" type="stmt"/>
+        <line num="233" count="560" type="stmt"/>
+        <line num="238" count="7" type="stmt"/>
+      </file>
+      <file name="ViewTrack.ts" path="C:\range-slider\range-slider\src\ts\ViewTrack.ts">
+        <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="3" count="7" type="stmt"/>
+        <line num="10" count="65" type="stmt"/>
+        <line num="11" count="65" type="stmt"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="16" count="65" type="stmt"/>
+        <line num="17" count="65" type="stmt"/>
+        <line num="18" count="65" type="stmt"/>
+        <line num="22" count="7" type="stmt"/>
+        <line num="23" count="65" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="16" type="stmt"/>
+        <line num="25" count="16" type="stmt"/>
+        <line num="26" count="49" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="16" type="stmt"/>
+        <line num="28" count="16" type="stmt"/>
+        <line num="29" count="33" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="16" type="stmt"/>
+        <line num="31" count="16" type="stmt"/>
+        <line num="33" count="17" type="stmt"/>
+        <line num="34" count="17" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+      </file>
+      <file name="model.ts" path="C:\range-slider\range-slider\src\ts\model.ts">
+        <metrics statements="32" coveredstatements="32" conditionals="22" coveredconditionals="21" methods="6" coveredmethods="6"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="13" count="19" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="19" type="stmt"/>
+        <line num="20" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="19" type="stmt"/>
+        <line num="23" count="19" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="23" type="stmt"/>
+        <line num="33" count="23" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="23" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="19" type="stmt"/>
+        <line num="41" count="19" type="stmt"/>
+        <line num="42" count="19" type="cond" truecount="4" falsecount="0"/>
+        <line num="43" count="6" type="stmt"/>
+        <line num="44" count="6" type="stmt"/>
+        <line num="46" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="19" type="cond" truecount="1" falsecount="1"/>
+        <line num="51" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="52" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="56" count="19" type="stmt"/>
+        <line num="58" count="19" type="stmt"/>
+        <line num="60" count="19" type="stmt"/>
+        <line num="66" count="19" type="stmt"/>
+        <line num="68" count="19" type="stmt"/>
+        <line num="70" count="2" type="stmt"/>
       </file>
     </package>
     <package name="ts.utils">
-      <metrics statements="51" coveredstatements="51" conditionals="18" coveredconditionals="18" methods="3" coveredmethods="3"/>
-      <file name="scaleHelpers.ts" path="C:\Users\ИС\Documents\GitHub\jquery-range-slider-plugin\src\ts\utils\scaleHelpers.ts">
+      <metrics statements="92" coveredstatements="92" conditionals="68" coveredconditionals="68" methods="7" coveredmethods="7"/>
+      <file name="scaleHelpers.ts" path="C:\range-slider\range-slider\src\ts\utils\scaleHelpers.ts">
         <metrics statements="51" coveredstatements="51" conditionals="18" coveredconditionals="18" methods="3" coveredmethods="3"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="14" count="20" type="stmt"/>
-        <line num="15" count="20" type="stmt"/>
-        <line num="16" count="20" type="cond" truecount="2" falsecount="0"/>
-        <line num="17" count="20" type="stmt"/>
-        <line num="19" count="20" type="stmt"/>
-        <line num="20" count="20" type="stmt"/>
-        <line num="22" count="20" type="stmt"/>
-        <line num="24" count="20" type="stmt"/>
-        <line num="25" count="20" type="stmt"/>
-        <line num="27" count="20" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="47" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="48" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="50" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="51" count="6" type="stmt"/>
-        <line num="52" count="126" type="stmt"/>
-        <line num="54" count="126" type="stmt"/>
-        <line num="55" count="126" type="stmt"/>
-        <line num="57" count="126" type="stmt"/>
-        <line num="59" count="126" type="stmt"/>
-        <line num="60" count="126" type="cond" truecount="2" falsecount="0"/>
-        <line num="61" count="120" type="stmt"/>
-        <line num="63" count="6" type="stmt"/>
-        <line num="65" count="4" type="stmt"/>
-        <line num="66" count="108" type="stmt"/>
-        <line num="68" count="108" type="stmt"/>
-        <line num="69" count="108" type="stmt"/>
-        <line num="70" count="108" type="stmt"/>
-        <line num="72" count="108" type="cond" truecount="2" falsecount="0"/>
-        <line num="74" count="104" type="stmt"/>
-        <line num="75" count="104" type="stmt"/>
-        <line num="77" count="4" type="stmt"/>
-        <line num="78" count="4" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
-        <line num="83" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="84" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="86" count="10" type="cond" truecount="2" falsecount="0"/>
-        <line num="87" count="6" type="stmt"/>
-        <line num="88" count="66" type="stmt"/>
-        <line num="89" count="66" type="stmt"/>
-        <line num="90" count="66" type="stmt"/>
-        <line num="91" count="66" type="stmt"/>
-        <line num="92" count="66" type="stmt"/>
-        <line num="94" count="66" type="stmt"/>
-        <line num="97" count="4" type="stmt"/>
-        <line num="98" count="4" type="stmt"/>
-        <line num="99" count="4" type="stmt"/>
-        <line num="100" count="4" type="stmt"/>
-        <line num="101" count="4" type="stmt"/>
-        <line num="102" count="4" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="14" count="190" type="stmt"/>
+        <line num="15" count="190" type="stmt"/>
+        <line num="16" count="190" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="190" type="stmt"/>
+        <line num="19" count="190" type="stmt"/>
+        <line num="20" count="190" type="stmt"/>
+        <line num="22" count="190" type="stmt"/>
+        <line num="24" count="190" type="stmt"/>
+        <line num="25" count="190" type="stmt"/>
+        <line num="27" count="190" type="stmt"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="47" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="48" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="50" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="42" type="stmt"/>
+        <line num="52" count="882" type="stmt"/>
+        <line num="54" count="882" type="stmt"/>
+        <line num="55" count="882" type="stmt"/>
+        <line num="57" count="882" type="stmt"/>
+        <line num="59" count="882" type="stmt"/>
+        <line num="60" count="882" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="840" type="stmt"/>
+        <line num="63" count="42" type="stmt"/>
+        <line num="65" count="53" type="stmt"/>
+        <line num="66" count="7101" type="stmt"/>
+        <line num="68" count="7101" type="stmt"/>
+        <line num="69" count="7101" type="stmt"/>
+        <line num="70" count="7101" type="stmt"/>
+        <line num="72" count="7101" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="7073" type="stmt"/>
+        <line num="75" count="7073" type="stmt"/>
+        <line num="77" count="53" type="stmt"/>
+        <line num="78" count="53" type="stmt"/>
+        <line num="82" count="7" type="stmt"/>
+        <line num="83" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="84" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="86" count="95" type="cond" truecount="2" falsecount="0"/>
+        <line num="87" count="42" type="stmt"/>
+        <line num="88" count="462" type="stmt"/>
+        <line num="89" count="462" type="stmt"/>
+        <line num="90" count="462" type="stmt"/>
+        <line num="91" count="462" type="stmt"/>
+        <line num="92" count="462" type="stmt"/>
+        <line num="94" count="462" type="stmt"/>
+        <line num="97" count="53" type="stmt"/>
+        <line num="98" count="53" type="stmt"/>
+        <line num="99" count="53" type="stmt"/>
+        <line num="100" count="53" type="stmt"/>
+        <line num="101" count="53" type="stmt"/>
+        <line num="102" count="53" type="stmt"/>
+      </file>
+      <file name="thumbHelpers.ts" path="C:\range-slider\range-slider\src\ts\utils\thumbHelpers.ts">
+        <metrics statements="41" coveredstatements="41" conditionals="50" coveredconditionals="50" methods="4" coveredmethods="4"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="4" count="122" type="stmt"/>
+        <line num="5" count="122" type="stmt"/>
+        <line num="7" count="122" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="90" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="11" count="122" type="cond" truecount="4" falsecount="0"/>
+        <line num="12" count="28" type="stmt"/>
+        <line num="13" count="94" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="7" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="226" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="226" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="177" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="140" type="stmt"/>
+        <line num="27" count="7" type="stmt"/>
+        <line num="33" count="287" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="287" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="287" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="287" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="98" type="stmt"/>
+        <line num="38" count="189" type="cond" truecount="2" falsecount="0"/>
+        <line num="39" count="105" type="stmt"/>
+        <line num="42" count="287" type="cond" truecount="4" falsecount="0"/>
+        <line num="43" count="42" type="stmt"/>
+        <line num="44" count="245" type="cond" truecount="4" falsecount="0"/>
+        <line num="45" count="28" type="stmt"/>
+        <line num="49" count="7" type="stmt"/>
+        <line num="61" count="511" type="stmt"/>
+        <line num="62" count="511" type="stmt"/>
+        <line num="63" count="511" type="stmt"/>
+        <line num="65" count="511" type="stmt"/>
+        <line num="66" count="511" type="stmt"/>
+        <line num="67" count="511" type="stmt"/>
+        <line num="69" count="511" type="stmt"/>
+        <line num="73" count="511" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="231" type="cond" truecount="2" falsecount="0"/>
+        <line num="75" count="91" type="stmt"/>
+        <line num="77" count="140" type="stmt"/>
+        <line num="81" count="511" type="stmt"/>
       </file>
     </package>
   </project>

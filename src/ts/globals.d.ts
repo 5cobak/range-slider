@@ -1,6 +1,6 @@
 export interface IsettingsTypes {
   [x: string]: number | string | boolean | HTMLElement | null;
-  el: HTMLElement,
+  el: HTMLElement;
   min: number;
   max: number;
   type: string;
@@ -24,21 +24,20 @@ export interface IFlag {
   setPosition(settings: IsettingsTypes): void;
 }
 export interface IObserver {
-  addObservers(o: ()=>void): void;
+  addObservers(o: () => void): void;
   notifyObservers(): void;
-  removeObserver(o: ()=>void): void;
+  removeObserver(o: () => void): void;
 }
 
 export interface IThumb {
   el: HTMLElement;
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
-  onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
-  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void;
+  moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
+  moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
+  onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
+  onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
   isVertical: RegExpMatchArray | null;
-  positions: {to: number, from: number}
+  positions: { to: number; from: number };
   changedSubject: IObserver;
-
 }
 
 export interface IClassPropertiesJquery {
@@ -50,7 +49,6 @@ export interface IBankModel {
   from: number;
   to: number | null;
   generalValue: number;
-
 }
 
 export interface IScale {
@@ -68,7 +66,7 @@ export interface ISubView {
   flag: IFlag;
   secondFlag?: IFlag;
   changedSubject: IObserver;
-  positions: {to: number, from: number}
+  positions: { to: number; from: number };
 }
 export interface IModel {
   modelChangedSubject: IObserver;
@@ -77,19 +75,18 @@ export interface IModel {
   settings: IsettingsTypes;
 }
 export interface IView {
-  el: HTMLElement
+  el: HTMLElement;
   changedSubject: IObserver;
   type: ISubView;
   trackSize: number;
-  positions: {to: number, from: number}
-
+  positions: { to: number; from: number };
 }
 
 export interface IViewSingle {
-  el: HTMLElement
+  el: HTMLElement;
 }
 export interface IMethods {
-  [x: string]: ()=>void;
+  [x: string]: () => void;
   update(): void;
   init(): void;
 }

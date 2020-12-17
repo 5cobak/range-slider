@@ -1,8 +1,10 @@
-import ViewTrack from '../../ts/ViewTrack'
-import { ITrack } from '../../ts/globals'
+import ViewTrack from '../../ts/ViewTrack';
+import { ITrack } from '../../ts/globals';
 
 describe('test ViewTrack', () => {
+  const elem = document.createElement('div');
   const settings = {
+    el: elem,
     type: 'single',
     min: 0,
     max: 10000,
@@ -16,9 +18,11 @@ describe('test ViewTrack', () => {
   test('single type track must be defined and match string single in class', () => {
     expect(track.el).not.toBeUndefined();
     expect(track.el.className).toMatch(/single/);
-  })
+  });
   test('single-vertical', () => {
+    const elem = document.createElement('div');
     const settings = {
+      el: elem,
       type: 'single-vertical',
       min: 0,
       max: 10000,
@@ -31,9 +35,11 @@ describe('test ViewTrack', () => {
     track = new ViewTrack(settings);
     expect(track.el.className).toMatch(/vertical/);
     expect(track.el.className).toMatch(/single/);
-  })
+  });
   test('double type track must be defined and match string single in class', () => {
+    const elem = document.createElement('div');
     const settings = {
+      el: elem,
       type: 'double',
       min: 0,
       max: 10000,
@@ -45,9 +51,11 @@ describe('test ViewTrack', () => {
     };
     track = new ViewTrack(settings);
     expect(track.el.className).toMatch(/double/);
-  })
+  });
   test('double-vertical type track must be defined and match string single in class', () => {
+    const elem = document.createElement('div');
     const settings = {
+      el: elem,
       type: 'double-vertical',
       min: 0,
       max: 10000,
@@ -61,5 +69,5 @@ describe('test ViewTrack', () => {
     track = new ViewTrack(settings);
     expect(track.el.className).toMatch(/double/);
     expect(track.el.className).toMatch(/vertical/);
-  })
-})
+  });
+});

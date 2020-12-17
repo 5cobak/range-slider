@@ -1,13 +1,15 @@
-import ViewDouble from '../../ts/ViewDouble'
-import './Thumb.test'
-import './Flag.test'
-import './Inner.test'
-import './Scale.test'
-import './Track.test'
-import './Observer.test'
+import ViewDouble from '../../ts/ViewDouble';
+import './Thumb.test';
+import './Flag.test';
+import './Inner.test';
+import './Scale.test';
+import './Track.test';
+import './Observer.test';
 
 describe('test ViewTrack', () => {
+  const parent = document.createElement('div');
   const settings = {
+    el: parent,
     type: 'double',
     min: 0,
     max: 10000,
@@ -19,15 +21,13 @@ describe('test ViewTrack', () => {
   };
   const isVertical = settings.type.match('vertical');
   const size = isVertical ? 'height' : 'width';
-  const parent = document.createElement('div');
 
   parent.className = 'range-slider';
 
   parent.style.position = 'absolute';
-  parent.style[size] = '400px'
+  parent.style[size] = '400px';
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -35,9 +35,9 @@ describe('test ViewTrack', () => {
 
   document.body.append(view.el);
 
-  view.thumb.el.style.width = '15px'
-  view.thumb.el.style.height = '15px'
-  view.thumb.el.style.position = 'absolute'
+  view.thumb.el.style.width = '15px';
+  view.thumb.el.style.height = '15px';
+  view.thumb.el.style.position = 'absolute';
 
   view.track.el.style[size] = '400px';
   view.track.el.style.position = 'relative';
@@ -53,7 +53,7 @@ describe('test ViewTrack', () => {
     expect(view.scale).not.toBeUndefined();
     expect(view.inner).not.toBeUndefined();
     expect(view.flag).not.toBeUndefined();
-  })
+  });
 
   test('test click in single type', () => {
     function onClick(e: MouseEvent) {
@@ -71,8 +71,8 @@ describe('test ViewTrack', () => {
     view.track.el.addEventListener('mousedown', onClick);
     triggerMouseEvent(view.track.el, 'mousedown');
 
-    expect(view.thumb.el.style.left).toMatch(/px/)
-  })
+    expect(view.thumb.el.style.left).toMatch(/px/);
+  });
   test('test move in single type', () => {
     function onMove(e: MouseEvent) {
       view.thumb.moveSingleType(e, settings, generalVal);
@@ -90,12 +90,14 @@ describe('test ViewTrack', () => {
     view.track.el.addEventListener('mousedown', onMove);
     triggerMouseEvent(view.track.el, 'mousedown');
     expect(view.thumb.el.style.left).toMatch(/px/);
-  })
-})
+  });
+});
 
 // test ViewSingle without scale and flag
 describe('ViewDouble without scale and flag', () => {
+  const parent = document.createElement('div');
   const settings = {
+    el: parent,
     type: 'double',
     min: 0,
     max: 10000,
@@ -108,15 +110,13 @@ describe('ViewDouble without scale and flag', () => {
   const isVertical = settings.type.match('vertical');
 
   const size = isVertical ? 'height' : 'width';
-  const parent = document.createElement('div');
 
   parent.className = 'range-slider';
 
   parent.style.position = 'absolute';
-  parent.style[size] = '400px'
+  parent.style[size] = '400px';
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -124,13 +124,13 @@ describe('ViewDouble without scale and flag', () => {
 
   document.body.append(view.el);
 
-  view.thumb.el.style.width = '15px'
-  view.thumb.el.style.height = '15px'
-  view.thumb.el.style.position = 'absolute'
+  view.thumb.el.style.width = '15px';
+  view.thumb.el.style.height = '15px';
+  view.thumb.el.style.position = 'absolute';
 
-  view.secondThumb.el.style.width = '15px'
-  view.secondThumb.el.style.height = '15px'
-  view.secondThumb.el.style.position = 'absolute'
+  view.secondThumb.el.style.width = '15px';
+  view.secondThumb.el.style.height = '15px';
+  view.secondThumb.el.style.position = 'absolute';
 
   view.track.el.style[size] = '400px';
   view.track.el.style.position = 'relative';
@@ -142,7 +142,7 @@ describe('ViewDouble without scale and flag', () => {
     expect(view.scale).not.toBeUndefined();
     expect(view.inner).not.toBeUndefined();
     expect(view.flag).not.toBeUndefined();
-  })
+  });
 
   test('test click in single type', () => {
     function onClick(e: MouseEvent) {
@@ -160,8 +160,8 @@ describe('ViewDouble without scale and flag', () => {
     view.track.el.addEventListener('mousedown', onClick);
     triggerMouseEvent(view.track.el, 'mousedown');
 
-    expect(view.thumb.el.style.left).toMatch(/px/)
-  })
+    expect(view.thumb.el.style.left).toMatch(/px/);
+  });
   test('test move in single type', () => {
     function onMove(e: MouseEvent) {
       view.thumb.moveSingleType(e, settings, generalVal);
@@ -179,9 +179,9 @@ describe('ViewDouble without scale and flag', () => {
     view.track.el.addEventListener('mousedown', onMove);
     triggerMouseEvent(view.track.el, 'mousedown');
     expect(view.thumb.el.style.left).toMatch(/px/);
-  })
+  });
   test('scale and flag must be null', () => {
     expect(view.thumb.el.querySelector('range-slider__flag')).toBeNull();
     expect(view.track.el.querySelector('range-slider__scale')).toBeNull();
-  })
-})
+  });
+});

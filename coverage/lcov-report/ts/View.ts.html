@@ -134,7 +134,8 @@
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -157,11 +158,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -172,6 +171,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -192,6 +192,12 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,10 +206,6 @@
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
@@ -219,11 +221,11 @@ import MakeObservableSubject from './Observer';
 import { IView, IsettingsTypes, ISubView, IObserver } from './globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
-  settings: IsettingsTypes;
+  settings!: IsettingsTypes;
 &nbsp;
-  el: HTMLElement;
+  el!: HTMLElement;
 &nbsp;
-  type: ISubView;
+  type!: ISubView;
 &nbsp;
   changedSubject!: IObserver;
 &nbsp;
@@ -231,16 +233,14 @@ export default class View implements IView {
 &nbsp;
   trackSize!: number;
 &nbsp;
-  positions: {to: number, from: number}
+  positions!: { to: number; from: number };
 &nbsp;
+  // constructor access first argument jQuery&lt;HTMLElement&gt;, model's settings and general value across presenter
   constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
-    this.el = element;
-    this.settings = settings;
-    this.type = this.chooseViewType(settings, generalVal);
-    this.positions = { to: 0, from: 0 };
-    this.init(settings);
+    this.init(settings, element, generalVal);
   }
 &nbsp;
+  // method for get positons from lower levels and notyfy high levels
   private getThumbsPos(): void {
     this.positions.from = this.type.positions.from;
 &nbsp;
@@ -251,6 +251,7 @@ export default class View implements IView {
     this.changedSubject.notifyObservers();
   }
 &nbsp;
+  // method for choose type of range-slider: single, single-vertical, double, double-vertical
   private chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
     let modelType: ISubView;
     if (settings.type === 'single') {
@@ -269,19 +270,21 @@ export default class View implements IView {
     return modelType;
   }
 &nbsp;
-  private init(settings: IsettingsTypes) {
+  // method set trackSize and thumbSize for model's calculation and add observer where get positons of thumbs and
+  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number) {
+    this.el = element;
+    this.settings = settings;
+    this.type = this.chooseViewType(settings, generalVal);
+    this.positions = { to: 0, from: 0 };
+    this.changedSubject = new MakeObservableSubject();
     this.thumbSize = settings.type.match('vertical')
       ? parseFloat(getComputedStyle(this.type.thumb.el).height)
       : parseFloat(getComputedStyle(this.type.thumb.el).width);
 &nbsp;
     this.trackSize = settings.type.match('vertical')
-      ? parseFloat(getComputedStyle(this.type.track.el).height) -
-        parseFloat(getComputedStyle(this.type.thumb.el).height)
-      : parseFloat(getComputedStyle(this.type.track.el).width) -
-        parseFloat(getComputedStyle(this.type.thumb.el).width);
-&nbsp;
-    this.changedSubject = new MakeObservableSubject();
-&nbsp;
+      ? parseFloat(getComputedStyle(this.type.track.el).height) - parseFloat(getComputedStyle(this.type.thumb.el).height)
+      : parseFloat(getComputedStyle(this.type.track.el).width) - parseFloat(getComputedStyle(this.type.thumb.el).width);
+    // add observer in type and notify this type in order to get positions from low level
     this.type.changedSubject.addObservers(() =&gt; {
       this.getThumbsPos();
     });
@@ -295,7 +298,7 @@ export default class View implements IView {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 14 2020 16:04:51 GMT+0400 (GMT+04:00)
+                at Thu Dec 17 2020 11:08:29 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="../prettify.js"></script>

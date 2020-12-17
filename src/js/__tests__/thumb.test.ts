@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { IThumb } from '../../ts/globals';
 import ViewThumb from '../../ts/ViewThumb';
-import './Observer.test'
+import './Observer.test';
 
 describe('test single type thumb', () => {
   const parent = document.createElement('div');
@@ -12,6 +12,7 @@ describe('test single type thumb', () => {
 
   document.body.append(parent);
   const settings = {
+    el: parent,
     type: 'single',
     min: 0,
     max: 10000,
@@ -22,8 +23,7 @@ describe('test single type thumb', () => {
     flag: true,
   };
 
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
@@ -32,7 +32,7 @@ describe('test single type thumb', () => {
       bubbles: true,
       cancelable: true,
       clientX: 100,
-    })
+    });
     node.dispatchEvent(event);
   }
 
@@ -49,10 +49,10 @@ describe('test single type thumb', () => {
 
   beforeEach(() => {
     thumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb-first'
+    thumb.el.className = 'range-slider__thumb range-slider__thumb-first';
     parent.style.position = 'relative';
     parent.style.width = '400px';
-    parent.style.height = '8px'
+    parent.style.height = '8px';
 
     thumb.el.style.width = '15px';
     thumb.el.style.height = '15px';
@@ -60,11 +60,11 @@ describe('test single type thumb', () => {
     thumb.el.style.left = '0';
     thumb.el.style.display = 'block';
     parent.append(thumb.el, inner);
-  })
+  });
   afterEach(() => {
     parent.removeChild(thumb.el);
     parent.removeChild(inner);
-  })
+  });
 
   test('return value not undefined', () => {
     expect(thumb).not.toBeUndefined();
@@ -101,7 +101,7 @@ describe('test single type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: -100,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -117,7 +117,7 @@ describe('test single type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 700,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -134,7 +134,7 @@ describe('test single type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 400,
-      })
+      });
       node.dispatchEvent(event);
     }
     parent.addEventListener('mousedown', onClick);
@@ -155,6 +155,7 @@ describe('test double type thumb', () => {
 
   document.body.append(parent);
   const settings = {
+    el: parent,
     type: 'double',
     min: 0,
     max: 10000,
@@ -164,8 +165,7 @@ describe('test double type thumb', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
@@ -174,7 +174,7 @@ describe('test double type thumb', () => {
       bubbles: true,
       cancelable: true,
       clientX: 700,
-    })
+    });
     node.dispatchEvent(event);
   }
 
@@ -197,7 +197,7 @@ describe('test double type thumb', () => {
     secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
     parent.style.position = 'relative';
     parent.style.width = '400px';
-    parent.style.height = '8px'
+    parent.style.height = '8px';
 
     thumb.el.style.width = '15px';
     thumb.el.style.height = '15px';
@@ -223,7 +223,7 @@ describe('test double type thumb', () => {
       right: 0,
       top: 0,
       toJSON: jest.fn(),
-    }))
+    }));
 
     thumb.el.getBoundingClientRect = jest.fn(() => ({
       width: 15,
@@ -248,13 +248,13 @@ describe('test double type thumb', () => {
       top: 0,
       toJSON: jest.fn(),
     }));
-  })
+  });
 
   afterEach(() => {
     parent.removeChild(thumb.el);
     parent.removeChild(secondThumb.el);
     parent.removeChild(inner);
-  })
+  });
 
   test('return value not undefined', () => {
     expect(thumb).not.toBeUndefined();
@@ -406,7 +406,7 @@ describe('test double type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: -100,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -430,7 +430,7 @@ describe('test double type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 700,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousemove', onMove);
@@ -451,7 +451,7 @@ describe('test double type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 300,
-      })
+      });
       node.dispatchEvent(event);
     }
     secondThumb.el.addEventListener('mousemove', onMove);
@@ -491,7 +491,7 @@ describe('test double type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 0,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousemove', onMove);
@@ -531,7 +531,7 @@ describe('test double type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientX: 300,
-      })
+      });
       node.dispatchEvent(event);
     }
     secondThumb.el.addEventListener('mousemove', onMove);
@@ -552,6 +552,7 @@ describe('test single-vertical type thumb', () => {
 
   document.body.append(parent);
   const settings = {
+    el: parent,
     type: 'single-vertical',
     min: 0,
     max: 10000,
@@ -561,8 +562,7 @@ describe('test single-vertical type thumb', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
@@ -571,7 +571,7 @@ describe('test single-vertical type thumb', () => {
       bubbles: true,
       cancelable: true,
       clientY: 0,
-    })
+    });
     node.dispatchEvent(event);
   }
 
@@ -588,10 +588,10 @@ describe('test single-vertical type thumb', () => {
 
   beforeEach(() => {
     thumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb-first'
+    thumb.el.className = 'range-slider__thumb range-slider__thumb-first';
     parent.style.position = 'relative';
     parent.style.height = '400px';
-    parent.style.width = '8px'
+    parent.style.width = '8px';
 
     thumb.el.style.width = '15px';
     thumb.el.style.height = '15px';
@@ -599,11 +599,11 @@ describe('test single-vertical type thumb', () => {
     thumb.el.style.top = '0';
     thumb.el.style.display = 'block';
     parent.append(thumb.el, inner);
-  })
+  });
   afterEach(() => {
     parent.removeChild(thumb.el);
     parent.removeChild(inner);
-  })
+  });
 
   test('return value not undefined', () => {
     expect(thumb).not.toBeUndefined();
@@ -637,7 +637,7 @@ describe('test single-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: -100,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -653,7 +653,7 @@ describe('test single-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 700,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -670,7 +670,7 @@ describe('test single-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 400,
-      })
+      });
       node.dispatchEvent(event);
     }
     parent.addEventListener('mousedown', onClick);
@@ -691,6 +691,7 @@ describe('test double-vertical type thumb', () => {
 
   document.body.append(parent);
   const settings = {
+    el: parent,
     type: 'double-vertical',
     min: 0,
     max: 10000,
@@ -700,8 +701,7 @@ describe('test double-vertical type thumb', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
   function triggerMouseEvent(node: Element, eventType: string) {
@@ -710,7 +710,7 @@ describe('test double-vertical type thumb', () => {
       bubbles: true,
       cancelable: true,
       clientY: 700,
-    })
+    });
     node.dispatchEvent(event);
   }
 
@@ -733,7 +733,7 @@ describe('test double-vertical type thumb', () => {
     secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
     parent.style.position = 'relative';
     parent.style.height = '400px';
-    parent.style.width = '8px'
+    parent.style.width = '8px';
 
     thumb.el.style.width = '15px';
     thumb.el.style.height = '15px';
@@ -759,7 +759,7 @@ describe('test double-vertical type thumb', () => {
       right: 0,
       top: 0,
       toJSON: jest.fn(),
-    }))
+    }));
 
     thumb.el.getBoundingClientRect = jest.fn(() => ({
       width: 15,
@@ -784,13 +784,13 @@ describe('test double-vertical type thumb', () => {
       top: 385,
       toJSON: jest.fn(),
     }));
-  })
+  });
 
   afterEach(() => {
     parent.removeChild(thumb.el);
     parent.removeChild(secondThumb.el);
     parent.removeChild(inner);
-  })
+  });
 
   test('return value not undefined', () => {
     expect(thumb).not.toBeUndefined();
@@ -850,8 +850,7 @@ describe('test double-vertical type thumb', () => {
         scale: true,
         flag: true,
       };
-      let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+      let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
       if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
       const event = new MouseEvent(eventType, {
         view: window,
@@ -967,7 +966,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: -100,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousedown', onMove);
@@ -987,7 +986,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 350,
-      })
+      });
       node.dispatchEvent(event);
     }
 
@@ -1009,7 +1008,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 0,
-      })
+      });
       node.dispatchEvent(event);
     }
 
@@ -1030,7 +1029,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 350,
-      })
+      });
       node.dispatchEvent(event);
     }
 
@@ -1051,7 +1050,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 700,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousemove', onMove);
@@ -1072,7 +1071,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 300,
-      })
+      });
       node.dispatchEvent(event);
     }
     secondThumb.el.addEventListener('mousemove', onMove);
@@ -1113,7 +1112,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 110,
-      })
+      });
       node.dispatchEvent(event);
     }
 
@@ -1156,7 +1155,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 0,
-      })
+      });
       node.dispatchEvent(event);
     }
     thumb.el.addEventListener('mousemove', onMove);
@@ -1196,7 +1195,7 @@ describe('test double-vertical type thumb', () => {
         bubbles: true,
         cancelable: true,
         clientY: 300,
-      })
+      });
       node.dispatchEvent(event);
     }
     secondThumb.el.addEventListener('mousemove', onMove);

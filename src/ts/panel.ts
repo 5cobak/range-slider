@@ -5,13 +5,10 @@ export default class Panel {
 
   scale!: HTMLInputElement;
 
-  inputs!: HTMLLabelElement[]
+  inputs!: HTMLLabelElement[];
 
   constructor(labelsArray: any[]) {
-    this.createPanel();
-    this.createInput(labelsArray);
-    this.flag = this.createCheckbox('flag') as HTMLInputElement;
-    this.scale = this.createCheckbox('scale') as HTMLInputElement;
+    this.init(labelsArray);
   }
 
   private createPanel() {
@@ -47,12 +44,12 @@ export default class Panel {
     return checkbox;
   }
 
-  onChangeVal(option: string, value: number):void {
+  onChangeVal(option: string, value: number): void {
     const inputCurrentVal = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
     inputCurrentVal.value = `${value}`;
   }
 
-  onInput(option: string, func: (val: string)=>number): void {
+  onInput(option: string, func: (val: string) => number): void {
     const input = this.el.querySelector(`.input-${option}`) as HTMLInputElement;
 
     input.onchange = () => {
@@ -60,9 +57,16 @@ export default class Panel {
     };
   }
 
-  onChangeSecondVal(value: number):void {
+  onChangeSecondVal(value: number): void {
     const inputCurrentVal = this.el.querySelector('.input-second-value') as HTMLInputElement;
     inputCurrentVal.value = `${value}`;
+  }
+
+  private init(labelsArray: any[]) {
+    this.createPanel();
+    this.createInput(labelsArray);
+    this.flag = this.createCheckbox('flag') as HTMLInputElement;
+    this.scale = this.createCheckbox('scale') as HTMLInputElement;
   }
 }
 

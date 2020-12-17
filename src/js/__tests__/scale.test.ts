@@ -1,9 +1,11 @@
-import ViewScale from '../../ts/ViewScale'
+import ViewScale from '../../ts/ViewScale';
 
-import { IScale, IsettingsTypes } from '../../ts/globals'
+import { IScale, IsettingsTypes } from '../../ts/globals';
 
 describe('test inner in single', () => {
+  const parent = document.createElement('div');
   const settings: IsettingsTypes = {
+    el: parent,
     type: 'single',
     min: 0,
     max: 10000,
@@ -13,8 +15,7 @@ describe('test inner in single', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -22,14 +23,13 @@ describe('test inner in single', () => {
   const coord = isVertical ? 'top' : 'left';
   const size = isVertical ? 'height' : 'width';
 
-  const parent = document.createElement('div');
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
 
   const scale: IScale = new ViewScale(settings);
 
-  thumb.className = 'range-slider__thumb_first'
-  secondThumb.className = 'range-slider__thumb_second'
+  thumb.className = 'range-slider__thumb_first';
+  secondThumb.className = 'range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -37,55 +37,57 @@ describe('test inner in single', () => {
   thumb.style.height = '15px';
   thumb.style.position = 'absolute';
   thumb.style[coord] = '0px';
-  thumb.className = 'range-slider__thumb'
+  thumb.className = 'range-slider__thumb';
 
-  secondThumb.style.width = '15px'
-  secondThumb.style.height = '15px'
-  secondThumb.style.position = 'absolute'
+  secondThumb.style.width = '15px';
+  secondThumb.style.height = '15px';
+  secondThumb.style.position = 'absolute';
   secondThumb.style[coord] = '385px';
 
   scale.smallLine.style.width = '2px';
-  scale.smallLine.style.height = '10px'
+  scale.smallLine.style.height = '10px';
 
-  parent.append( thumb, secondThumb, scale.el)
+  parent.append(thumb, secondThumb, scale.el);
 
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
 
   test('scale.el must be HTMLElement', () => {
-    expect(scale.el).toBeInstanceOf(HTMLElement)
-  })
+    expect(scale.el).toBeInstanceOf(HTMLElement);
+  });
   test('big-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const bigLine = scale.el.querySelector('.range-slider__big-line') as HTMLElement;
     expect(bigLine).toBeInstanceOf(HTMLElement);
     expect(bigLine.style[coord]).toMatch(/px/);
-  })
+  });
 
   test('small-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const smallLineClone = scale.el.querySelector('.range-slider__small-line') as HTMLElement;
     expect(smallLineClone).toBeInstanceOf(HTMLElement);
     expect(smallLineClone.style[coord]).toMatch(/px/);
-  })
+  });
 
   test('min and max value must be in range-slider', () => {
     scale.writeMinAndMaxValues(settings);
     const min = (scale.el.querySelector('.range-slider__text') as HTMLElement).innerHTML as string;
-    const max = (scale.el.querySelectorAll('.range-slider__text')[1]as HTMLElement).innerHTML as string;
+    const max = (scale.el.querySelectorAll('.range-slider__text')[1] as HTMLElement).innerHTML as string;
     expect(min).toBe(`${settings.min}`);
     expect(max).toBe(`${settings.max}`);
-  })
-})
+  });
+});
 
 // test with count step > 50
 
 describe('test inner', () => {
+  const parent = document.createElement('div');
   const settings: IsettingsTypes = {
+    el: parent,
     type: 'single',
     min: 0,
     max: 10000,
@@ -95,8 +97,7 @@ describe('test inner', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -104,14 +105,13 @@ describe('test inner', () => {
   const coord = isVertical ? 'top' : 'left';
   const size = isVertical ? 'height' : 'width';
 
-  const parent = document.createElement('div');
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
 
   const scale: IScale = new ViewScale(settings);
   scale.el.style.position = 'relative';
-  thumb.className = 'range-slider__thumb_first'
-  secondThumb.className = 'range-slider__thumb_second'
+  thumb.className = 'range-slider__thumb_first';
+  secondThumb.className = 'range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -119,47 +119,47 @@ describe('test inner', () => {
   thumb.style.height = '15px';
   thumb.style.position = 'absolute';
   thumb.style[coord] = '0px';
-  thumb.className = 'range-slider__thumb'
+  thumb.className = 'range-slider__thumb';
 
-  secondThumb.style.width = '15px'
-  secondThumb.style.height = '15px'
-  secondThumb.style.position = 'absolute'
+  secondThumb.style.width = '15px';
+  secondThumb.style.height = '15px';
+  secondThumb.style.position = 'absolute';
   secondThumb.style[coord] = '385px';
 
   scale.smallLine.style.width = '2px';
-  scale.smallLine.style.height = '10px'
+  scale.smallLine.style.height = '10px';
 
-  parent.append( thumb, secondThumb, scale.el)
+  parent.append(thumb, secondThumb, scale.el);
 
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
 
   test('scale.el must be HTMLElement', () => {
-    expect(scale.el).toBeInstanceOf(HTMLElement)
-  })
+    expect(scale.el).toBeInstanceOf(HTMLElement);
+  });
   test('big-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const bigLine = scale.el.querySelector('.range-slider__big-line') as HTMLElement;
     expect(bigLine).toBeInstanceOf(HTMLElement);
-  })
+  });
 
   test('small-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const smallLine = scale.el.querySelector('.range-slider__small-line') as HTMLElement;
     expect(smallLine).toBeInstanceOf(HTMLElement);
-  })
+  });
 
   test('min and max value must be in range-slider', () => {
     scale.writeMinAndMaxValues(settings);
     const min = (scale.el.querySelector('.range-slider__text') as HTMLElement).innerHTML as string;
-    const max = (scale.el.querySelectorAll('.range-slider__text')[1]as HTMLElement).innerHTML as string;
+    const max = (scale.el.querySelectorAll('.range-slider__text')[1] as HTMLElement).innerHTML as string;
     expect(min).toBe(`${settings.min}`);
     expect(max).toBe(`${settings.max}`);
-  })
+  });
   test('stop append smallLine if it so much', () => {
     scale.setCountOfLines(settings, generalVal);
     const trackSize = parseFloat(getComputedStyle(parent)[size]);
@@ -167,13 +167,15 @@ describe('test inner', () => {
 
     const lastLineLeft = parseFloat(getComputedStyle(lastSmallLine)[coord]);
     expect(lastLineLeft).toBeLessThan(trackSize);
-  })
-})
+  });
+});
 
 // test single-vertical
 
 describe('test inner in single-vertical', () => {
+  const parent = document.createElement('div');
   const settings: IsettingsTypes = {
+    el: parent,
     type: 'single-vertical',
     min: 0,
     max: 10000,
@@ -183,8 +185,7 @@ describe('test inner in single-vertical', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -192,14 +193,13 @@ describe('test inner in single-vertical', () => {
   const coord = isVertical ? 'top' : 'left';
   const size = isVertical ? 'height' : 'width';
 
-  const parent = document.createElement('div');
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
 
   const scale: IScale = new ViewScale(settings);
 
-  thumb.className = 'range-slider__thumb_first'
-  secondThumb.className = 'range-slider__thumb_second'
+  thumb.className = 'range-slider__thumb_first';
+  secondThumb.className = 'range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -207,55 +207,57 @@ describe('test inner in single-vertical', () => {
   thumb.style.height = '15px';
   thumb.style.position = 'absolute';
   thumb.style[coord] = '0px';
-  thumb.className = 'range-slider__thumb'
+  thumb.className = 'range-slider__thumb';
 
-  secondThumb.style.width = '15px'
-  secondThumb.style.height = '15px'
-  secondThumb.style.position = 'absolute'
+  secondThumb.style.width = '15px';
+  secondThumb.style.height = '15px';
+  secondThumb.style.position = 'absolute';
   secondThumb.style[coord] = '385px';
 
   scale.smallLine.style.width = '10px';
-  scale.smallLine.style.height = '2px'
+  scale.smallLine.style.height = '2px';
 
-  parent.append( thumb, secondThumb, scale.el)
+  parent.append(thumb, secondThumb, scale.el);
 
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
 
   test('scale.el must be HTMLElement', () => {
-    expect(scale.el).toBeInstanceOf(HTMLElement)
-  })
+    expect(scale.el).toBeInstanceOf(HTMLElement);
+  });
   test('big-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const bigLine = scale.el.querySelector('.range-slider__big-line') as HTMLElement;
     expect(bigLine).toBeInstanceOf(HTMLElement);
     expect(bigLine.style[coord]).toMatch(/px/);
-  })
+  });
 
   test('small-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const smallLine = scale.el.querySelector('.range-slider__small-line') as HTMLElement;
     expect(smallLine).toBeInstanceOf(HTMLElement);
     expect(smallLine.style[coord]).toMatch(/px/);
-  })
+  });
 
   test('min and max value must be in range-slider', () => {
     scale.writeMinAndMaxValues(settings);
     const min = (scale.el.querySelector('.range-slider__text') as HTMLElement).innerHTML as string;
-    const max = (scale.el.querySelectorAll('.range-slider__text')[1]as HTMLElement).innerHTML as string;
+    const max = (scale.el.querySelectorAll('.range-slider__text')[1] as HTMLElement).innerHTML as string;
     expect(min).toBe(`${settings.min}`);
     expect(max).toBe(`${settings.max}`);
-  })
-})
+  });
+});
 
 // test with count step > 50
 
 describe('test inner', () => {
+  const parent = document.createElement('div');
   const settings: IsettingsTypes = {
+    el: parent,
     type: 'double',
     min: 0,
     max: 10000,
@@ -265,8 +267,7 @@ describe('test inner', () => {
     scale: true,
     flag: true,
   };
-  let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+  let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -274,14 +275,13 @@ describe('test inner', () => {
   const coord = isVertical ? 'top' : 'left';
   const size = isVertical ? 'height' : 'width';
 
-  const parent = document.createElement('div');
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
 
   const scale: IScale = new ViewScale(settings);
   scale.el.style.position = 'relative';
-  thumb.className = 'range-slider__thumb_first'
-  secondThumb.className = 'range-slider__thumb_second'
+  thumb.className = 'range-slider__thumb_first';
+  secondThumb.className = 'range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -289,47 +289,47 @@ describe('test inner', () => {
   thumb.style.height = '15px';
   thumb.style.position = 'absolute';
   thumb.style[coord] = '0px';
-  thumb.className = 'range-slider__thumb'
+  thumb.className = 'range-slider__thumb';
 
-  secondThumb.style.width = '15px'
-  secondThumb.style.height = '15px'
-  secondThumb.style.position = 'absolute'
+  secondThumb.style.width = '15px';
+  secondThumb.style.height = '15px';
+  secondThumb.style.position = 'absolute';
   secondThumb.style[coord] = '385px';
 
   scale.smallLine.style.width = '2px';
-  scale.smallLine.style.height = '10px'
+  scale.smallLine.style.height = '10px';
 
-  parent.append( thumb, secondThumb, scale.el)
+  parent.append(thumb, secondThumb, scale.el);
 
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
   test('scale must be defined', () => {
-    expect(scale).not.toBeUndefined()
-  })
+    expect(scale).not.toBeUndefined();
+  });
 
   test('scale.el must be HTMLElement', () => {
-    expect(scale.el).toBeInstanceOf(HTMLElement)
-  })
+    expect(scale.el).toBeInstanceOf(HTMLElement);
+  });
   test('big-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const bigLine = scale.el.querySelector('.range-slider__big-line') as HTMLElement;
     expect(bigLine).toBeInstanceOf(HTMLElement);
-  })
+  });
 
   test('small-line must be in scale.el', () => {
     scale.setCountOfLines(settings, generalVal);
     const smallLine = scale.el.querySelector('.range-slider__small-line') as HTMLElement;
     expect(smallLine).toBeInstanceOf(HTMLElement);
-  })
+  });
 
   test('min and max value must be in range-slider', () => {
     scale.writeMinAndMaxValues(settings);
     const min = (scale.el.querySelector('.range-slider__text') as HTMLElement).innerHTML as string;
-    const max = (scale.el.querySelectorAll('.range-slider__text')[1]as HTMLElement).innerHTML as string;
+    const max = (scale.el.querySelectorAll('.range-slider__text')[1] as HTMLElement).innerHTML as string;
     expect(min).toBe(`${settings.min}`);
     expect(max).toBe(`${settings.max}`);
-  })
+  });
   test('stop append smallLine if it so much', () => {
     const smallLine = document.createElement('span');
     smallLine.className = 'range-slider__small-line';
@@ -346,5 +346,5 @@ describe('test inner', () => {
     }
     const lastLineLeft = parseFloat(getComputedStyle(lastSmallLine)[coord]);
     expect(lastLineLeft).toBeLessThan(trackSize);
-  })
-})
+  });
+});

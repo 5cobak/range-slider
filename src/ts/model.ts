@@ -2,33 +2,20 @@ import MakeObservableSubject from './Observer';
 import { IModel, IsettingsTypes, IObserver, IBankModel } from './globals';
 
 export default class Model implements IModel {
-  settings: IsettingsTypes;
+  settings!: IsettingsTypes;
 
-  modelChangedSubject: IObserver;
+  modelChangedSubject!: IObserver;
 
-  bank: IBankModel;
+  bank!: IBankModel;
 
   // constructor access settings from user or default settings
   constructor(settings: IsettingsTypes) {
-    this.settings = settings;
-    // create observable subject for model
-    this.modelChangedSubject = new MakeObservableSubject();
-    // create storage for values
-    this.bank = {
-      generalValue: 0,
-      from: this.settings.from,
-      to: this.settings.to,
-    };
-    // calculate and set general value of range-slider
-    this.setGeneralValue(settings);
-    // validate all settings from usder or default settings
-    this.validate();
+    this.init(settings);
   }
 
   // method for calculate general value
   private setGeneralValue(settings: IsettingsTypes) {
-    let generalVal =
-      settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
+    let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
@@ -63,5 +50,21 @@ export default class Model implements IModel {
     if (!this.settings.to) return;
     if (this.settings.to < this.settings.min) this.settings.to = this.settings.min;
     if (this.settings.to > this.settings.max) this.settings.to = this.settings.max;
+  }
+
+  private init(settings: IsettingsTypes) {
+    this.settings = settings;
+    // create observable subject for model
+    this.modelChangedSubject = new MakeObservableSubject();
+    // create storage for values
+    this.bank = {
+      generalValue: 0,
+      from: this.settings.from,
+      to: this.settings.to,
+    };
+    // calculate and set general value of range-slider
+    this.setGeneralValue(settings);
+    // validate all settings from usder or default settings
+    this.validate();
   }
 }
