@@ -7,6 +7,8 @@ import { validateCoordsByClick, validateCoord, validateCoordsByMove, getValues }
 export default class ViewThumb implements IThumb {
   el!: HTMLElement;
 
+  hiddenTrack!: HTMLElement;
+
   positions!: Iposition;
 
   changedSubject!: IObserver;
@@ -25,6 +27,18 @@ export default class ViewThumb implements IThumb {
     this.el = thumb;
   }
 
+  private createHiddenTrack() {
+    const hiddenTrack = document.createElement('div');
+    hiddenTrack.className = 'range-slider__hidden-track';
+    this.hiddenTrack = hiddenTrack;
+  }
+
+  setHeightForHiddenTrackIntoVertSl(): void {
+    const parent = this.hiddenTrack.parentElement as HTMLElement;
+    this.hiddenTrack.style.height = getComputedStyle(parent).height;
+    console.log(getComputedStyle(this.hiddenTrack).height);
+  }
+
   // -------------------------------------------------------------  events for X type range
   // method for drap-and-drop on single and single-vertical types track
   moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
@@ -34,7 +48,7 @@ export default class ViewThumb implements IThumb {
     const { changedSubject, positions, isVertical } = this;
     // get values of element which we'll use when calculate position of thumb
     // getValues is function you we'll find at ./utils/thumbHelpers.ts
-    const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
+    const { track, targetThumb, trackSize, halfSizeThumb, thumbSize } = getValues(isVertical, e);
     // choose client.x or client.y for horizontal or vertical slider
     const isTouch = e instanceof TouchEvent;
 
@@ -66,8 +80,10 @@ export default class ViewThumb implements IThumb {
       // get and regulation pos of thumb by step size
       const posByStep = Math.round(newPos / stepSize) * stepSize;
       // set thumb pos
-      targetThumb.style[coord] = `${posByStep}px`;
+      targetThumb.style[coord] = `${(posByStep / trackSize) * 100}%`;
+
       // valudate thumb pos in horizontal and vertical type of track, pos must not be greater then track size and less then coord 0 of track
+
       validateCoord(targetThumb, trackSize, isVertical);
       // set from in property position and notify observers, this observers will use this from in high level
       positions.from = parseFloat(targetThumb.style[coord]);
@@ -119,7 +135,7 @@ export default class ViewThumb implements IThumb {
       const newLeft = userCoord - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
-      targetThumb.style[coord] = `${posPercent}px`;
+      targetThumb.style[coord] = `${(posPercent / trackSize) * 100}%`;
 
       validateCoordsByMove(targetThumb, targetSecondThumb, trackSize, firstThumb, secondThumb, isVertical);
 
@@ -164,9 +180,9 @@ export default class ViewThumb implements IThumb {
     function moveAt() {
       const trackCoord = track.getBoundingClientRect()[coord];
       const newLeft = userCoord - trackCoord - halfSizeThumb;
-      const posPercent = Math.round(newLeft / stepSize) * stepSize;
+      const posPercent = ((Math.round(newLeft / stepSize) * stepSize) / trackSize) * 100;
 
-      firstThumb.style[coord] = `${posPercent}px`;
+      firstThumb.style[coord] = `${posPercent}%`;
 
       validateCoord(firstThumb, trackSize, isVertical);
 
@@ -211,9 +227,9 @@ export default class ViewThumb implements IThumb {
       const newLeft = userCoord - trackCoord - halfSizeThumb;
       const posPercent = Math.round(newLeft / stepSize) * stepSize;
 
-      movedThumb.style[coord] = `${posPercent}px`;
+      movedThumb.style[coord] = `${(posPercent / trackSize) * 100}%`;
 
-      validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
+      // validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
 
       positions.from = parseFloat(firstThumb.style[coord]);
       positions.to = parseFloat(secondThumb.style[coord]);
@@ -225,6 +241,7 @@ export default class ViewThumb implements IThumb {
 
   private init(settings: IsettingsTypes) {
     this.createElem();
+    this.createHiddenTrack();
     // create observable subject for thumb
     this.changedSubject = new MakeObservableSubject();
     // we need to know type vertical or horizontal for track to unite mdrap-and-drop to single method

@@ -5,7 +5,7 @@ import { IFlag, IModel, IsettingsTypes, IView } from './globals';
 export default class Presenter {
   private view!: IView;
 
-  private model!: IModel;
+  model!: IModel;
 
   private isDouble!: RegExpMatchArray | null;
 
@@ -24,7 +24,7 @@ export default class Presenter {
       const trackSize = view.trackSize;
       const stepCount = generalVal / step;
       const stepSize = trackSize / stepCount;
-      const thumbPosFrom = view.positions.from;
+      const thumbPosFrom = (view.positions.from / 100) * trackSize;
 
       model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
     }
@@ -42,8 +42,8 @@ export default class Presenter {
       const trackSize = view.trackSize;
       const stepCount = generalVal / step;
       const stepSize = trackSize / stepCount;
-      const thumbPosFrom = view.positions.from;
-      const thumbPosTo = view.positions.to;
+      const thumbPosFrom = (view.positions.from / 100) * trackSize;
+      const thumbPosTo = (view.positions.to / 100) * trackSize;
       // set value in model.bank.from, which will be used in view's observer above
       model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
       // set value in model.bank.to, which will be used in view's observer above
@@ -65,7 +65,7 @@ export default class Presenter {
     // set current values for to and from for data set and flags
     this.view.changedSubject.addObservers(() => {
       const flag = this.view.type.flag.el;
-      const track = this.view.type.track.el;
+      const parent = this.view.type.parent;
       // notify model and model calculate current vals for from and to
       this.model.modelChangedSubject.notifyObservers();
       if (!this.isDouble) {
@@ -73,13 +73,13 @@ export default class Presenter {
         // set model.bank.from from model.bank to dataset and flag
         flag.innerHTML = `${from}`;
         // set dataset for help us at bundle with panel
-        track.dataset.from = `${from}`;
+        parent.dataset.from = `${from}`;
       } else {
         const from = this.model.bank.from;
         const to = this.model.bank.to;
         // set model.bank.from and model.bank.to to dataset and flags
-        track.dataset.from = `${from}`;
-        track.dataset.to = `${to}`;
+        parent.dataset.from = `${from}`;
+        parent.dataset.to = `${to}`;
 
         const secondFlag = (this.view.type.secondFlag as IFlag).el;
         flag.innerHTML = `${from}`;

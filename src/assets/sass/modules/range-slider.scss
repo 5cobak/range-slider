@@ -1,64 +1,86 @@
 .range-slider {
   position: relative;
-  height: 8px;
-  width: 100%;
+  $self: &;
   max-width: 400px;
-  border-radius: rem(20);
-  border: 1px solid $ds25;
-  user-select: none;
   margin-bottom: 50px;
-  cursor: pointer;
-  &_single {
-    .range-slider__inner {
-      outline: none;
-    }
-    .range-slider__span-to {
-      display: none;
-    }
-  }
+  user-select: none;
+  min-height: 50px;
   &_vertical {
-    width: 8px;
-    height: 266px;
-
-    .range-slider__inner {
+    max-width: 50px;
+    display: flex;
+    #{$self}__track {
       width: 8px;
+      height: 266px;
+      max-width: 50px;
+    }
+
+    #{$self}__inner {
+      min-width: 8px;
       left: -1px;
       background: $greenGrVertical;
     }
-    .range-slider__thumb {
-      left: calc(50% - 7.5px);
+    #{$self}__thumb {
+      left: -4px;
       top: 0;
     }
-    .range-slider__flag {
+    #{$self}__hidden-track {
+      position: relative;
+      left: -8px;
+    }
+    #{$self}__flag {
       left: 20px;
     }
-    .range-slider__scale {
+    #{$self}__scale {
       position: relative;
       opacity: 0.5;
       z-index: 10;
       top: 0;
-      left: 150%;
       width: 20px;
-      height: calc(99%);
+      min-height: 100px;
       overflow: visible;
     }
-    .range-slider__big-line {
+
+    #{$self}__big-line {
       width: 20px;
       height: 2px;
       background-color: $darkGreen;
       position: absolute;
     }
-    .range-slider__small-line {
+    #{$self}__small-line {
       width: 10px;
       height: 2px;
       background-color: $darkGreen;
       position: absolute;
     }
-    .range-slider__text {
+    #{$self}__text {
       position: relative;
       top: -600%;
       left: 150%;
       width: auto;
+    }
+
+    #{$self}__hidden-track {
+      top: 0;
+      left: -8px;
+      bottom: 100%;
+    }
+  }
+  &__track {
+    top: -8px;
+    z-index: 5;
+    height: 8px;
+    width: 100%;
+    border-radius: rem(20);
+    border: 1px solid $ds25;
+    user-select: none;
+    cursor: pointer;
+    &_single {
+      #{$self}__inner {
+        outline: none;
+      }
+      #{$self}__span-to {
+        display: none;
+      }
     }
   }
 
@@ -67,8 +89,13 @@
     background: $greenGrGorizont;
     border-radius: rem(20);
     position: absolute;
-    top: -1px;
+    top: 0;
+    max-width: 100%;
     box-shadow: 0 0 3px 1px $darkGreen;
+  }
+  &__hidden-track {
+    position: relative;
+    top: -8px;
   }
   &__thumb {
     position: absolute;
@@ -81,7 +108,7 @@
     border-radius: 50%;
     border: 2px solid grey;
     cursor: pointer;
-    top: calc(50% - 8px);
+    top: -4px;
   }
 
   &__span-to {
@@ -111,9 +138,10 @@
     opacity: 0.5;
     z-index: 10;
     top: calc(150%);
-    width: calc(99%);
+    width: 100%;
     height: 20px;
-    // overflow-x: hidden;
+    max-width: 100%;
+    cursor: pointer;
   }
   &__big-line {
     width: 2px;
@@ -134,6 +162,9 @@
     top: 110%;
     min-height: 25px;
     background-color: #fff;
-    // border: 1px solid $darkGreen;
+    font-size: 14px;
+    @media (max-width: $phoneWidth) {
+      font-size: 10px;
+    }
   }
 }

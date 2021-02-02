@@ -8,12 +8,13 @@ import { IsettingsTypes, IMethods } from './globals';
     rangeSlider(options: IsettingsTypes, method: string) {
       // get html element which was used by user
       const htmlEl = $(this)[0] as HTMLElement;
+
       // get jQuery object
       const $object = $(this);
       // set default options for range-slider and extend them by user's options
       const settings: IsettingsTypes = $.extend(
+        // default options object
         {
-          // default options object
           el: htmlEl,
           type: 'single',
           min: 0,
@@ -24,8 +25,9 @@ import { IsettingsTypes, IMethods } from './globals';
           step: 1,
           scale: true,
         },
-        options,
-      ); // custom options object
+        // custom options object
+        options
+      );
 
       // function for set data in jquery data object, data is options used by user
       function setData(obj: IsettingsTypes) {
@@ -55,14 +57,16 @@ import { IsettingsTypes, IMethods } from './globals';
           setData(presenter.model.settings);
         },
       };
+
       // default return for each slider
-      return $(this).each( (...args) => {
+      return $(this).each((...args) => {
         if (methods[method]) {
           // если запрашиваемый метод существует, мы его вызываем
           // все параметры, кроме имени метода прийдут в метод
           // this так же перекочует в метод
           return methods[method].apply(this, Array.prototype.slice.call(args, 1) as []);
-        } if (typeof method === 'object' || !method) {
+        }
+        if (typeof method === 'object' || !method) {
           // если первым параметром идет объект, либо совсем пусто
           // выполняем метод init
 

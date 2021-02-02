@@ -9,31 +9,22 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint/eslint-plugin"],
-  "extends": [
-    "airbnb/base",
-    "plugin:fsd/all",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["airbnb/base", "plugin:fsd/all", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "linebreak-style": 0,
-    "no-tabs": "off",
     "indent": [2, 2],
     "no-console": "warn",
     "eot-last": "off",
     "max-len": [2, 200, 4, { "ignoreUrls": true }],
-    "no-plusplus": "off",
-    "prefer-destructuring": "off",
-    "no-param-resassign": "off",
+    "no-param-reassign": "off",
     "semi": "off",
     "no-unused-vars": "warn",
     "space-in-parens": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "object-curly-newline": "off",
-    "operator-linebreak": 0,
-    "no-shadow": "off",
-    "class-methods-use-this": "off"
+    "@typescript-eslint/no-this-alias": "off",
+    "comma-dangle": "off",
+    "object-curly-newline": "off"
   },
   "parserOptions": {
     "ecmaVersion": 11,

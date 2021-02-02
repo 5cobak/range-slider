@@ -31,10 +31,12 @@ export interface IObserver {
 
 export interface IThumb {
   el: HTMLElement;
+  hiddenTrack: HTMLElement;
   moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
   moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
   onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
+  setHeightForHiddenTrackIntoVertSl(): void;
   isVertical: RegExpMatchArray | null;
   positions: { to: number; from: number };
   changedSubject: IObserver;
@@ -59,6 +61,7 @@ export interface IScale {
   setCountOfLines(settings: IsettingsTypes, generalVal: number): void;
 }
 export interface ISubView {
+  parent: HTMLElement;
   track: ITrack;
   thumb: IThumb;
   secondThumb?: IThumb;

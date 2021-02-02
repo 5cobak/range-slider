@@ -3,41 +3,48 @@ import { IsettingsTypes } from './globals';
 export default class ViewInner {
   settings: IsettingsTypes;
 
-  el: HTMLElement;
+  el!: HTMLElement;
 
   // constructor acces first argument from model's settings across presenter
   constructor(settings: IsettingsTypes) {
     this.settings = settings;
-    this.el = this.createInner();
+    this.createInner();
   }
 
   // method for create inner el
-  private createInner():HTMLElement {
+  private createInner(): void {
     const inner = document.createElement('div');
     inner.classList.add('range-slider__inner');
-    return inner;
+    this.el = inner;
   }
 
   // public method for set inner's position, used at init slider and mouse events
-  setPosition(settings: IsettingsTypes):void {
-    const track = this.el.parentElement as HTMLElement;
-    const thumbFirst = track.querySelector('.range-slider__thumb_first') as HTMLElement;
-
-    const heightThumb = parseFloat(getComputedStyle(thumbFirst).height);
+  setPosition(settings: IsettingsTypes): void {
+    const hiddenTrack = this.el.parentElement as HTMLElement;
+    const thumbFirst = hiddenTrack.querySelector('.range-slider__thumb_first') as HTMLElement;
     const widthThumb = parseFloat(getComputedStyle(thumbFirst).width);
+    const hiddenTrackWidth = parseFloat(getComputedStyle(hiddenTrack as Element).width);
+    const hiddenTrackHeight = parseFloat(getComputedStyle(hiddenTrack as Element).height);
+
     // choose type inner and set behavior in various slider
     if (settings.type === 'single') {
-      this.el.style.width = `${parseFloat(getComputedStyle(thumbFirst).left) + widthThumb / 2}px`;
+      const widthInPx = parseFloat(getComputedStyle(thumbFirst).left) + widthThumb / 2;
+      this.el.style.width = `${(widthInPx / hiddenTrackWidth) * 100}%`;
     } else if (settings.type === 'double') {
-      const thumbSecond = track.querySelector('.range-slider__thumb_second') as HTMLElement;
-      this.el.style.left = `${thumbFirst.offsetLeft + widthThumb / 2}px`;
-      this.el.style.width = `${thumbSecond.offsetLeft - thumbFirst.offsetLeft}px`;
+      const thumbSecond = hiddenTrack.querySelector('.range-slider__thumb_second') as HTMLElement;
+      const widthInPx = thumbSecond.offsetLeft - thumbFirst.offsetLeft;
+      const leftInPx = thumbFirst.offsetLeft + widthThumb / 2;
+      this.el.style.left = `${(leftInPx / hiddenTrackWidth) * 100}%`;
+      this.el.style.width = `${(widthInPx / hiddenTrackWidth) * 100}%`;
     } else if (settings.type === 'single-vertical') {
-      this.el.style.height = `${parseFloat(getComputedStyle(thumbFirst).top) + heightThumb / 2}px`;
+      const heightInPx = thumbFirst.offsetTop + widthThumb / 2;
+      this.el.style.height = `${heightInPx}px`;
     } else {
-      const thumbSecond = track.querySelector('.range-slider__thumb_second') as HTMLElement;
-      this.el.style.top = `${thumbFirst.offsetTop + heightThumb / 2}px`;
-      this.el.style.height = `${thumbSecond.offsetTop - thumbFirst.offsetTop}px`;
+      const thumbSecond = hiddenTrack.querySelector('.range-slider__thumb_second') as HTMLElement;
+      const heightInPx = thumbSecond.offsetTop - thumbFirst.offsetTop;
+      const leftInPx = thumbFirst.offsetTop + widthThumb / 2;
+      this.el.style.top = `${(leftInPx / hiddenTrackHeight) * 100}%`;
+      this.el.style.height = `${(heightInPx / hiddenTrackHeight) * 100}%`;
     }
   }
 }

@@ -12,6 +12,8 @@ export default class ViewDouble {
 
   el!: HTMLElement;
 
+  parent!: HTMLElement;
+
   track!: ITrack;
 
   thumb!: IThumb;
@@ -35,30 +37,32 @@ export default class ViewDouble {
     this.init(settings, element, generalVal);
   }
 
+  private createMainElement() {
+    const parent = document.createElement('div');
+    parent.className = 'range-slider range-slider_double';
+    this.parent = parent;
+  }
+
   // this method set thumb position at init slider and notify high level's observers
   // method used model's settings and general value from presenter across main view
   private setThumbPos(settings: IsettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).width);
     const trackSize = parseFloat(getComputedStyle(this.track.el).width) - thumbSize;
+    const { hiddenTrack } = this.thumb;
+    hiddenTrack.style.width = `${100 - (thumbSize / trackSize) * 100}%`;
     const stepCount = generalVal / settings.step;
     const stepSize = +(trackSize / stepCount);
-    let from: number = settings.from;
+    let { from } = settings;
     let to = settings.to as number;
-
-    const min = settings.min;
-
+    const { min } = settings;
     from -= min;
     to -= min;
-
-    from = stepSize * Math.round(from / settings.step);
-    to = stepSize * Math.round(to / settings.step);
-
-    this.thumb.el.style.left = `${from}px`;
-    this.secondThumb.el.style.left = `${to}px`;
-
+    from = ((stepSize * Math.round(from / settings.step)) / trackSize) * 100;
+    this.thumb.el.style.left = `${from}%`;
+    to = ((stepSize * Math.round(to / settings.step)) / trackSize) * 100;
+    this.secondThumb.el.style.left = `${to}%`;
     this.positions.from = from;
     this.positions.to = to;
-
     this.changedSubject.notifyObservers();
   }
 
@@ -72,24 +76,26 @@ export default class ViewDouble {
 
   // add all elements in view
   private addElements(): void {
-    this.el.append(this.track.el);
-    this.track.el.append(this.inner.el, this.thumb.el);
+    this.createMainElement();
+    this.el.append(this.parent);
+    this.parent.append(this.track.el, this.thumb.hiddenTrack);
+    this.thumb.hiddenTrack.append(this.thumb.el, this.inner.el);
     // add flag and scale if the user set in options true for them, add second thumb
     if (this.settings.flag) this.thumb.el.append(this.flag.el);
 
     this.addSecondThumb();
 
-    this.track.el.append(this.secondThumb.el);
+    this.thumb.hiddenTrack.append(this.secondThumb.el);
     if (this.settings.flag) this.secondThumb.el.append(this.secondFlag.el);
-    if (this.settings.scale) this.track.el.append(this.scale.el);
+    if (this.settings.scale) this.parent.append(this.scale.el);
   }
 
   // add view events drap-and-drop and click on track from thumb
   private addEvents(generalVal: number): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const thumb = this.thumb;
-    const settings = this.settings;
+    const { thumb } = this;
+    const { settings } = this;
     function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveDoubleType(e, settings, generalVal);
     }
@@ -98,11 +104,11 @@ export default class ViewDouble {
     }
 
     if (isMobile) {
-      this.track.el.addEventListener('touchstart', onClick);
-      this.track.el.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchstart', onClick);
+      this.parent.addEventListener('touchstart', onMove);
     } else {
-      this.track.el.addEventListener('mousedown', onClick);
-      this.track.el.addEventListener('mousedown', onMove);
+      this.parent.addEventListener('mousedown', onClick);
+      this.parent.addEventListener('mousedown', onMove);
     }
   }
 
@@ -135,6 +141,7 @@ export default class ViewDouble {
     }
 
     this.inner.setPosition(this.settings);
+
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);

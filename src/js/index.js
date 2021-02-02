@@ -3,10 +3,11 @@ import { panelFirst, panelSecond, panelThird, panelFourth } from '../ts/panel';
 
 const rangeFirst = $('.js-range-slider-1').rangeSlider({
   min: 0,
-  max: 10000,
-  from: 1000,
-  to: 10000,
-  step: 1,
+  max: 50,
+  from: 0,
+  to: 10,
+  step: 5,
+  // flag: false,
 });
 
 rangeFirst.after(panelFirst.el);
@@ -19,25 +20,27 @@ panelFirst.onChangeVal('max', rangeFirst.data('max'));
 function onMove(e) {
   const target = e.target;
   const track = target.closest('.range-slider');
+
   if (!track) return;
-  function changeVal() {
-    panelFirst.onChangeVal('from', +track.dataset.from);
-  }
   function updateVal() {
     rangeFirst.rangeSlider({ from: +track.dataset.from }, 'update');
   }
+  function changeVal() {
+    panelFirst.onChangeVal('from', +track.dataset.from);
+    document.addEventListener('mouseup', updateVal);
+  }
+
   function removeEventListeners() {
-    setTimeout(() => {
-      document.removeEventListener('mousemove', changeVal);
-      document.removeEventListener('touchmove', changeVal);
-      document.removeEventListener('mouseup', updateVal);
-    }, 100);
+    document.removeEventListener('mousemove', changeVal);
+    document.removeEventListener('touchmove', changeVal);
+    document.removeEventListener('mouseup', updateVal);
+    document.removeEventListener('touchend', updateVal);
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
   document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
-  document.addEventListener('mouseup', removeEventListeners);
+  document.addEventListener('touchend', updateVal);
 }
 
 rangeFirst.on('mousedown', onMove);
@@ -119,12 +122,14 @@ function onMoveSec(e) {
       document.removeEventListener('mousemove', changeVal);
       document.removeEventListener('touchmove', changeVal);
       document.removeEventListener('mouseup', updateVal);
+      document.removeEventListener('touchend', updateVal);
     }, 100);
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
   document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
+  document.addEventListener('touchend', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 
@@ -190,7 +195,7 @@ panelSecond.scale.onchange = () => {
   rangeSecond.rangeSlider({ scale: panelSecond.scale.checked }, 'update');
 };
 
-// /* ----------------------------------------------- third slider with panel -------------------------- */
+// // /* ----------------------------------------------- third slider with panel -------------------------- */
 
 const rangeThird = $('.js-range-slider-3').rangeSlider({
   type: 'double-vertical',
@@ -199,6 +204,7 @@ const rangeThird = $('.js-range-slider-3').rangeSlider({
   from: 0,
   to: -2000,
   step: 1000,
+  flag: false,
 });
 
 rangeThird.after(panelThird.el);
@@ -226,12 +232,14 @@ function onMoveThird(e) {
       document.removeEventListener('mousemove', changeVal);
       document.removeEventListener('touchmove', changeVal);
       document.removeEventListener('mouseup', updateVal);
+      document.removeEventListener('touchend', updateVal);
     }, 100);
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
   document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
+  document.addEventListener('touchend', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 
@@ -298,7 +306,7 @@ panelThird.scale.onchange = () => {
   rangeThird.rangeSlider({ scale: panelThird.scale.checked }, 'update');
 };
 
-// /* ----------------------------------------------- fourth slider with panel -------------------------- */
+// // /* ----------------------------------------------- fourth slider with panel -------------------------- */
 
 const rangeFourth = $('.js-range-slider-4').rangeSlider({
   type: 'single-vertical',
@@ -327,19 +335,21 @@ function onMoveForth(e) {
     panelFourth.onChangeVal('from', +track.dataset.from);
   }
   function updateVal() {
-    rangeFourth.rangeSlider({ from: track.dataset.from }, 'update');
+    rangeFourth.rangeSlider({ from: +track.dataset.from }, 'update');
   }
   function removeEventListeners() {
     setTimeout(() => {
       document.removeEventListener('mousemove', changeVal);
       document.removeEventListener('touchmove', changeVal);
       document.removeEventListener('mouseup', updateVal);
+      document.removeEventListener('touchend', updateVal);
     }, 100);
   }
   changeVal();
   document.addEventListener('mousemove', changeVal);
   document.addEventListener('touchmove', changeVal);
   document.addEventListener('mouseup', updateVal);
+  document.addEventListener('touchend', updateVal);
   document.addEventListener('mouseup', removeEventListeners);
 }
 

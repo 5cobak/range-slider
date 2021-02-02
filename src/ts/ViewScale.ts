@@ -1,3 +1,4 @@
+import { tsConstructorType } from '@babel/types';
 import { IScale, IsettingsTypes } from './globals';
 import { getValues, setBigLines, setSmallLines } from './utils/scaleHelpers';
 
@@ -8,7 +9,7 @@ export default class Scale implements IScale {
 
   smallLine!: HTMLElement;
 
-  bigLine!: HTMLElement
+  bigLine!: HTMLElement;
 
   // constructor acces first argument moles's settings across presenter
   constructor(settings: IsettingsTypes) {
@@ -29,11 +30,11 @@ export default class Scale implements IScale {
     bigLine.className = 'range-slider__big-line';
     this.el = scale;
     this.smallLine = smallLine;
-    this.bigLine = bigLine
+    this.bigLine = bigLine;
   }
 
   // write in scale min and max values
-  writeMinAndMaxValues(settings: IsettingsTypes):void {
+  writeMinAndMaxValues(settings: IsettingsTypes): void {
     const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
     const min = document.createElement('div');
 
@@ -52,14 +53,16 @@ export default class Scale implements IScale {
     const scale = this.el;
     // get values and calculate step size
     const { thumbSize, trackSize, stepCount, stepSize, posCountSmallPercent } = getValues(settings, generalVal, scale);
+
     // get positions for bit and small lines
     const { posCountBig } = getValues(settings, generalVal, scale);
+
     // add small line in scale
     this.el.append(this.smallLine);
 
     // calculate and append small lines in scale
     setSmallLines(settings, stepCount, posCountSmallPercent, trackSize, thumbSize, stepSize, smallLine, scale);
     // calculate and append big Lines in scale
-    setBigLines(settings, stepCount, posCountBig, stepSize, trackSize, scale)
+    setBigLines(settings, stepCount, posCountBig, stepSize, trackSize, scale);
   }
 }
