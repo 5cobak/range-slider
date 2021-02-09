@@ -1,0 +1,18 @@
+.panel {
+  padding: 20px;
+  background-color: $primary-color;
+  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &__label {
+    margin-right: 20px;
+  }
+
+  &__input {
+    border: 1px solid #000;
+  }
+  &__input-title {
+    display: block;
+  }
+}

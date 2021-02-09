@@ -24,7 +24,8 @@
     "import/extensions": "off",
     "@typescript-eslint/no-this-alias": "off",
     "comma-dangle": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-shadow": "off"
   },
   "parserOptions": {
     "ecmaVersion": 11,
