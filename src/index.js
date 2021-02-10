@@ -1,4 +1,4 @@
-import { panelFirst, panelSecond, panelThird, panelFourth } from './range-slider/Panel';
+import { panelFirst, panelSecond, panelThird, panelFourth } from './panel/Panel';
 /* ----------------------------------------------- first slider with panel -------------------------- */
 
 const rangeFirst = $('.js-range-slider-1').rangeSlider({
