@@ -19,10 +19,6 @@ export interface ITrack {
   el: HTMLElement;
 }
 
-export interface IFlag {
-  el: HTMLElement;
-  setPosition(settings: IsettingsTypes): void;
-}
 export interface IObserver {
   addObservers(o: () => void): void;
   notifyObservers(): void;
@@ -41,7 +37,10 @@ export interface IThumb {
   positions: { to: number; from: number };
   changedSubject: IObserver;
 }
-
+export interface IFlag {
+  el: HTMLElement;
+  setPosition(settings: IsettingsTypes): void;
+}
 export interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;
 }

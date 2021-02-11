@@ -16,12 +16,11 @@ export default class Presenter {
 
   // method for calculate from in model by using thumb position from view
   private changeSingleValue(settings: IsettingsTypes) {
-    const view = this.view;
-    const model = this.model;
+    const { view, model } = this;
     function changeVal() {
       const generalVal = model.bank.generalValue;
-      const step = settings.step;
-      const trackSize = view.trackSize;
+      const { step } = settings;
+      const { trackSize } = view;
       const stepCount = generalVal / step;
       const stepSize = trackSize / stepCount;
       const thumbPosFrom = (view.positions.from / 100) * trackSize;
@@ -33,13 +32,11 @@ export default class Presenter {
 
   // method for calculate from and to in model by using thumbs position from view
   private changeDoubleValue(settings: IsettingsTypes) {
-    const view = this.view;
-    const model = this.model;
-
+    const { view, model } = this;
     function changeVal() {
       const generalVal = model.bank.generalValue;
-      const step = settings.step;
-      const trackSize = view.trackSize;
+      const { step } = settings;
+      const { trackSize } = view;
       const stepCount = generalVal / step;
       const stepSize = trackSize / stepCount;
       const thumbPosFrom = (view.positions.from / 100) * trackSize;
@@ -65,18 +62,17 @@ export default class Presenter {
     // set current values for to and from for data set and flags
     this.view.changedSubject.addObservers(() => {
       const flag = this.view.type.flag.el;
-      const parent = this.view.type.parent;
+      const { parent } = this.view.type;
       // notify model and model calculate current vals for from and to
       this.model.modelChangedSubject.notifyObservers();
       if (!this.isDouble) {
-        const from = this.model.bank.from;
+        const { from } = this.model.bank;
         // set model.bank.from from model.bank to dataset and flag
         flag.innerHTML = `${from}`;
         // set dataset for help us at bundle with panel
         parent.dataset.from = `${from}`;
       } else {
-        const from = this.model.bank.from;
-        const to = this.model.bank.to;
+        const { from, to } = this.model.bank;
         // set model.bank.from and model.bank.to to dataset and flags
         parent.dataset.from = `${from}`;
         parent.dataset.to = `${to}`;

@@ -55,21 +55,23 @@ export default class ViewSingle implements IViewSingle {
   private addEvents(generalVal: number): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const { thumb } = this;
+    const { thumb, flag } = this;
     const { settings } = this;
-    function onMove(e: MouseEvent | TouchEvent) {
+    function moveAt(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
+      if (flag) flag.setPosition(settings);
     }
     function onClick(e: MouseEvent | TouchEvent) {
       thumb.onClickSingleType(e, settings, generalVal);
+      if (flag) flag.setPosition(settings);
     }
 
     if (isMobile) {
       this.parent.addEventListener('touchstart', onClick);
-      this.parent.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchstart', moveAt);
     } else {
       this.parent.addEventListener('mousedown', onClick);
-      this.parent.addEventListener('mousedown', onMove);
+      this.parent.addEventListener('mousemove', moveAt);
     }
   }
 
@@ -119,8 +121,9 @@ export default class ViewSingle implements IViewSingle {
     this.addEvents(generalVal);
 
     this.setThumbPos(this.settings, generalVal);
+    this.inner.setPosition(settings);
     if (this.settings.flag) this.flag.setPosition(this.settings);
-    this.inner.setPosition(this.settings);
+
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);

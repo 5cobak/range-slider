@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import { IObserver, IsettingsTypes, IThumb, Iposition } from './globals';
 import MakeObservableSubject from './Observer';
 
@@ -49,7 +48,8 @@ export default class ViewThumb implements IThumb {
     // getValues is function you we'll find at ./utils/thumbHelpers.ts
     const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
     // choose client.x or client.y for horizontal or vertical slider
-    const isTouch = e instanceof TouchEvent;
+
+    const isTouch = e.type === 'touchstart';
 
     if (!targetThumb) return;
 
@@ -61,7 +61,7 @@ export default class ViewThumb implements IThumb {
     const stepSize = trackSize / stepCount;
     // choose left or top for horizontal or vertical slider
     const coord = settings.type.match('vertical') ? 'top' : 'left';
-
+    const size = isVertical ? 'height' : 'width';
     // function for move thumb
     function moveAt(e: MouseEvent | TouchEvent) {
       let userCoord: number;
@@ -72,32 +72,28 @@ export default class ViewThumb implements IThumb {
         userCoord = isVertical ? touch.clientY : touch.clientX;
       }
       const trackCoord = track.getBoundingClientRect()[coord];
-      // get coord for click in track
+      // get coordinate for click in track
       const newPos = userCoord - trackCoord - halfSizeThumb;
 
       // get and regulation pos of thumb by step size
       const posByStep = Math.round(newPos / stepSize) * stepSize;
       // set thumb pos
       targetThumb.style[coord] = `${(posByStep / trackSize) * 100}%`;
-
-      // valudate thumb pos in horizontal and vertical type of track, pos must not be greater then track size and less then coord 0 of track
+      // validate thumb pos in horizontal and vertical type of track, pos must not be greater then track size and less then coord 0 of track
 
       validateCoord(targetThumb, trackSize, isVertical);
       // set from in property position and notify observers, this observers will use this from in high level
       positions.from = parseFloat(targetThumb.style[coord]);
       changedSubject.notifyObservers();
     }
-    // standart drag-and-drop addition and deletion event's listeners
-    function onMouseMove(e: MouseEvent | TouchEvent) {
-      moveAt(e);
-    }
+    // standard drag-and-drop addition and deletion event's listeners
     function removeEventListeners() {
       document.body.classList.remove('stop-scrolling');
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('mousemove', moveAt);
+      document.removeEventListener('touchmove', moveAt);
     }
-    document.addEventListener('touchmove', onMouseMove);
-    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', moveAt);
+    document.addEventListener('mousemove', moveAt);
     document.addEventListener('mouseup', removeEventListeners);
     document.addEventListener('touchend', removeEventListeners);
   }
