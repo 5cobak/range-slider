@@ -14,7 +14,7 @@ import { IsettingsTypes, IMethods } from './globals';
         // default options object
         {
           el: htmlEl,
-          type: 'single',
+          type: 'single-horizontal',
           min: 0,
           max: 1000,
           from: 0,
@@ -39,6 +39,7 @@ import { IsettingsTypes, IMethods } from './globals';
       }
 
       let updatedOptions = settings;
+
       // set init and update methods for plugin, which user can use, we use this methods at the bundle with panel
       const methods: IMethods = {
         update: () => {

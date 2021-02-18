@@ -25,7 +25,8 @@
     "@typescript-eslint/no-this-alias": "off",
     "comma-dangle": "off",
     "object-curly-newline": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "class-methods-use-this": "off"
   },
   "parserOptions": {
     "ecmaVersion": 11,

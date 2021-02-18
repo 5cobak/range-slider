@@ -57,21 +57,37 @@ export default class ViewSingle implements IViewSingle {
 
     const { thumb, flag } = this;
     const { settings } = this;
-    function moveAt(e: MouseEvent | TouchEvent) {
+
+    function setFlagPosOnMove(e: MouseEvent | TouchEvent) {
+      const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
+      if (flag) {
+        if (currentThumb === thumb.el) {
+          flag.setPosition(settings, thumb.el);
+        }
+      }
+    }
+    function setFlagPosOnClick() {
+      if (flag) {
+        flag.setPosition(settings, thumb.el);
+      }
+    }
+    function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
-      if (flag) flag.setPosition(settings);
+      setFlagPosOnMove(e);
     }
     function onClick(e: MouseEvent | TouchEvent) {
       thumb.onClickSingleType(e, settings, generalVal);
-      if (flag) flag.setPosition(settings);
+      setFlagPosOnClick();
     }
 
     if (isMobile) {
       this.parent.addEventListener('touchstart', onClick);
-      this.parent.addEventListener('touchstart', moveAt);
+      this.parent.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchmove', setFlagPosOnMove);
+      this.parent.addEventListener('touchend', onClick);
     } else {
       this.parent.addEventListener('mousedown', onClick);
-      this.parent.addEventListener('mousemove', moveAt);
+      this.parent.addEventListener('mousedown', onMove);
     }
   }
 
@@ -122,7 +138,7 @@ export default class ViewSingle implements IViewSingle {
 
     this.setThumbPos(this.settings, generalVal);
     this.inner.setPosition(settings);
-    if (this.settings.flag) this.flag.setPosition(this.settings);
+    if (this.settings.flag) this.flag.setPosition(this.settings, this.thumb.el);
 
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);

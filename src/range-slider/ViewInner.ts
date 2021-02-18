@@ -27,11 +27,12 @@ export default class ViewInner {
     const hiddenTrackHeight = parseFloat(getComputedStyle(hiddenTrack as Element).height);
 
     // choose type inner and set behavior in various slider
-    if (settings.type === 'single') {
+    if (settings.type === 'single-horizontal') {
       const widthInPx = parseFloat(getComputedStyle(thumbFirst).left) + widthThumb / 2;
       this.el.style.width = `${(widthInPx / hiddenTrackWidth) * 100}%`;
-    } else if (settings.type === 'double') {
+    } else if (settings.type === 'double-horizontal') {
       const thumbSecond = hiddenTrack.querySelector('.range-slider__thumb_second') as HTMLElement;
+
       const widthInPx = thumbSecond.offsetLeft - thumbFirst.offsetLeft;
       const leftInPx = thumbFirst.offsetLeft + widthThumb / 2;
       this.el.style.left = `${(leftInPx / hiddenTrackWidth) * 100}%`;

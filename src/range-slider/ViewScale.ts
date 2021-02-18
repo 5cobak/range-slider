@@ -49,7 +49,7 @@ export default class Scale implements IScale {
   }
 
   setCountOfLines(settings: IsettingsTypes, generalVal: number): void {
-    const smallLine = this.smallLine;
+    const { smallLine } = this;
     const scale = this.el;
     // get values and calculate step size
     const { thumbSize, trackSize, stepCount, stepSize, posCountSmallPercent } = getValues(settings, generalVal, scale);

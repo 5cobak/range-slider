@@ -57,18 +57,36 @@ export default class ViewSingleVertical {
   private addEvents(generalVal: number): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const { thumb } = this;
+    const { thumb, flag } = this;
     const { settings } = this;
+
+    function setFlagPosOnMove(e: MouseEvent | TouchEvent) {
+      const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
+      if (flag) {
+        if (currentThumb === thumb.el) {
+          flag.setPosition(settings, thumb.el);
+        }
+      }
+    }
+    function setFlagPosOnClick() {
+      if (flag) {
+        flag.setPosition(settings, thumb.el);
+      }
+    }
     function onMove(e: MouseEvent | TouchEvent) {
       thumb.moveSingleType(e, settings, generalVal);
+      setFlagPosOnMove(e);
     }
     function onClick(e: MouseEvent | TouchEvent) {
       thumb.onClickSingleType(e, settings, generalVal);
+      setFlagPosOnClick();
     }
 
     if (isMobile) {
       this.parent.addEventListener('touchstart', onClick);
       this.parent.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchmove', setFlagPosOnMove);
+      this.parent.addEventListener('touchend', onClick);
     } else {
       this.parent.addEventListener('mousedown', onClick);
       this.parent.addEventListener('mousedown', onMove);
@@ -120,7 +138,7 @@ export default class ViewSingleVertical {
 
     this.setThumbPos(this.settings, generalVal);
     this.inner.setPosition(this.settings);
-    if (this.settings.flag) this.flag.setPosition(this.settings);
+    if (this.settings.flag) this.flag.setPosition(this.settings, this.thumb.el);
     if (this.settings.scale) {
       this.scale.setCountOfLines(this.settings, generalVal);
       this.scale.writeMinAndMaxValues(this.settings);

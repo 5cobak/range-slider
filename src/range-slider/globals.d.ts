@@ -39,7 +39,7 @@ export interface IThumb {
 }
 export interface IFlag {
   el: HTMLElement;
-  setPosition(settings: IsettingsTypes): void;
+  setPosition(settings: IsettingsTypes, parent: HTMLElement): void;
 }
 export interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;

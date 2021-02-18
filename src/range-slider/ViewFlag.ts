@@ -14,28 +14,33 @@ export default class ViewFlag {
   }
 
   // set flag's position in center of thumb and method used at mouse events and init slider like inner's method
-  setPosition(settings: IsettingsTypes): void {
-    this.el.innerHTML = `${settings.from}`;
-    const thumb = this.el.parentElement as HTMLElement;
+  setPosition(settings: IsettingsTypes, parent: HTMLElement): void {
+    const isVertical = settings.type.match('vertical');
+    const thumb = parent;
+    const flag = thumb.querySelector('.range-slider__flag') as HTMLElement;
     const thumbLeft = parseFloat(thumb.style.left);
-    const halfWidthThumb = thumb.offsetWidth / 2;
-    const halfWidthFlag = this.el.offsetWidth / 2;
     const halfHeightThumb = thumb.offsetHeight / 2;
-    const halfHeightFlag = this.el.offsetHeight / 2;
+    let halfHeightFlag: number;
+    if (flag) halfHeightFlag = flag.offsetHeight / 2;
+    else return;
 
-    const leftCoord = this.el.getBoundingClientRect().left;
+    const leftCoord = flag.getBoundingClientRect().left;
 
-    if (leftCoord - 20 < 0) {
-      this.el.style.left = '0px';
-    } else if (!settings.type.match('vertical')) {
-      this.el.style.left = `${-halfWidthFlag + halfWidthThumb}px`;
+    if (!isVertical) {
+      flag.style.left = `${-150}%`;
+      flag.style.right = 'auto';
     } else if (halfHeightFlag > halfHeightThumb) {
-      this.el.style.top = `${-halfHeightFlag + halfHeightThumb}px`;
-    } else this.el.style.top = `${0}px`;
+      flag.style.top = `${-halfHeightFlag + halfHeightThumb}px`;
+    } else flag.style.top = `${0}px`;
 
     if (thumbLeft > 95) {
-      this.el.style.left = 'auto';
-      this.el.style.right = '0%';
+      flag.style.left = 'auto';
+      flag.style.right = '0%';
+    }
+
+    if (thumbLeft < 5) {
+      flag.style.left = '0';
+      flag.style.right = 'auto';
     }
   }
 

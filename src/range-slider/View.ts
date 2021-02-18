@@ -39,11 +39,11 @@ export default class View implements IView {
   // method for choose type of range-slider: single, single-vertical, double, double-vertical
   private chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
     let modelType: ISubView;
-    if (settings.type === 'single') {
+    if (settings.type === 'single-horizontal') {
       modelType = new ViewSingle(this.el, this.settings, generalVal);
       return modelType;
     }
-    if (settings.type === 'double') {
+    if (settings.type === 'double-horizontal') {
       modelType = new ViewDouble(this.el, this.settings, generalVal);
       return modelType;
     }

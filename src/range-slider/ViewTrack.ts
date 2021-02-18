@@ -20,7 +20,7 @@ export default class ViewTrack {
 
   // method choose type of track(single, single-vertical, double-vertical, double ) and add current class name
   private setType(type: string): void {
-    if (type === 'single') {
+    if (type === 'single-horizontal') {
       this.el.className = '';
       this.el.className = 'range-slider__track range-slider__track_single';
     } else if (type === 'single-vertical') {
