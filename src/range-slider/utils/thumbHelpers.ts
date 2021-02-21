@@ -8,21 +8,24 @@ export function validateCoordsByClick(
   const coord = isVertical ? 'top' : 'left';
   const firstThumbCoord = firstThumb.getBoundingClientRect()[coord];
   const secondThumbCoord = secondThumb.getBoundingClientRect()[coord];
-  if (parseFloat(getComputedStyle(movedThumb)[coord]) <= 0) movedThumb.style[coord] = `${0}%`;
-  else if (parseFloat(getComputedStyle(movedThumb)[coord]) > trackSize) {
+  const movedThumbCoord = parseFloat(getComputedStyle(movedThumb)[coord]);
+
+  if (movedThumbCoord <= 0) movedThumb.style[coord] = `${0}%`;
+  else if (movedThumbCoord > trackSize) {
     movedThumb.style[coord] = `${100}%`;
   }
-  if (movedThumb === firstThumb && firstThumbCoord > secondThumbCoord) {
+
+  if (firstThumbCoord > secondThumbCoord) {
     movedThumb.style[coord] = `${(parseFloat(getComputedStyle(secondThumb)[coord]) / trackSize) * 100}%`;
-  } else if (movedThumb === secondThumb && secondThumbCoord < firstThumbCoord) {
+  } else if (firstThumbCoord > secondThumbCoord) {
     movedThumb.style[coord] = `${(parseFloat(getComputedStyle(firstThumb)[coord]) / trackSize) * 100}%`;
   }
 }
 
 export function validateCoord(thumb: HTMLElement, trackSize: number, isVertical: RegExpMatchArray | null): void {
   const coord = isVertical ? 'top' : 'left';
-
-  if (parseFloat(getComputedStyle(thumb)[coord]) <= 0) thumb.style[coord] = `${0}%`;
+  const thumbCoord = parseFloat(getComputedStyle(thumb)[coord]);
+  if (thumbCoord <= 0) thumb.style[coord] = `${0}%`;
   else if (parseFloat(getComputedStyle(thumb)[coord]) >= trackSize) {
     thumb.style[coord] = `${100}%`;
   }
@@ -39,8 +42,9 @@ export function validateCoordsByMove(
   const targetSecondThumbCoord = isVertical
     ? (targetSecondThumb as HTMLElement).getBoundingClientRect().top
     : (targetSecondThumb as HTMLElement).getBoundingClientRect().left;
-  const targetThumbCoord = isVertical ? targetThumb.getBoundingClientRect().top : targetThumb.getBoundingClientRect().left;
+
   const coord = isVertical ? 'top' : 'left';
+  const targetThumbCoord = isVertical ? targetThumb.getBoundingClientRect().top : targetThumb.getBoundingClientRect().left;
   const hiddenTrack = firstThumb.parentElement as HTMLElement;
 
   const size = isVertical ? 'height' : 'width';
@@ -50,9 +54,9 @@ export function validateCoordsByMove(
   } else if (parseFloat(getComputedStyle(targetThumb)[coord]) >= trackSize) {
     targetThumb.style[coord] = '100%';
   }
-  if (targetThumb === firstThumb && targetThumbCoord >= targetSecondThumbCoord) {
+  if (targetThumbCoord >= targetSecondThumbCoord) {
     targetThumb.style[coord] = `${(parseFloat(getComputedStyle(secondThumb as HTMLElement)[coord]) / hiddenTrackSize) * 100}%`;
-  } else if (targetThumb === secondThumb && targetThumbCoord <= targetSecondThumbCoord) {
+  } else if (targetThumbCoord <= targetSecondThumbCoord) {
     targetThumb.style[coord] = `${(parseFloat(getComputedStyle(firstThumb as HTMLElement)[coord]) / hiddenTrackSize) * 100}%`;
   }
 }
@@ -72,6 +76,7 @@ export function getValues(
   trackSize: number;
 } {
   const track = (e.target as HTMLElement).closest('.range-slider') as HTMLElement;
+
   const thumbs = track.querySelectorAll('.range-slider__thumb');
   const targetThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
 

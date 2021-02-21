@@ -1,9 +1,8 @@
-import { tsConstructorType } from '@babel/types';
-import { IScale, IsettingsTypes } from './globals';
+import { IScale, ISettingsTypes } from './globals';
 import { getValues, setBigLines, setSmallLines } from './utils/scaleHelpers';
 
 export default class Scale implements IScale {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 
   el!: HTMLElement;
 
@@ -12,7 +11,7 @@ export default class Scale implements IScale {
   bigLine!: HTMLElement;
 
   // constructor acces first argument moles's settings across presenter
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.settings = settings;
     // create thumb element and add class range-slider__thumb
     this.createElement();
@@ -34,7 +33,7 @@ export default class Scale implements IScale {
   }
 
   // write in scale min and max values
-  writeMinAndMaxValues(settings: IsettingsTypes): void {
+  writeMinAndMaxValues(settings: ISettingsTypes): void {
     const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
     const min = document.createElement('div');
 
@@ -48,7 +47,7 @@ export default class Scale implements IScale {
     lineCollections[lineCollections.length - 1].append(max);
   }
 
-  setCountOfLines(settings: IsettingsTypes, generalVal: number): void {
+  setCountOfLines(settings: ISettingsTypes, generalVal: number): void {
     const { smallLine } = this;
     const scale = this.el;
     // get values and calculate step size

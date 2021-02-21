@@ -255,7 +255,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import View from './View';
 import Model from './Model';
-import { IFlag, IModel, IsettingsTypes, IView } from './globals';
+import { IFlag, IModel, ISettingsTypes, IView } from './globals';
 &nbsp;
 export default class Presenter {
   private view!: IView;
@@ -265,12 +265,12 @@ export default class Presenter {
   private isDouble!: RegExpMatchArray | null;
 &nbsp;
   // settings is options from user or from init slider
-  constructor(settings: IsettingsTypes, element: HTMLElement) {
+  constructor(settings: ISettingsTypes, element: HTMLElement) {
     this.init(settings, element);
   }
 &nbsp;
   // method for calculate from in model by using thumb position from view
-  private changeSingleValue(settings: IsettingsTypes) {
+  private changeSingleValue(settings: ISettingsTypes) {
     const view = this.view;
     const model = this.model;
     function changeVal() {
@@ -287,7 +287,7 @@ export default class Presenter {
   }
 &nbsp;
   // method for calculate from and to in model by using thumbs position from view
-  private changeDoubleValue(settings: IsettingsTypes) {
+  private changeDoubleValue(settings: ISettingsTypes) {
     const view = this.view;
     const model = this.model;
 &nbsp;
@@ -307,7 +307,7 @@ export default class Presenter {
     changeVal();
   }
 &nbsp;
-  private init(settings: IsettingsTypes, element: HTMLElement) {
+  private init(settings: ISettingsTypes, element: HTMLElement) {
     // this property help us to know which type slider was used
     this.isDouble = settings.type.match('double');
     // init model

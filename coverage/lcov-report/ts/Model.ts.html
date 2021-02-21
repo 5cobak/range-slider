@@ -198,22 +198,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import MakeObservableSubject from './Observer';
-import { IModel, IsettingsTypes, IObserver, IBankModel } from './globals';
+import { IModel, ISettingsTypes, IObserver, IBankModel } from './globals';
 &nbsp;
 export default class Model implements IModel {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 &nbsp;
   modelChangedSubject!: IObserver;
 &nbsp;
   bank!: IBankModel;
 &nbsp;
   // constructor access settings from user or default settings
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.init(settings);
   }
 &nbsp;
   // method for calculate general value
-  private setGeneralValue(settings: IsettingsTypes) {
+  private setGeneralValue(settings: ISettingsTypes) {
     let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 &nbsp;
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
@@ -251,7 +251,7 @@ export default class Model implements IModel {
     if (this.settings.to &gt; this.settings.max) this.settings.to = this.settings.max;
   }
 &nbsp;
-  private init(settings: IsettingsTypes) {
+  private init(settings: ISettingsTypes) {
     this.settings = settings;
     // create observable subject for model
     this.modelChangedSubject = new MakeObservableSubject();

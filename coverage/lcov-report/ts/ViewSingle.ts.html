@@ -324,11 +324,11 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IViewSingle, IObserver } from './globals';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IViewSingle, IObserver } from './globals';
 import MakeObservableSubject from './Observer';
 &nbsp;
 export default class ViewSingle implements IViewSingle {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 &nbsp;
   el!: HTMLElement;
 &nbsp;
@@ -348,7 +348,7 @@ export default class ViewSingle implements IViewSingle {
 &nbsp;
   positions!: { to: number; from: number };
 &nbsp;
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.init(settings, element, generalVal);
   }
 &nbsp;
@@ -394,7 +394,7 @@ export default class ViewSingle implements IViewSingle {
 &nbsp;
   // this method set thumb position at init slider and notify high level's observers
   // method used model's settings and general value from presenter across main view
-  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: ISettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).width);
     const trackSize = parseFloat(getComputedStyle(this.track.el).width) - thumbSize;
     const { hiddenTrack } = this.thumb;
@@ -412,7 +412,7 @@ export default class ViewSingle implements IViewSingle {
 &nbsp;
   // inicialize view, set position for elements
   // method use methods from flag and scale if it was set true by user
-  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number): void {
+  private init(settings: ISettingsTypes, element: HTMLElement, generalVal: number): void {
     this.settings = settings;
     this.el = element;
     // this property we'll pass by observer to high level, this store thumbs positions for model

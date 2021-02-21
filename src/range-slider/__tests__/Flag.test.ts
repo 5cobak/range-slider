@@ -1,10 +1,10 @@
 import ViewFlag from '../ViewFlag';
-import { IFlag, IsettingsTypes } from '../globals';
+import { IFlag, ISettingsTypes } from '../globals';
 
 describe('test ViewTrack single', () => {
   const parent = document.createElement('div');
   parent.className = 'range-slider__thumb';
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,

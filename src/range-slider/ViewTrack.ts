@@ -1,4 +1,4 @@
-import { IsettingsTypes } from './globals';
+import { ISettingsTypes } from './globals';
 
 export default class ViewTrack {
   el!: HTMLElement;
@@ -6,7 +6,7 @@ export default class ViewTrack {
   type!: string;
 
   // constructor access one argument, this is validated options from model
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.createElement();
     this.setType(settings.type);
   }

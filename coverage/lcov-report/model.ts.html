@@ -168,16 +168,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import MakeObservableSubject from './Observer';
-import { IModel, IsettingsTypes, IObserver, IBankModel } from './globals';
+import { IModel, ISettingsTypes, IObserver, IBankModel } from './globals';
 &nbsp;
 export default class Model implements IModel {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 &nbsp;
   modelChangedSubject: IObserver;
 &nbsp;
   bank: IBankModel;
 &nbsp;
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.settings = settings;
     this.modelChangedSubject = new MakeObservableSubject();
     this.bank = {
@@ -189,7 +189,7 @@ export default class Model implements IModel {
     this.validate();
   }
 &nbsp;
-  private setGeneralValue(settings: IsettingsTypes) {
+  private setGeneralValue(settings: ISettingsTypes) {
     let generalVal =
       settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 &nbsp;

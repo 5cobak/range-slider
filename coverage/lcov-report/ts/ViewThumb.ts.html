@@ -562,7 +562,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-unused-expressions */
-import { IObserver, IsettingsTypes, IThumb, Iposition } from './globals';
+import { IObserver, ISettingsTypes, IThumb, IPosition } from './globals';
 import MakeObservableSubject from './Observer';
 &nbsp;
 import { validateCoordsByClick, validateCoord, validateCoordsByMove, getValues } from './utils/thumbHelpers';
@@ -572,14 +572,14 @@ export default class ViewThumb implements IThumb {
 &nbsp;
   hiddenTrack!: HTMLElement;
 &nbsp;
-  positions!: Iposition;
+  positions!: IPosition;
 &nbsp;
   changedSubject!: IObserver;
 &nbsp;
   isVertical!: RegExpMatchArray | null;
 &nbsp;
   // constructor access one argument, this is validated options from model
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.init(settings);
   }
 &nbsp;
@@ -603,7 +603,7 @@ export default class ViewThumb implements IThumb {
 &nbsp;
   // -------------------------------------------------------------  events for X type range
   // method for drap-and-drop on single and single-vertical types track
-  moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveSingleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     // console.log(e.type);
 &nbsp;
     // get observable subject, positions and isVertical
@@ -666,7 +666,7 @@ export default class ViewThumb implements IThumb {
   }
 &nbsp;
   // looks like method above, besides there is the second thumb element
-  moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveDoubleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
 &nbsp;
     const isTouch = e.type === 'touchstart';
@@ -722,7 +722,7 @@ export default class ViewThumb implements IThumb {
 &nbsp;
   // next methods look like methods above, besides type of event, it is mousedown on track
 &nbsp;
-  onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickSingleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
     const { track, firstThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
 &nbsp;
@@ -752,7 +752,7 @@ export default class ViewThumb implements IThumb {
     moveAt();
   }
 &nbsp;
-  onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickDoubleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
     const { track, firstThumb, secondThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
     let firstDifference: number;
@@ -799,7 +799,7 @@ export default class ViewThumb implements IThumb {
     moveAt(e);
   }
 &nbsp;
-  private init(settings: IsettingsTypes) {
+  private init(settings: ISettingsTypes) {
     this.createElem();
     this.createHiddenTrack();
     // create observable subject for thumb

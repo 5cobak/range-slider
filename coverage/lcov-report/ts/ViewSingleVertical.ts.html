@@ -335,11 +335,11 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, Iposition } from './globals';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, IPosition } from './globals';
 import MakeObservableSubject from './Observer';
 // VIEW class
 export default class ViewSingleVertical {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 &nbsp;
   el!: HTMLElement;
 &nbsp;
@@ -359,10 +359,10 @@ export default class ViewSingleVertical {
 &nbsp;
   changedSubject!: IObserver;
 &nbsp;
-  positions!: Iposition;
+  positions!: IPosition;
 &nbsp;
   // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.init(settings, element, generalVal);
   }
 &nbsp;
@@ -408,7 +408,7 @@ export default class ViewSingleVertical {
 &nbsp;
   // this method set thumb position at init slider and notify high level's observers
   // method used model's settings and general value from presenter across main view
-  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: ISettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
     const { hiddenTrack } = this.thumb;
@@ -431,7 +431,7 @@ export default class ViewSingleVertical {
 &nbsp;
   // inicialize view, set position for elements
   // method use methods from flag and scale if it was set true by user
-  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number): void {
+  private init(settings: ISettingsTypes, element: HTMLElement, generalVal: number): void {
     this.settings = settings;
     this.el = element;
     // this property we'll pass by observer to high level, this store thumbs positions for model

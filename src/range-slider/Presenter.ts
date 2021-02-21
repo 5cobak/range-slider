@@ -1,6 +1,6 @@
 import View from './View';
 import Model from './Model';
-import { IFlag, IModel, IsettingsTypes, IView } from './globals';
+import { IFlag, IModel, ISettingsTypes, IView } from './globals';
 
 export default class Presenter {
   private view!: IView;
@@ -10,46 +10,42 @@ export default class Presenter {
   private isDouble!: RegExpMatchArray | null;
 
   // settings is options from user or from init slider
-  constructor(settings: IsettingsTypes, element: HTMLElement) {
+  constructor(settings: ISettingsTypes, element: HTMLElement) {
     this.init(settings, element);
   }
 
   // method for calculate from in model by using thumb position from view
-  private changeSingleValue(settings: IsettingsTypes) {
+  private changeSingleValue(settings: ISettingsTypes) {
     const { view, model } = this;
-    function changeVal() {
-      const generalVal = model.bank.generalValue;
-      const { step } = settings;
-      const { trackSize } = view;
-      const stepCount = generalVal / step;
-      const stepSize = trackSize / stepCount;
-      const thumbPosFrom = (view.positions.from / 100) * trackSize;
 
-      model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
-    }
-    changeVal();
+    const generalVal = model.bank.generalValue;
+    const { step } = settings;
+    const { trackSize } = view;
+    const stepCount = generalVal / step;
+    const stepSize = trackSize / stepCount;
+    const thumbPosFrom = (view.positions.from / 100) * trackSize;
+
+    model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
   }
 
   // method for calculate from and to in model by using thumbs position from view
-  private changeDoubleValue(settings: IsettingsTypes) {
+  private changeDoubleValue(settings: ISettingsTypes) {
     const { view, model } = this;
-    function changeVal() {
-      const generalVal = model.bank.generalValue;
-      const { step } = settings;
-      const { trackSize } = view;
-      const stepCount = generalVal / step;
-      const stepSize = trackSize / stepCount;
-      const thumbPosFrom = (view.positions.from / 100) * trackSize;
-      const thumbPosTo = (view.positions.to / 100) * trackSize;
-      // set value in model.bank.from, which will be used in view's observer above
-      model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
-      // set value in model.bank.to, which will be used in view's observer above
-      model.setCurrentVal(thumbPosTo, stepSize, step, 'to');
-    }
-    changeVal();
+
+    const generalVal = model.bank.generalValue;
+    const { step } = settings;
+    const { trackSize } = view;
+    const stepCount = generalVal / step;
+    const stepSize = trackSize / stepCount;
+    const thumbPosFrom = (view.positions.from / 100) * trackSize;
+    const thumbPosTo = (view.positions.to / 100) * trackSize;
+    // set value in model.bank.from, which will be used in view's observer above
+    model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
+    // set value in model.bank.to, which will be used in view's observer above
+    model.setCurrentVal(thumbPosTo, stepSize, step, 'to');
   }
 
-  private init(settings: IsettingsTypes, element: HTMLElement) {
+  private init(settings: ISettingsTypes, element: HTMLElement) {
     // this property help us to know which type slider was used
     this.isDouble = settings.type.match('double');
     // init model

@@ -125,14 +125,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from './globals';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ISettingsTypes } from './globals';
 &nbsp;
 export default class ViewTrack {
   el!: HTMLElement;
 &nbsp;
   type!: string;
 &nbsp;
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.createElement();
     this.setType(settings.type)
   }

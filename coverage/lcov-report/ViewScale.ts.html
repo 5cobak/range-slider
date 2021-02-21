@@ -281,10 +281,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IScale, IsettingsTypes } from './globals';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IScale, ISettingsTypes } from './globals';
 &nbsp;
 export default class Scale implements IScale {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 &nbsp;
   el!: HTMLElement;
 &nbsp;
@@ -292,7 +292,7 @@ export default class Scale implements IScale {
 &nbsp;
   bigLine!: HTMLElement
 &nbsp;
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.settings = settings;
     this.createElement();
   }
@@ -311,7 +311,7 @@ export default class Scale implements IScale {
     this.bigLine = bigLine
   }
 &nbsp;
-  writeMinAndMaxValues(settings: IsettingsTypes):void {
+  writeMinAndMaxValues(settings: ISettingsTypes):void {
     const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
     const min = document.createElement('div');
 &nbsp;
@@ -325,7 +325,7 @@ export default class Scale implements IScale {
     lineCollections[lineCollections.length - 1].append(max);
   }
 &nbsp;
-  setCountOfLines(settings: IsettingsTypes, generalVal: number): void {
+  setCountOfLines(settings: ISettingsTypes, generalVal: number): void {
     const coord = settings.type.match('vertical') ? 'top' : 'left';
     const size = settings.type.match('vertical') ? 'height' : 'width';
 &nbsp;

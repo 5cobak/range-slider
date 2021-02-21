@@ -3,10 +3,10 @@ import ViewDouble from './ViewDouble';
 import ViewDoubleVertical from './ViewDoubleVertical';
 import ViewSingleVertical from './ViewSingleVertical';
 import MakeObservableSubject from './Observer';
-import { IView, IsettingsTypes, ISubView, IObserver } from './globals';
+import { IView, ISettingsTypes, ISubView, IObserver } from './globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 
   el!: HTMLElement;
 
@@ -21,7 +21,7 @@ export default class View implements IView {
   positions!: { to: number; from: number };
 
   // constructor access first argument jQuery<HTMLElement>, model's settings and general value across presenter
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.init(settings, element, generalVal);
   }
 
@@ -37,7 +37,7 @@ export default class View implements IView {
   }
 
   // method for choose type of range-slider: single, single-vertical, double, double-vertical
-  private chooseViewType(settings: IsettingsTypes, generalVal: number): ISubView {
+  private chooseViewType(settings: ISettingsTypes, generalVal: number): ISubView {
     let modelType: ISubView;
     if (settings.type === 'single-horizontal') {
       modelType = new ViewSingle(this.el, this.settings, generalVal);
@@ -56,7 +56,7 @@ export default class View implements IView {
   }
 
   // method set trackSize and thumbSize for model's calculation and add observer where get positons of thumbs and
-  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number) {
+  private init(settings: ISettingsTypes, element: HTMLElement, generalVal: number) {
     this.el = element;
     this.settings = settings;
     this.type = this.chooseViewType(settings, generalVal);

@@ -335,7 +335,7 @@
 <span class="cline-any cline-yes">53x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from '../globals.d';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ISettingsTypes } from '../globals.d';
 &nbsp;
 function toFixed(num: number) {
   num = Number(num.toFixed(20));
@@ -343,7 +343,7 @@ function toFixed(num: number) {
 }
 &nbsp;
 export function getValues(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   generalVal: number,
   scale: HTMLElement
 ): {
@@ -388,7 +388,7 @@ export function getValues(
 }
 &nbsp;
 export function setSmallLines(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   stepCount: number,
   posCountSmallPercent: number,
   trackSize: number,
@@ -439,7 +439,7 @@ export function setSmallLines(
 }
 &nbsp;
 export function setBigLines(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   stepCount: number,
   posCountBig: number,
   stepSize: number,

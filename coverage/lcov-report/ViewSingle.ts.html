@@ -276,11 +276,11 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IViewSingle, IObserver } from './globals';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IViewSingle, IObserver } from './globals';
 import MakeObservableSubject from './Observer';
 &nbsp;
 export default class ViewSingle implements IViewSingle {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 &nbsp;
   el!: HTMLElement;
 &nbsp;
@@ -298,7 +298,7 @@ export default class ViewSingle implements IViewSingle {
 &nbsp;
   thumbPos: number
 &nbsp;
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.settings = settings;
     this.el = element;
     this.thumbPos = 0;
@@ -344,7 +344,7 @@ export default class ViewSingle implements IViewSingle {
     this.track.el.addEventListener('mousedown', onClick);
   }
 &nbsp;
-  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: ISettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).width);
     const trackSize = parseFloat(getComputedStyle(this.track.el).width) - thumbSize;
     const stepCount = generalVal / settings.step;

@@ -612,10 +612,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-unused-expressions */
-import { IsettingsTypes, IThumb } from './globals';
+import { ISettingsTypes, IThumb } from './globals';
 &nbsp;
 export default class ViewThumb implements IThumb {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 &nbsp;
   el!: HTMLElement;
 &nbsp;
@@ -623,7 +623,7 @@ export default class ViewThumb implements IThumb {
 &nbsp;
   secondThumbPos!: number;
 &nbsp;
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.settings = settings;
     this.createElem();
   }
@@ -635,7 +635,7 @@ export default class ViewThumb implements IThumb {
   }
 &nbsp;
   // -------------------------------------------------------------  events for X type range
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes): void {
+  moveSingleType(e: MouseEvent, settings: ISettingsTypes): void {
     const target = e.target as HTMLElement;
     const isVertical = settings.type.match('vertical');
     const track = target.closest('.range-slider') as HTMLElement;
@@ -691,7 +691,7 @@ export default class ViewThumb implements IThumb {
     document.addEventListener('mouseup', removeEventListeners);
   }
 &nbsp;
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
+  moveDoubleType(e: MouseEvent, settings: ISettingsTypes): void {
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -775,7 +775,7 @@ export default class ViewThumb implements IThumb {
     this.secondThumbPos = parseFloat(getComputedStyle(secondThumb)[coord])
   }
 &nbsp;
-  onClickSingleType(e: MouseEvent, settings: IsettingsTypes): void {
+  onClickSingleType(e: MouseEvent, settings: ISettingsTypes): void {
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -813,7 +813,7 @@ export default class ViewThumb implements IThumb {
     this.thumbPos = parseFloat(getComputedStyle(thumb)[coord]);
   }
 &nbsp;
-  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes): void {
+  onClickDoubleType(e: MouseEvent, settings: ISettingsTypes): void {
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;

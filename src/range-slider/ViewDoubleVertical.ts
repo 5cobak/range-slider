@@ -4,11 +4,11 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, Iposition } from './globals';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, IPosition } from './globals';
 import MakeObservableSubject from './Observer';
 
 export default class ViewDoubleVertical {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 
   el!: HTMLElement;
 
@@ -34,12 +34,14 @@ export default class ViewDoubleVertical {
 
   changedSubject!: IObserver;
 
-  positions!: Iposition;
+  positions!: IPosition;
 
   type!: string;
 
+  generalVal!: number;
+
   // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.init(settings, element, generalVal);
   }
 
@@ -51,7 +53,7 @@ export default class ViewDoubleVertical {
 
   // this method set thumb position at init slider and notify high level's observers
   // method used model's settings and general value from presenter across main view
-  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: ISettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
     const { hiddenTrack } = this.thumb;
@@ -74,6 +76,32 @@ export default class ViewDoubleVertical {
     this.positions.to = to;
 
     this.changedSubject.notifyObservers();
+  }
+
+  private setFlagPosOnMove(e: MouseEvent | TouchEvent): void {
+    const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
+    if (this.flag) {
+      if (currentThumb === this.thumb.el) {
+        this.flag.setPosition(this.settings, this.thumb.el);
+      } else this.secondFlag.setPosition(this.settings, this.secondThumb.el);
+    }
+  }
+
+  private setFlagPosOnClick(): void {
+    if (this.flag) {
+      this.flag.setPosition(this.settings, this.thumb.el);
+      this.secondFlag.setPosition(this.settings, this.secondThumb.el);
+    }
+  }
+
+  private onMove(e: MouseEvent | TouchEvent) {
+    this.thumb.moveDoubleType(e, this.settings, this.generalVal);
+    this.setFlagPosOnMove(e);
+  }
+
+  private onClick(e: MouseEvent | TouchEvent) {
+    this.thumb.onClickDoubleType(e, this.settings, this.generalVal);
+    this.setFlagPosOnClick();
   }
 
   // method for addition second thumb
@@ -100,50 +128,35 @@ export default class ViewDoubleVertical {
   }
 
   // add view events drag-and-drop and click on track from thumb
-  private addEvents(generalVal: number): void {
+  private addEvents(): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const { thumb, flag, secondFlag, secondThumb } = this;
-    const { settings } = this;
-
-    function setFlagPosOnMove(e: MouseEvent | TouchEvent) {
-      const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
-      if (flag) {
-        if (currentThumb === thumb.el) {
-          flag.setPosition(settings, thumb.el);
-        } else secondFlag.setPosition(settings, secondThumb.el);
-      }
-    }
-    function setFlagPosOnClick() {
-      if (flag) {
-        flag.setPosition(settings, thumb.el);
-        secondFlag.setPosition(settings, secondThumb.el);
-      }
-    }
-    function onMove(e: MouseEvent | TouchEvent) {
-      thumb.moveDoubleType(e, settings, generalVal);
-      setFlagPosOnMove(e);
-    }
-    function onClick(e: MouseEvent | TouchEvent) {
-      thumb.onClickDoubleType(e, settings, generalVal);
-      setFlagPosOnClick();
-    }
+    const onClick = this.onClick.bind(this);
+    const onMove = this.onMove.bind(this);
+    const setFlagPosOnMove = this.setFlagPosOnMove.bind(this);
 
     if (isMobile) {
       this.parent.addEventListener('touchstart', onClick);
       this.parent.addEventListener('touchstart', onMove);
       this.parent.addEventListener('touchmove', setFlagPosOnMove);
-      this.parent.addEventListener('touchend', onClick);
     } else {
       this.parent.addEventListener('mousedown', onClick);
       this.parent.addEventListener('mousedown', onMove);
+      this.parent.addEventListener('mousemove', setFlagPosOnMove);
     }
+  }
+
+  private addEventsOnResize(): void {
+    const updateEvents = this.addEvents.bind(this);
+    window.addEventListener('resize', updateEvents);
   }
 
   // initialize view, set position for elements
   // method use methods from flag and scale if it was set true in options by user
-  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number): void {
+  private init(settings: ISettingsTypes, element: HTMLElement, generalVal: number): void {
     this.settings = settings;
+    this.generalVal = generalVal;
+
     this.type = settings.type;
     this.el = element;
     // this property we'll pass by observer to high level, this store thumbs positions for model
@@ -159,8 +172,9 @@ export default class ViewDoubleVertical {
     this.changedSubject = new MakeObservableSubject();
     // add all elements in track
     this.addElements();
+    this.addEventsOnResize();
     // add needed events for double-vertical type of slider
-    this.addEvents(generalVal);
+    this.addEvents();
 
     this.setThumbPos(this.settings, generalVal);
 

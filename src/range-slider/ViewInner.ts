@@ -1,12 +1,12 @@
-import { IsettingsTypes } from './globals';
+import { ISettingsTypes } from './globals';
 
 export default class ViewInner {
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 
   el!: HTMLElement;
 
   // constructor acces first argument from model's settings across presenter
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.settings = settings;
     this.createInner();
   }
@@ -19,7 +19,7 @@ export default class ViewInner {
   }
 
   // public method for set inner's position, used at init slider and mouse events
-  setPosition(settings: IsettingsTypes): void {
+  setPosition(settings: ISettingsTypes): void {
     const hiddenTrack = this.el.parentElement as HTMLElement;
     const thumbFirst = hiddenTrack.querySelector('.range-slider__thumb_first') as HTMLElement;
     const widthThumb = parseFloat(getComputedStyle(thumbFirst).width);

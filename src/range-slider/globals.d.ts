@@ -1,4 +1,4 @@
-export interface IsettingsTypes {
+export interface ISettingsTypes {
   [x: string]: number | string | boolean | HTMLElement | null;
   el: HTMLElement;
   min: number;
@@ -13,7 +13,7 @@ export interface IsettingsTypes {
 
 export interface IClassProperties {
   el: HTMLElement;
-  setPosition(settings: IsettingsTypes): void;
+  setPosition(settings: ISettingsTypes): void;
 }
 export interface ITrack {
   el: HTMLElement;
@@ -28,10 +28,10 @@ export interface IObserver {
 export interface IThumb {
   el: HTMLElement;
   hiddenTrack: HTMLElement;
-  moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
-  moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
-  onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
-  onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void;
+  moveSingleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void;
+  moveDoubleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void;
+  onClickSingleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void;
+  onClickDoubleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void;
   setHeightForHiddenTrackIntoVertSl(): void;
   isVertical: RegExpMatchArray | null;
   positions: { to: number; from: number };
@@ -39,7 +39,7 @@ export interface IThumb {
 }
 export interface IFlag {
   el: HTMLElement;
-  setPosition(settings: IsettingsTypes, parent: HTMLElement): void;
+  setPosition(settings: ISettingsTypes, parent: HTMLElement): void;
 }
 export interface IClassPropertiesJquery {
   $el: JQuery<HTMLElement>;
@@ -56,8 +56,8 @@ export interface IScale {
   el: HTMLElement;
   smallLine: HTMLElement;
   bigLine: HTMLElement;
-  writeMinAndMaxValues(settings: IsettingsTypes): void;
-  setCountOfLines(settings: IsettingsTypes, generalVal: number): void;
+  writeMinAndMaxValues(settings: ISettingsTypes): void;
+  setCountOfLines(settings: ISettingsTypes, generalVal: number): void;
 }
 export interface ISubView {
   parent: HTMLElement;
@@ -74,7 +74,7 @@ export interface IModel {
   modelChangedSubject: IObserver;
   bank: IBankModel;
   setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void;
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 }
 export interface IView {
   el: HTMLElement;
@@ -103,7 +103,7 @@ export interface IInput {
   attr: IAttr;
 }
 
-export interface Iposition {
+export interface IPosition {
   [x: string]: number;
   from: number;
   to: number;

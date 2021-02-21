@@ -1,4 +1,4 @@
-import { IsettingsTypes } from './globals';
+import { ISettingsTypes } from './globals';
 
 export default class ViewFlag {
   el!: HTMLElement;
@@ -14,7 +14,7 @@ export default class ViewFlag {
   }
 
   // set flag's position in center of thumb and method used at mouse events and init slider like inner's method
-  setPosition(settings: IsettingsTypes, parent: HTMLElement): void {
+  setPosition(settings: ISettingsTypes, parent: HTMLElement): void {
     const isVertical = settings.type.match('vertical');
     const thumb = parent;
     const flag = thumb.querySelector('.range-slider__flag') as HTMLElement;
@@ -23,8 +23,6 @@ export default class ViewFlag {
     let halfHeightFlag: number;
     if (flag) halfHeightFlag = flag.offsetHeight / 2;
     else return;
-
-    const leftCoord = flag.getBoundingClientRect().left;
 
     if (!isVertical) {
       flag.style.left = `${-150}%`;

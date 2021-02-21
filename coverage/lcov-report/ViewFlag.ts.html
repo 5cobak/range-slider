@@ -117,7 +117,7 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IsettingsTypes } from './globals';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ISettingsTypes } from './globals';
 &nbsp;
 export default class ViewFlag {
   el: HTMLElement;
@@ -132,7 +132,7 @@ export default class ViewFlag {
     return flag;
   }
 &nbsp;
-  setPosition(settings: IsettingsTypes):void {
+  setPosition(settings: ISettingsTypes):void {
     const thumb = this.el.parentElement as HTMLElement;
     const halfWidthThumb = parseFloat(getComputedStyle(thumb).width) / 2;
     const halfWidthFlag = parseFloat(getComputedStyle(this.el).width) / 2;

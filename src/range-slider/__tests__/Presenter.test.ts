@@ -1,5 +1,5 @@
 import Presenter from '../Presenter';
-import { IsettingsTypes } from '../globals';
+import { ISettingsTypes } from '../globals';
 
 import './Thumb.test';
 import './Flag.test';
@@ -16,7 +16,7 @@ import './View.test';
 
 describe('test class Presenter with single type', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -40,7 +40,7 @@ describe('test class Presenter with single type', () => {
 });
 describe('test class Presenter with double type', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single-vertical',
     min: 0,
@@ -60,7 +60,7 @@ describe('test class Presenter with double type', () => {
 });
 describe('test class Presenter with double type', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,
@@ -82,7 +82,7 @@ describe('test class Presenter with double type', () => {
 });
 describe('test class Presenter with double-vertical type', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double-vertical',
     min: 0,
@@ -104,7 +104,7 @@ describe('test class Presenter with double-vertical type', () => {
 });
 describe('test class Presenter without', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double-vertical',
     min: 0,

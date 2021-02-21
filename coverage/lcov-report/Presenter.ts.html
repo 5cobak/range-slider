@@ -221,16 +221,16 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import View from './View';
 import Model from './Model';
-import { IFlag, IModel, IsettingsTypes, IView } from './globals';
+import { IFlag, IModel, ISettingsTypes, IView } from './globals';
 &nbsp;
 export default class Presenter {
   view: IView;
 &nbsp;
   model: IModel;
 &nbsp;
-  settings: IsettingsTypes;
+  settings: ISettingsTypes;
 &nbsp;
-  constructor(settings: IsettingsTypes, $this: HTMLElement) {
+  constructor(settings: ISettingsTypes, $this: HTMLElement) {
     this.settings = settings;
     this.model = new Model(settings);
     this.view = new View($this, settings, this.model.bank.generalValue);
@@ -239,7 +239,7 @@ export default class Presenter {
     this.view.viewChangedSubject.notifyObservers();
   }
 &nbsp;
-  private addObserversInView(settings: IsettingsTypes) {
+  private addObserversInView(settings: ISettingsTypes) {
     const flag = this.view.type.flag.el;
     const track = this.view.type.track.el;
 &nbsp;
@@ -264,7 +264,7 @@ export default class Presenter {
     });
   }
 &nbsp;
-  private changeSingleValue(settings: IsettingsTypes) {
+  private changeSingleValue(settings: ISettingsTypes) {
     const view = this.view;
     const model = this.model;
 &nbsp;
@@ -282,7 +282,7 @@ export default class Presenter {
     changeVal();
   }
 &nbsp;
-  private changeDoubleValue(settings: IsettingsTypes) {
+  private changeDoubleValue(settings: ISettingsTypes) {
     const view = this.view;
     const model = this.model;
 &nbsp;

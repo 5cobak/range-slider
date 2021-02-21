@@ -1,20 +1,20 @@
 import MakeObservableSubject from './Observer';
-import { IModel, IsettingsTypes, IObserver, IBankModel } from './globals';
+import { IModel, ISettingsTypes, IObserver, IBankModel } from './globals';
 
 export default class Model implements IModel {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 
   modelChangedSubject!: IObserver;
 
   bank!: IBankModel;
 
   // constructor access settings from user or default settings
-  constructor(settings: IsettingsTypes) {
+  constructor(settings: ISettingsTypes) {
     this.init(settings);
   }
 
   // method for calculate general value
-  private setGeneralValue(settings: IsettingsTypes) {
+  private setGeneralValue(settings: ISettingsTypes) {
     let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
 
     if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
@@ -28,7 +28,7 @@ export default class Model implements IModel {
   // second argument step size of track
   // currentVal is string which point us which position to return: from or to
   public setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void {
-    let val = +this.settings.min + (Math.round(pos / stepSize) * (step * 10)) / 10;
+    let val = Number(this.settings.min) + (Math.round(pos / stepSize) * (step * 10)) / 10;
 
     if (val > this.settings.max) val = this.settings.max;
 
@@ -36,11 +36,15 @@ export default class Model implements IModel {
   }
 
   // method for validate settings which come from user or default
+  private isFromBiggerThenTo() {
+    return this.settings.type.match('double') && this.settings.from > (this.settings.to as number);
+  }
+
   private validate() {
     const { from } = this.settings;
     const to = this.settings.to as number;
 
-    if (this.settings.type.match('double') && from > to) {
+    if (this.isFromBiggerThenTo()) {
       this.settings.from = to;
       this.settings.to = from;
     }
@@ -53,7 +57,7 @@ export default class Model implements IModel {
     if (this.settings.to > this.settings.max) this.settings.to = this.settings.max;
   }
 
-  private init(settings: IsettingsTypes) {
+  private init(settings: ISettingsTypes) {
     this.settings = settings;
     // create observable subject for model
     this.modelChangedSubject = new MakeObservableSubject();

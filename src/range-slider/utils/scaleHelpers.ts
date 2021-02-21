@@ -1,4 +1,4 @@
-import { IsettingsTypes } from '../globals.d';
+import { ISettingsTypes } from '../globals.d';
 
 function toFixed(num: number) {
   num = Number(num.toFixed(20));
@@ -6,7 +6,7 @@ function toFixed(num: number) {
 }
 
 export function getValues(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   generalVal: number,
   scale: HTMLElement
 ): {
@@ -51,7 +51,7 @@ export function getValues(
 }
 
 export function setSmallLines(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   stepCount: number,
   posCountSmallPercent: number,
   trackSize: number,
@@ -102,7 +102,7 @@ export function setSmallLines(
 }
 
 export function setBigLines(
-  settings: IsettingsTypes,
+  settings: ISettingsTypes,
   stepCount: number,
   posCountBig: number,
   stepSize: number,

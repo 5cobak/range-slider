@@ -1,10 +1,10 @@
 import ViewScale from '../ViewScale';
 
-import { IScale, IsettingsTypes } from '../globals';
+import { IScale, ISettingsTypes } from '../globals';
 
 describe('test inner in single', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -86,7 +86,7 @@ describe('test inner in single', () => {
 
 describe('test inner', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -174,7 +174,7 @@ describe('test inner', () => {
 
 describe('test inner in single-vertical', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single-vertical',
     min: 0,
@@ -256,7 +256,7 @@ describe('test inner in single-vertical', () => {
 
 describe('test inner', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,

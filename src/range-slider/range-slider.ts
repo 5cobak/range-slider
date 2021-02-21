@@ -1,16 +1,16 @@
 import Presenter from './Presenter';
-import { IsettingsTypes, IMethods } from './globals';
+import { ISettingsTypes, IMethods } from './globals';
 
 (($) => {
   $.fn.extend({
-    rangeSlider(options: IsettingsTypes, method: string) {
+    rangeSlider(options: ISettingsTypes, method: string) {
       // get html element which was used by user
       const htmlEl = $(this)[0] as HTMLElement;
 
       // get jQuery object
       const $object = $(this);
       // set default options for range-slider and extend them by user's options
-      const settings: IsettingsTypes = $.extend(
+      const settings: ISettingsTypes = $.extend(
         // default options object
         {
           el: htmlEl,
@@ -28,7 +28,7 @@ import { IsettingsTypes, IMethods } from './globals';
       );
 
       // function for set data in jquery data object, data is options used by user
-      function setData(obj: IsettingsTypes) {
+      function setData(obj: ISettingsTypes) {
         const keys = Object.keys(obj);
         const values = Object.values(obj);
 

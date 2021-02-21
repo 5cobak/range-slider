@@ -1,4 +1,4 @@
-import { IObserver, IsettingsTypes, IThumb, Iposition } from './globals';
+import { IObserver, ISettingsTypes, IThumb, IPosition } from './globals';
 import MakeObservableSubject from './Observer';
 
 import { validateCoordsByClick, validateCoord, validateCoordsByMove, getValues } from './utils/thumbHelpers';
@@ -8,15 +8,19 @@ export default class ViewThumb implements IThumb {
 
   hiddenTrack!: HTMLElement;
 
-  positions!: Iposition;
+  positions!: IPosition;
 
   changedSubject!: IObserver;
 
   isVertical!: RegExpMatchArray | null;
 
-  // constructor access one argument, this is validated options from model
-  constructor(settings: IsettingsTypes) {
-    this.init(settings);
+  generalVal!: number;
+
+  settings!: ISettingsTypes;
+
+  // constructor access one argument, this is validated options from modeli
+  constructor(settings: ISettingsTypes, generalVal: number) {
+    this.init(settings, generalVal);
   }
 
   // method create element and add class name
@@ -37,33 +41,28 @@ export default class ViewThumb implements IThumb {
     this.hiddenTrack.style.height = getComputedStyle(parent).height;
   }
 
-  // -------------------------------------------------------------  events for X type range
-  // method for drap-and-drop on single and single-vertical types track
-  moveSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
-    // console.log(e.type);
+  private makeMoveAtOnSingleType([targetThumb, trackSize, isVertical, track, halfSizeThumb]: [
+    HTMLElement,
+    number,
+    RegExpMatchArray | null,
+    HTMLElement,
+    number
+  ]) {
+    return (e: MouseEvent | TouchEvent) => {
+      const isTouch = e.type === 'touchstart';
 
-    // get observable subject, positions and isVertical
-    const { changedSubject, positions, isVertical } = this;
-    // get values of element which we'll use when calculate position of thumb
-    // getValues is function you we'll find at ./utils/thumbHelpers.ts
-    const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
-    // choose client.x or client.y for horizontal or vertical slider
+      if (!targetThumb) return;
 
-    const isTouch = e.type === 'touchstart';
+      if (isTouch) document.body.classList.add('stop-scrolling');
 
-    if (!targetThumb) return;
+      // count of steps in track
+      const stepCount = this.generalVal / this.settings.step;
+      // step size
+      const stepSize = trackSize / stepCount;
+      // choose left or top for horizontal or vertical slider
+      const coord = this.settings.type.match('vertical') ? 'top' : 'left';
+      // function for move thumb
 
-    if (isTouch) document.body.classList.add('stop-scrolling');
-
-    // count of steps in track
-    const stepCount = generalVal / settings.step;
-    // step size
-    const stepSize = trackSize / stepCount;
-    // choose left or top for horizontal or vertical slider
-    const coord = settings.type.match('vertical') ? 'top' : 'left';
-    const size = isVertical ? 'height' : 'width';
-    // function for move thumb
-    function moveAt(e: MouseEvent | TouchEvent) {
       let userCoord: number;
       if (e instanceof MouseEvent) {
         userCoord = isVertical ? e.clientY : e.clientX;
@@ -71,6 +70,7 @@ export default class ViewThumb implements IThumb {
         const touch = e.touches[0] || e.changedTouches[0];
         userCoord = isVertical ? touch.clientY : touch.clientX;
       }
+
       const trackCoord = track.getBoundingClientRect()[coord];
       // get coordinate for click in track
       const newPos = userCoord - trackCoord - halfSizeThumb;
@@ -79,51 +79,79 @@ export default class ViewThumb implements IThumb {
       const posByStep = Math.round(newPos / stepSize) * stepSize;
       // set thumb pos
       targetThumb.style[coord] = `${(posByStep / trackSize) * 100}%`;
+
       // validate thumb pos in horizontal and vertical type of track, pos must not be greater then track size and less then coord 0 of track
 
       validateCoord(targetThumb, trackSize, isVertical);
       // set from in property position and notify observers, this observers will use this from in high level
-      positions.from = parseFloat(targetThumb.style[coord]);
-      changedSubject.notifyObservers();
-    }
-    // standard drag-and-drop addition and deletion event's listeners
-    function removeEventListeners() {
-      document.body.classList.remove('stop-scrolling');
-      document.removeEventListener('mousemove', moveAt);
-      document.removeEventListener('touchmove', moveAt);
-    }
-    document.addEventListener('touchmove', moveAt);
-    document.addEventListener('mousemove', moveAt);
-    document.addEventListener('mouseup', removeEventListeners);
-    document.addEventListener('touchend', removeEventListeners);
+      this.positions.from = parseFloat(targetThumb.style[coord]);
+      this.changedSubject.notifyObservers();
+    };
+    // get observable subject, positions and isVertical
+
+    // choose client.x or client.y for horizontal or vertical slider
   }
 
-  // looks like method above, besides there is the second thumb element
-  moveDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
-    const { changedSubject, positions, isVertical } = this;
+  // -------------------------------------------------------------  events for X type range
+  // method for drap-and-drop on single and single-vertical types track
+  moveSingleType(e: MouseEvent | TouchEvent): void {
+    const thumb = (e.target as HTMLElement).closest('.range-slider__thumb');
+    if (!thumb) return;
+    const { isVertical } = this;
+    // get values of element which we'll use when calculate position of thumb
+    // getValues is function you we'll find at ./utils/thumbHelpers.ts
+    const { track, targetThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
 
-    const isTouch = e.type === 'touchstart';
+    const paramsForMakeMoveAt = [targetThumb, trackSize, isVertical, track, halfSizeThumb] as [
+      HTMLElement,
+      number,
+      RegExpMatchArray | null,
+      HTMLElement,
+      number
+    ];
 
-    const { firstThumb, secondThumb, track, targetThumb, targetSecondThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
+    const makeMoveAt = this.makeMoveAtOnSingleType.bind(this);
+    // // standard drag-and-drop addition and deletion event's listeners
+    const moveAt = makeMoveAt(paramsForMakeMoveAt);
 
-    if (!targetThumb) return;
-    if (isTouch) document.body.classList.add('stop-scrolling');
-    // choosed thumb will have more z-index then wasn't choosed thumb
-    targetThumb.style.zIndex = '100';
-    (targetSecondThumb as HTMLElement).style.zIndex = '50';
-    const stepCount = generalVal / settings.step;
+    const removeEvents = this.removeEvents.bind(this, moveAt);
+    document.addEventListener('touchmove', moveAt);
+    document.addEventListener('mousemove', moveAt);
+    document.addEventListener('mouseup', removeEvents);
+    document.addEventListener('touchend', removeEvents);
+  }
 
-    const stepSize = trackSize / stepCount;
-    const coord = isVertical ? 'top' : 'left';
+  private makeMoveAtOnDoubleType([targetThumb, targetSecondThumb, trackSize, isVertical, track, halfSizeThumb, firstThumb, secondThumb]: [
+    HTMLElement,
+    HTMLElement,
+    number,
+    RegExpMatchArray | null,
+    HTMLElement,
+    number,
+    HTMLElement,
+    HTMLElement
+  ]) {
+    return (e: MouseEvent | TouchEvent) => {
+      const isTouch = e.type === 'touchstart';
+      if (!targetThumb) return;
+      if (isTouch) document.body.classList.add('stop-scrolling');
+      // choosed thumb will have more z-index then wasn't choosed thumb
+      targetThumb.style.zIndex = '100';
+      (targetSecondThumb as HTMLElement).style.zIndex = '50';
+      const stepCount = this.generalVal / this.settings.step;
 
-    function moveAt(e: MouseEvent | TouchEvent): void {
+      const stepSize = trackSize / stepCount;
+      const coord = isVertical ? 'top' : 'left';
+
       let userCoord: number;
+
       if (e instanceof MouseEvent) {
         userCoord = isVertical ? e.clientY : e.clientX;
       } else {
         const touch = e.touches[0] || e.changedTouches[0];
         userCoord = isVertical ? touch.clientY : touch.clientX;
       }
+
       const trackCoord = track.getBoundingClientRect()[coord];
 
       const newLeft = userCoord - trackCoord - halfSizeThumb;
@@ -133,29 +161,49 @@ export default class ViewThumb implements IThumb {
 
       validateCoordsByMove(targetThumb, targetSecondThumb, trackSize, firstThumb, secondThumb, isVertical);
 
-      positions.from = parseFloat(firstThumb.style[coord]);
-      positions.to = parseFloat(secondThumb.style[coord]);
+      this.positions.from = parseFloat(firstThumb.style[coord]);
+      this.positions.to = parseFloat(secondThumb.style[coord]);
 
-      changedSubject.notifyObservers();
-    }
+      this.changedSubject.notifyObservers();
+    };
+  }
 
-    function onMouseMove(e: MouseEvent | TouchEvent) {
-      moveAt(e);
-    }
-    function removeEventListeners() {
-      document.body.classList.remove('stop-scrolling');
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('touchmove', onMouseMove);
-    }
-    document.addEventListener('touchmove', onMouseMove);
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', removeEventListeners);
-    document.addEventListener('touchend', removeEventListeners);
+  // looks like method above, besides there is the second thumb element
+  moveDoubleType(e: MouseEvent | TouchEvent): void {
+    const thumb = (e.target as HTMLElement).closest('.range-slider__thumb');
+    if (!thumb) return;
+    const { isVertical } = this;
+
+    const { firstThumb, secondThumb, track, targetThumb, targetSecondThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
+    const paramsForMakeMoveAt = [targetThumb, targetSecondThumb, trackSize, isVertical, track, halfSizeThumb, firstThumb, secondThumb] as [
+      HTMLElement,
+      HTMLElement,
+      number,
+      RegExpMatchArray | null,
+      HTMLElement,
+      number,
+      HTMLElement,
+      HTMLElement
+    ];
+    const makeMoveAt = this.makeMoveAtOnDoubleType.bind(this);
+    // // standard drag-and-drop addition and deletion event's listeners
+    const moveAt = makeMoveAt(paramsForMakeMoveAt);
+    const removeEvents = this.removeEvents.bind(this, moveAt);
+    document.addEventListener('touchmove', moveAt);
+    document.addEventListener('mousemove', moveAt);
+    document.addEventListener('mouseup', removeEvents);
+    document.addEventListener('touchend', removeEvents);
+  }
+
+  private removeEvents(moveAt: (e: MouseEvent | TouchEvent) => void): void {
+    document.body.classList.remove('stop-scrolling');
+    document.removeEventListener('mousemove', moveAt);
+    document.removeEventListener('touchmove', moveAt);
   }
 
   // next methods look like methods above, besides type of event, it is mousedown on track
 
-  onClickSingleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickSingleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
     const { track, firstThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
 
@@ -170,22 +218,20 @@ export default class ViewThumb implements IThumb {
       const touch = e.touches[0] || e.changedTouches[0];
       userCoord = isVertical ? touch.clientY : touch.clientX;
     }
-    function moveAt() {
-      const trackCoord = track.getBoundingClientRect()[coord];
-      const newLeft = userCoord - trackCoord - halfSizeThumb;
-      const posPercent = ((Math.round(newLeft / stepSize) * stepSize) / trackSize) * 100;
 
-      firstThumb.style[coord] = `${posPercent}%`;
+    const trackCoord = track.getBoundingClientRect()[coord];
+    const newLeft = userCoord - trackCoord - halfSizeThumb;
+    const posPercent = ((Math.round(newLeft / stepSize) * stepSize) / trackSize) * 100;
 
-      validateCoord(firstThumb, trackSize, isVertical);
+    firstThumb.style[coord] = `${posPercent}%`;
 
-      positions.from = parseFloat(firstThumb.style[coord]);
-      changedSubject.notifyObservers();
-    }
-    moveAt();
+    validateCoord(firstThumb, trackSize, isVertical);
+
+    positions.from = parseFloat(firstThumb.style[coord]);
+    changedSubject.notifyObservers();
   }
 
-  onClickDoubleType(e: MouseEvent | TouchEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickDoubleType(e: MouseEvent | TouchEvent, settings: ISettingsTypes, generalVal: number): void {
     const { changedSubject, positions, isVertical } = this;
     const { track, firstThumb, secondThumb, trackSize, halfSizeThumb } = getValues(isVertical, e);
     let firstDifference: number;
@@ -193,46 +239,44 @@ export default class ViewThumb implements IThumb {
     const coord = isVertical ? 'top' : 'left';
     const secondCoord = isVertical ? 'bottom' : 'right';
 
-    function moveAt(e: MouseEvent | TouchEvent) {
-      let userCoord: number;
-      if (e instanceof MouseEvent) {
-        userCoord = isVertical ? e.clientY : e.clientX;
-      } else {
-        const touch = e.touches[0] || e.changedTouches[0];
-        userCoord = isVertical ? touch.clientY : touch.clientX;
-      }
-      firstDifference = firstThumb.getBoundingClientRect()[coord] - userCoord;
-      secondDifference = secondThumb.getBoundingClientRect()[secondCoord] - userCoord;
-
-      let movedThumb: HTMLElement;
-
-      if (firstDifference < 0) firstDifference = -firstDifference;
-      else if (secondDifference < 0) secondDifference = -secondDifference;
-
-      if (firstDifference > secondDifference) movedThumb = secondThumb;
-      else movedThumb = firstThumb;
-
-      const stepCount = generalVal / settings.step;
-      const stepSize = trackSize / stepCount;
-
-      const trackCoord = track.getBoundingClientRect()[coord];
-
-      const newLeft = userCoord - trackCoord - halfSizeThumb;
-      const posPercent = Math.round(newLeft / stepSize) * stepSize;
-
-      movedThumb.style[coord] = `${(posPercent / trackSize) * 100}%`;
-      validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
-      // validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
-
-      positions.from = parseFloat(firstThumb.style[coord]);
-      positions.to = parseFloat(secondThumb.style[coord]);
-      changedSubject.notifyObservers();
+    let userCoord: number;
+    if (e instanceof MouseEvent) {
+      userCoord = isVertical ? e.clientY : e.clientX;
+    } else {
+      const touch = e.touches[0] || e.changedTouches[0];
+      userCoord = isVertical ? touch.clientY : touch.clientX;
     }
+    firstDifference = firstThumb.getBoundingClientRect()[coord] - userCoord;
+    secondDifference = secondThumb.getBoundingClientRect()[secondCoord] - userCoord;
 
-    moveAt(e);
+    let movedThumb: HTMLElement;
+
+    if (firstDifference < 0) firstDifference = -firstDifference;
+    else if (secondDifference < 0) secondDifference = -secondDifference;
+
+    if (firstDifference > secondDifference) movedThumb = secondThumb;
+    else movedThumb = firstThumb;
+
+    const stepCount = generalVal / settings.step;
+    const stepSize = trackSize / stepCount;
+
+    const trackCoord = track.getBoundingClientRect()[coord];
+
+    const newLeft = userCoord - trackCoord - halfSizeThumb;
+    const posPercent = Math.round(newLeft / stepSize) * stepSize;
+
+    movedThumb.style[coord] = `${(posPercent / trackSize) * 100}%`;
+    validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
+    // validateCoordsByClick(movedThumb, trackSize, firstThumb, secondThumb, isVertical);
+
+    positions.from = parseFloat(firstThumb.style[coord]);
+    positions.to = parseFloat(secondThumb.style[coord]);
+    changedSubject.notifyObservers();
   }
 
-  private init(settings: IsettingsTypes) {
+  private init(settings: ISettingsTypes, generalVal: number) {
+    this.settings = settings;
+    this.generalVal = generalVal;
     this.createElem();
     this.createHiddenTrack();
     // create observable subject for thumb

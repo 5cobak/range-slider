@@ -102,15 +102,26 @@ export default class Controller implements IController {
   private changeStartValOnSlider(e: Event) {
     const fromInput = (e.target as HTMLElement).closest('.input-from') as HTMLInputElement;
     this.slider.rangeSlider({ from: fromInput.value }, 'update');
+    const toInput = this.panel.to as HTMLInputElement;
+
     const { from } = this.slider.data('el').querySelector('.range-slider').dataset;
+    let to: number;
+    if (toInput) {
+      to = this.slider.data('el').querySelector('.range-slider').dataset.to;
+      toInput.value = `${to}`;
+    }
+
     fromInput.value = `${from}`;
   }
 
   private changeSecondValueOnSlider(e: Event) {
     const toInput = (e.target as HTMLElement).closest('.input-to') as HTMLInputElement;
+    const fromInput = this.panel.from as HTMLInputElement;
     this.slider.rangeSlider({ to: toInput.value }, 'update');
-    const { to } = this.slider.data('el').querySelector('.range-slider').dataset;
+    const { to, from } = this.slider.data('el').querySelector('.range-slider').dataset;
+    this.slider.rangeSlider({ from }, 'update');
     toInput.value = `${to}`;
+    fromInput.value = `${from}`;
   }
 
   private showHideFlag(e: Event) {

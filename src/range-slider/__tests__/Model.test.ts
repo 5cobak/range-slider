@@ -1,10 +1,10 @@
 import Model from '../Model';
-import { IsettingsTypes } from '../globals';
+import { ISettingsTypes } from '../globals';
 import './Observer.test';
 
 describe('test model', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,
@@ -46,7 +46,7 @@ describe('test model', () => {
 
 describe('test model with non-multiple step', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -82,7 +82,7 @@ describe('test model with non-multiple step', () => {
 });
 describe('test model with non-multiple step', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -106,7 +106,7 @@ describe('test model with non-multiple step', () => {
 
 describe('test from and to if they greater then max', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'single',
     min: 0,
@@ -130,7 +130,7 @@ describe('test from and to if they greater then max', () => {
 
 describe('test from and to if they less then min', () => {
   const parent = document.createElement('div');
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,
@@ -153,7 +153,7 @@ describe('test from and to if they less then min', () => {
 });
 describe('test from and to if they less then min', () => {
   const parent = document.createElement('div') as HTMLElement;
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,
@@ -177,7 +177,7 @@ describe('test from and to if they less then min', () => {
 
 describe('test step if it is be zero', () => {
   const parent = document.createElement('div') as HTMLElement;
-  const settings: IsettingsTypes = {
+  const settings: ISettingsTypes = {
     el: parent,
     type: 'double',
     min: 0,

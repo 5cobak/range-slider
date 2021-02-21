@@ -596,7 +596,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-unused-expressions */
-import { IObserver, IsettingsTypes, IThumb } from './globals';
+import { IObserver, ISettingsTypes, IThumb } from './globals';
 import MakeObservableSubject from './Observer';
 &nbsp;
 export default class ViewThumb implements IThumb {
@@ -620,7 +620,7 @@ export default class ViewThumb implements IThumb {
   }
 &nbsp;
   // -------------------------------------------------------------  events for X type range
-  moveSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveSingleType(e: MouseEvent, settings: ISettingsTypes, generalVal: number): void {
     const changedSubject = this.thumbChangedSubject;
     const target = e.target as HTMLElement;
     const isVertical = settings.type.match('vertical');
@@ -676,7 +676,7 @@ export default class ViewThumb implements IThumb {
     this.thumbPos = parseFloat(thumb.style[coord]);
   }
 &nbsp;
-  moveDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  moveDoubleType(e: MouseEvent, settings: ISettingsTypes, generalVal: number): void {
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;
@@ -757,7 +757,7 @@ export default class ViewThumb implements IThumb {
     this.thumbChangedSubject.notifyObservers();
   }
 &nbsp;
-  onClickSingleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickSingleType(e: MouseEvent, settings: ISettingsTypes, generalVal: number): void {
     const changedSubject = this.thumbChangedSubject;
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
@@ -794,7 +794,7 @@ export default class ViewThumb implements IThumb {
     this.thumbChangedSubject.notifyObservers();
   }
 &nbsp;
-  onClickDoubleType(e: MouseEvent, settings: IsettingsTypes, generalVal: number): void {
+  onClickDoubleType(e: MouseEvent, settings: ISettingsTypes, generalVal: number): void {
     const isVertical = settings.type.match('vertical');
     const target = e.target as HTMLElement;
     const track = target.closest('.range-slider') as HTMLElement;

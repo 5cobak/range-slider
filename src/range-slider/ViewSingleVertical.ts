@@ -4,11 +4,11 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { IsettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, Iposition } from './globals';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, IPosition } from './globals';
 import MakeObservableSubject from './Observer';
 // VIEW class
 export default class ViewSingleVertical {
-  settings!: IsettingsTypes;
+  settings!: ISettingsTypes;
 
   el!: HTMLElement;
 
@@ -28,10 +28,12 @@ export default class ViewSingleVertical {
 
   changedSubject!: IObserver;
 
-  positions!: Iposition;
+  positions!: IPosition;
+
+  generalVal!: number;
 
   // constructor access first argument jQuery object from jQuery plugin, settings and general value from model across presenter
-  constructor(element: HTMLElement, settings: IsettingsTypes, generalVal: number) {
+  constructor(element: HTMLElement, settings: ISettingsTypes, generalVal: number) {
     this.init(settings, element, generalVal);
   }
 
@@ -54,33 +56,35 @@ export default class ViewSingleVertical {
   }
 
   // add view events drap-and-drop and click on track from thumb
-  private addEvents(generalVal: number): void {
+  private setFlagPosOnMove(): void {
+    if (this.flag) {
+      this.flag.setPosition(this.settings, this.thumb.el);
+    }
+  }
+
+  private setFlagPosOnClick(): void {
+    if (this.flag) {
+      this.flag.setPosition(this.settings, this.thumb.el);
+    }
+  }
+
+  private onMove(e: MouseEvent | TouchEvent): void {
+    this.thumb.moveSingleType(e, this.settings, this.generalVal);
+    this.setFlagPosOnMove();
+  }
+
+  private onClick(e: MouseEvent | TouchEvent): void {
+    this.thumb.onClickSingleType(e, this.settings, this.generalVal);
+    this.setFlagPosOnClick();
+  }
+
+  // add view events drap-and-drop and click on track from thumb
+  private addEvents(): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const { thumb, flag } = this;
-    const { settings } = this;
-
-    function setFlagPosOnMove(e: MouseEvent | TouchEvent) {
-      const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
-      if (flag) {
-        if (currentThumb === thumb.el) {
-          flag.setPosition(settings, thumb.el);
-        }
-      }
-    }
-    function setFlagPosOnClick() {
-      if (flag) {
-        flag.setPosition(settings, thumb.el);
-      }
-    }
-    function onMove(e: MouseEvent | TouchEvent) {
-      thumb.moveSingleType(e, settings, generalVal);
-      setFlagPosOnMove(e);
-    }
-    function onClick(e: MouseEvent | TouchEvent) {
-      thumb.onClickSingleType(e, settings, generalVal);
-      setFlagPosOnClick();
-    }
+    const onClick = this.onClick.bind(this);
+    const onMove = this.onMove.bind(this);
+    const setFlagPosOnMove = this.setFlagPosOnMove.bind(this);
 
     if (isMobile) {
       this.parent.addEventListener('touchstart', onClick);
@@ -95,13 +99,13 @@ export default class ViewSingleVertical {
 
   // this method set thumb position at init slider and notify high level's observers
   // method used model's settings and general value from presenter across main view
-  private setThumbPos(settings: IsettingsTypes, generalVal: number) {
+  private setThumbPos(settings: ISettingsTypes, generalVal: number) {
     const thumbSize = parseFloat(getComputedStyle(this.thumb.el).height);
     const trackSize = parseFloat(getComputedStyle(this.track.el).height) - thumbSize;
     const { hiddenTrack } = this.thumb;
     hiddenTrack.style.height = `${trackSize}px`;
     const stepCount = generalVal / settings.step;
-    const stepSize = +(trackSize / stepCount);
+    const stepSize = Number(trackSize / stepCount);
     let { from } = settings;
 
     const { min } = settings;
@@ -116,11 +120,17 @@ export default class ViewSingleVertical {
     this.changedSubject.notifyObservers();
   }
 
+  private addEventsOnResize(): void {
+    const updateEvents = this.addEvents.bind(this);
+    window.addEventListener('resize', updateEvents);
+  }
+
   // inicialize view, set position for elements
   // method use methods from flag and scale if it was set true by user
-  private init(settings: IsettingsTypes, element: HTMLElement, generalVal: number): void {
+  private init(settings: ISettingsTypes, element: HTMLElement, generalVal: number): void {
     this.settings = settings;
     this.el = element;
+    this.generalVal = generalVal;
     // this property we'll pass by observer to high level, this store thumbs positions for model
     this.positions = { from: 0, to: 0 };
     // init track, thumb, inner, scale, flag
@@ -134,7 +144,8 @@ export default class ViewSingleVertical {
     // add all elements in track
     this.addElements();
     // add needed events for single-vertical type of slider
-    this.addEvents(generalVal);
+    this.addEvents();
+    this.addEventsOnResize();
 
     this.setThumbPos(this.settings, generalVal);
     this.inner.setPosition(this.settings);
