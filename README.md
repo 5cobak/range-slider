@@ -24,6 +24,6 @@
 - npm run build для сбора проект
 - npm run test для запуска тестов Model, Presenter, View
 
-4. UML-диаграмма проекта https://app.diagrams.net/#H5cobak%2Ftemplate-webpack%2Fmaster%2Fsrc%2Fts%2FUntitled%20Diagram.drawio
+4. UML-диаграмма проекта ![alt tag](http://https://github.com/5cobak/range-slider/src/range-slider/diagram/Diagram.png)
 
 5. GitHub Pages https://5cobak.github.io/range-slider/

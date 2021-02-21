@@ -8,7 +8,8 @@
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
     "test": "jest",
-    "lint:fix": "eslint --fix --ext .js, src test/unit/specs test/e2e/specs"
+    "lint:fix": "eslint --fix --ext .js, src test/unit/specs test/e2e/specs",
+    "deploy": "gh-pages -d dist"
   },
   "jest": {
     "moduleNameMapper": {
@@ -46,6 +47,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "file-loader": "^6.0.0",
+    "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^4.3.0",
     "identity-obj-proxy": "^3.0.0",
     "ion-rangeslider": "^2.3.1",

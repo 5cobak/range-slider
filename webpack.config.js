@@ -92,6 +92,7 @@ module.exports = {
   output: {
     filename: filename('js'),
     path: path.resolve(__dirname, 'dist'),
+    // publicPath: '/range-slider/',
   },
   resolve: {
     extensions: ['.jsx', '.ts', '.js'],
