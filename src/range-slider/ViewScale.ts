@@ -20,13 +20,13 @@ export default class Scale implements IScale {
   // method for creation scale element and add class range-slider__scale
   private createElement(): void {
     const scale: HTMLElement = document.createElement('div');
-    scale.className = 'range-slider__scale';
+    scale.className = 'range-slider__scale js-range-slider__scale';
 
     const smallLine = document.createElement('span');
-    smallLine.className = 'range-slider__small-line';
+    smallLine.className = 'js-range-slider__small-line range-slider__small-line';
 
     const bigLine = document.createElement('span');
-    bigLine.className = 'range-slider__big-line';
+    bigLine.className = 'js-range-slider__big-line range-slider__big-line';
     this.el = scale;
     this.smallLine = smallLine;
     this.bigLine = bigLine;
@@ -34,10 +34,10 @@ export default class Scale implements IScale {
 
   // write in scale min and max values
   writeMinAndMaxValues(settings: ISettingsTypes): void {
-    const lineCollections = this.el.querySelectorAll('.range-slider__big-line');
+    const lineCollections = this.el.querySelectorAll('.js-range-slider__big-line');
     const min = document.createElement('div');
 
-    min.className = 'range-slider__text';
+    min.className = 'range-slider__text js-range-slider__text';
     min.innerHTML = `${settings.min}`;
 
     const max = min.cloneNode(true) as HTMLElement;

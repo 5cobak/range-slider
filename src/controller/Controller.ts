@@ -78,14 +78,14 @@ export default class Controller implements IController {
   }
 
   private changeStepOnSlider(e: Event) {
-    const stepInput = (e.target as HTMLElement).closest('.input-step') as HTMLInputElement;
+    const stepInput = (e.target as HTMLElement).closest('.js-input-step') as HTMLInputElement;
 
     this.slider.rangeSlider({ step: stepInput.value }, 'update');
     this.updateVal();
   }
 
   private changeMinOnSlider(e: Event) {
-    const inputMin = (e.target as HTMLElement).closest('.input-min') as HTMLInputElement;
+    const inputMin = (e.target as HTMLElement).closest('.js-input-min') as HTMLInputElement;
     const inputFrom = this.panel.from as HTMLInputElement;
 
     this.slider.rangeSlider({ min: inputMin.value }, 'update');
@@ -94,20 +94,20 @@ export default class Controller implements IController {
   }
 
   private changeMaxOnSlider(e: Event) {
-    const maxInput = (e.target as HTMLElement).closest('.input-max') as HTMLInputElement;
+    const maxInput = (e.target as HTMLElement).closest('.js-input-max') as HTMLInputElement;
     this.slider.rangeSlider({ max: maxInput.value }, 'update');
     this.updateVal();
   }
 
   private changeStartValOnSlider(e: Event) {
-    const fromInput = (e.target as HTMLElement).closest('.input-from') as HTMLInputElement;
+    const fromInput = (e.target as HTMLElement).closest('.js-input-from') as HTMLInputElement;
     this.slider.rangeSlider({ from: fromInput.value }, 'update');
     const toInput = this.panel.to as HTMLInputElement;
 
-    const { from } = this.slider.data('el').querySelector('.range-slider').dataset;
+    const { from } = this.slider.data('el').querySelector('.js-range-slider').dataset;
     let to: number;
     if (toInput) {
-      to = this.slider.data('el').querySelector('.range-slider').dataset.to;
+      to = this.slider.data('el').querySelector('.js-range-slider').dataset.to;
       toInput.value = `${to}`;
     }
 
@@ -115,23 +115,23 @@ export default class Controller implements IController {
   }
 
   private changeSecondValueOnSlider(e: Event) {
-    const toInput = (e.target as HTMLElement).closest('.input-to') as HTMLInputElement;
+    const toInput = (e.target as HTMLElement).closest('.js-input-to') as HTMLInputElement;
     const fromInput = this.panel.from as HTMLInputElement;
     this.slider.rangeSlider({ to: toInput.value }, 'update');
-    const { to, from } = this.slider.data('el').querySelector('.range-slider').dataset;
+    const { to, from } = this.slider.data('el').querySelector('.js-range-slider').dataset;
     this.slider.rangeSlider({ from }, 'update');
     toInput.value = `${to}`;
     fromInput.value = `${from}`;
   }
 
   private showHideFlag(e: Event) {
-    const stepInput = (e.target as HTMLElement).closest('.input-flag') as HTMLInputElement;
+    const stepInput = (e.target as HTMLElement).closest('.js-input-flag') as HTMLInputElement;
     this.slider.rangeSlider({ flag: stepInput.checked }, 'update');
     this.updateVal();
   }
 
   private showHideScale(e: Event) {
-    const stepInput = (e.target as HTMLElement).closest('.input-scale') as HTMLInputElement;
+    const stepInput = (e.target as HTMLElement).closest('.js-input-scale') as HTMLInputElement;
     this.updateVal();
     this.slider.rangeSlider({ scale: stepInput.checked }, 'update');
   }
@@ -178,7 +178,7 @@ export default class Controller implements IController {
   }
 
   private getElementOfSlider(): HTMLElement {
-    return this.slider.data('el').querySelector('.range-slider') as HTMLElement;
+    return this.slider.data('el').querySelector('.js-range-slider') as HTMLElement;
   }
 
   private init(slider: any, panel: IPanel): void {

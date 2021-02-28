@@ -50,7 +50,8 @@ export default class Panel implements IPanel {
       label.className = 'panel__label';
       title.innerHTML = obj.title;
       label.append(title, input);
-      this[`${obj.class.split('-')[1]}`] = input;
+
+      this[`${obj.class.split('-')[1].split(' ')[0]}`] = input;
 
       return label;
     });
@@ -75,7 +76,7 @@ export default class Panel implements IPanel {
       title.innerHTML = obj.title;
       label.append(title, input);
 
-      this[`${obj.class.split('-')[1]}`] = input;
+      this[`${obj.class.split('-')[1].split(' ')[0]}`] = input;
       return label;
     });
     this.el.append(...labels);

@@ -9,20 +9,19 @@ export default class ViewFlag {
 
   private createFlag() {
     const flag = document.createElement('span');
-    flag.className = 'range-slider__flag range-slider__flag_first';
+    flag.className = 'range-slider__flag range-slider__flag_first js-range-slider__flag js-range-slider__flag_first';
     this.el = flag;
   }
 
   // set flag's position in center of thumb and method used at mouse events and init slider like inner's method
   setPosition(settings: ISettingsTypes, parent: HTMLElement): void {
     const isVertical = settings.type.match('vertical');
+
     const thumb = parent;
-    const flag = thumb.querySelector('.range-slider__flag') as HTMLElement;
+    const flag = thumb.querySelector('.js-range-slider__flag') as HTMLElement;
     const thumbLeft = parseFloat(thumb.style.left);
     const halfHeightThumb = thumb.offsetHeight / 2;
-    let halfHeightFlag: number;
-    if (flag) halfHeightFlag = flag.offsetHeight / 2;
-    else return;
+    const halfHeightFlag = flag.offsetHeight / 2;
 
     if (!isVertical) {
       flag.style.left = `${-150}%`;

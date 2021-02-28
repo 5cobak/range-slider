@@ -49,7 +49,7 @@ export default class ViewSingle implements IViewSingle {
 
   private createMainElement() {
     const parent = document.createElement('div');
-    parent.className = 'range-slider range-slider_single';
+    parent.className = 'js-range-slider range-slider range-slider_single';
     this.parent = parent;
   }
 
@@ -65,12 +65,12 @@ export default class ViewSingle implements IViewSingle {
     }
   }
 
-  private changePosByMove(e: MouseEvent | TouchEvent): void {
+  private changePosByMoveThumb(e: MouseEvent | TouchEvent): void {
     this.thumb.moveSingleType(e, this.settings, this.generalVal);
     this.setFlagPosOnMove();
   }
 
-  private changePosByClickOnParent(e: MouseEvent | TouchEvent): void {
+  private changePosOnClickSlider(e: MouseEvent | TouchEvent): void {
     this.thumb.onClickSingleType(e, this.settings, this.generalVal);
     this.setFlagPosOnClick();
   }
@@ -79,18 +79,18 @@ export default class ViewSingle implements IViewSingle {
   private addEvents(): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const changePosByClick = this.changePosByClickOnParent.bind(this);
-    const changePosByMove = this.changePosByMove.bind(this);
+    const changePosOnClickSlider = this.changePosOnClickSlider.bind(this);
+    const changePosByMoveThumb = this.changePosByMoveThumb.bind(this);
     const setFlagPosOnMove = this.setFlagPosOnMove.bind(this);
 
     if (isMobile) {
-      this.parent.addEventListener('touchstart', changePosByClick);
-      this.parent.addEventListener('touchstart', changePosByMove);
+      this.parent.addEventListener('touchstart', changePosOnClickSlider);
+      this.parent.addEventListener('touchstart', changePosByMoveThumb);
       this.parent.addEventListener('touchmove', setFlagPosOnMove);
-      this.parent.addEventListener('touchend', changePosByClick);
+      this.parent.addEventListener('touchend', changePosOnClickSlider);
     } else {
-      this.parent.addEventListener('mousedown', changePosByClick);
-      this.parent.addEventListener('mousedown', changePosByMove);
+      this.parent.addEventListener('mousedown', changePosOnClickSlider);
+      this.parent.addEventListener('mousedown', changePosByMoveThumb);
       this.parent.addEventListener('mousemove', setFlagPosOnMove);
     }
   }

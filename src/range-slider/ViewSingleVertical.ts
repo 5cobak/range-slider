@@ -51,7 +51,7 @@ export default class ViewSingleVertical {
 
   private createMainElement() {
     const parent = document.createElement('div');
-    parent.className = 'range-slider range-slider_vertical range-slider_single';
+    parent.className = 'js-range-slider range-slider range-slider_vertical range-slider_single';
     this.parent = parent;
   }
 
@@ -68,12 +68,12 @@ export default class ViewSingleVertical {
     }
   }
 
-  private onMove(e: MouseEvent | TouchEvent): void {
+  private changeValByMoveThumb(e: MouseEvent | TouchEvent): void {
     this.thumb.moveSingleType(e, this.settings, this.generalVal);
     this.setFlagPosOnMove();
   }
 
-  private onClick(e: MouseEvent | TouchEvent): void {
+  private changeValOnClickSlider(e: MouseEvent | TouchEvent): void {
     this.thumb.onClickSingleType(e, this.settings, this.generalVal);
     this.setFlagPosOnClick();
   }
@@ -82,18 +82,18 @@ export default class ViewSingleVertical {
   private addEvents(): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const onClick = this.onClick.bind(this);
-    const onMove = this.onMove.bind(this);
+    const changeValOnClickSlider = this.changeValOnClickSlider.bind(this);
+    const changeValByMoveThumb = this.changeValByMoveThumb.bind(this);
     const setFlagPosOnMove = this.setFlagPosOnMove.bind(this);
 
     if (isMobile) {
-      this.parent.addEventListener('touchstart', onClick);
-      this.parent.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchstart', changeValOnClickSlider);
+      this.parent.addEventListener('touchstart', changeValByMoveThumb);
       this.parent.addEventListener('touchmove', setFlagPosOnMove);
-      this.parent.addEventListener('touchend', onClick);
+      this.parent.addEventListener('touchend', changeValOnClickSlider);
     } else {
-      this.parent.addEventListener('mousedown', onClick);
-      this.parent.addEventListener('mousedown', onMove);
+      this.parent.addEventListener('mousedown', changeValOnClickSlider);
+      this.parent.addEventListener('mousedown', changeValByMoveThumb);
     }
   }
 
@@ -135,7 +135,7 @@ export default class ViewSingleVertical {
     this.positions = { from: 0, to: 0 };
     // init track, thumb, inner, scale, flag
     this.track = new ViewTrack(this.settings);
-    this.thumb = new ViewThumb(this.settings);
+    this.thumb = new ViewThumb(this.settings, this.generalVal);
     this.inner = new ViewInner(this.settings);
     this.flag = new ViewFlag();
     this.scale = new ViewScale(this.settings);

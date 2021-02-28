@@ -26,7 +26,7 @@ export default class ViewThumb implements IThumb {
   // method create element and add class name
   private createElem(): void {
     const thumb: HTMLElement = document.createElement('span');
-    thumb.className = 'range-slider__thumb range-slider__thumb_first';
+    thumb.className = 'js-range-slider__thumb_first js-range-slider__thumb range-slider__thumb range-slider__thumb_first';
     this.el = thumb;
   }
 
@@ -49,11 +49,7 @@ export default class ViewThumb implements IThumb {
     number
   ]) {
     return (e: MouseEvent | TouchEvent) => {
-      const isTouch = e.type === 'touchstart';
-
       if (!targetThumb) return;
-
-      if (isTouch) document.body.classList.add('stop-scrolling');
 
       // count of steps in track
       const stepCount = this.generalVal / this.settings.step;
@@ -95,8 +91,10 @@ export default class ViewThumb implements IThumb {
   // -------------------------------------------------------------  events for X type range
   // method for drap-and-drop on single and single-vertical types track
   moveSingleType(e: MouseEvent | TouchEvent): void {
-    const thumb = (e.target as HTMLElement).closest('.range-slider__thumb');
+    const thumb = (e.target as HTMLElement).closest('.js-range-slider__thumb');
     if (!thumb) return;
+    const isTouch = e.type === 'touchstart';
+    if (isTouch) document.body.classList.add('stop-scrolling');
     const { isVertical } = this;
     // get values of element which we'll use when calculate position of thumb
     // getValues is function you we'll find at ./utils/thumbHelpers.ts
@@ -112,13 +110,13 @@ export default class ViewThumb implements IThumb {
 
     const makeMoveAt = this.makeMoveAtOnSingleType.bind(this);
     // // standard drag-and-drop addition and deletion event's listeners
-    const moveAt = makeMoveAt(paramsForMakeMoveAt);
+    const moveRangeSliderThumb = makeMoveAt(paramsForMakeMoveAt);
 
-    const removeEvents = this.removeEvents.bind(this, moveAt);
-    document.addEventListener('touchmove', moveAt);
-    document.addEventListener('mousemove', moveAt);
-    document.addEventListener('mouseup', removeEvents);
-    document.addEventListener('touchend', removeEvents);
+    const removeEventsFromRangeSliderThumb = this.removeEvents.bind(this, moveRangeSliderThumb);
+    document.addEventListener('touchmove', moveRangeSliderThumb);
+    document.addEventListener('mousemove', moveRangeSliderThumb);
+    document.addEventListener('mouseup', removeEventsFromRangeSliderThumb);
+    document.addEventListener('touchend', removeEventsFromRangeSliderThumb);
   }
 
   private makeMoveAtOnDoubleType([targetThumb, targetSecondThumb, trackSize, isVertical, track, halfSizeThumb, firstThumb, secondThumb]: [
@@ -132,9 +130,8 @@ export default class ViewThumb implements IThumb {
     HTMLElement
   ]) {
     return (e: MouseEvent | TouchEvent) => {
-      const isTouch = e.type === 'touchstart';
       if (!targetThumb) return;
-      if (isTouch) document.body.classList.add('stop-scrolling');
+
       // choosed thumb will have more z-index then wasn't choosed thumb
       targetThumb.style.zIndex = '100';
       (targetSecondThumb as HTMLElement).style.zIndex = '50';
@@ -170,7 +167,9 @@ export default class ViewThumb implements IThumb {
 
   // looks like method above, besides there is the second thumb element
   moveDoubleType(e: MouseEvent | TouchEvent): void {
-    const thumb = (e.target as HTMLElement).closest('.range-slider__thumb');
+    const isTouch = e.type === 'touchstart';
+    if (isTouch) document.body.classList.add('stop-scrolling');
+    const thumb = (e.target as HTMLElement).closest('.js-range-slider__thumb');
     if (!thumb) return;
     const { isVertical } = this;
 
@@ -188,11 +187,11 @@ export default class ViewThumb implements IThumb {
     const makeMoveAt = this.makeMoveAtOnDoubleType.bind(this);
     // // standard drag-and-drop addition and deletion event's listeners
     const moveAt = makeMoveAt(paramsForMakeMoveAt);
-    const removeEvents = this.removeEvents.bind(this, moveAt);
+    const removeEventsFromRangeSliderThumb = this.removeEvents.bind(this, moveAt);
     document.addEventListener('touchmove', moveAt);
     document.addEventListener('mousemove', moveAt);
-    document.addEventListener('mouseup', removeEvents);
-    document.addEventListener('touchend', removeEvents);
+    document.addEventListener('mouseup', removeEventsFromRangeSliderThumb);
+    document.addEventListener('touchend', removeEventsFromRangeSliderThumb);
   }
 
   private removeEvents(moveAt: (e: MouseEvent | TouchEvent) => void): void {

@@ -4,7 +4,7 @@ export const panelFirst = new Panel(
   [
     {
       title: 'Текущее значение',
-      class: 'input-from',
+      class: 'input-from js-input-from',
       attr: {
         type: 'text',
         placeholder: 'Текущее значение',
@@ -12,7 +12,7 @@ export const panelFirst = new Panel(
     },
     {
       title: 'Шаг',
-      class: 'input-step',
+      class: 'input-step js-input-step',
       attr: {
         type: 'text',
         placeholder: 'Шаг',
@@ -20,7 +20,7 @@ export const panelFirst = new Panel(
     },
     {
       title: 'Минимальное значение',
-      class: 'input-min',
+      class: 'input-min js-input-min',
       attr: {
         type: 'text',
         placeholder: 'Минимальное значение',
@@ -28,14 +28,14 @@ export const panelFirst = new Panel(
     },
     {
       title: 'Максимальное значение',
-      class: 'input-max',
+      class: 'input-max js-input-max',
       attr: {
         type: 'text',
         placeholder: 'Максимальное значение',
       },
     },
     {
-      class: 'input-flag',
+      class: 'input-flag js-input-flag',
       title: 'Флаг',
       attr: {
         type: 'checkbox',
@@ -43,7 +43,7 @@ export const panelFirst = new Panel(
       },
     },
     {
-      class: 'input-scale',
+      class: 'input-scale js-input-scale',
       title: 'Шкала',
       attr: {
         type: 'checkbox',
@@ -53,7 +53,7 @@ export const panelFirst = new Panel(
   ],
   [
     {
-      class: 'input-horizontal',
+      class: 'input-horizontal js-input-horizontal',
       title: 'Горизонтальный',
       attr: {
         value: 'single-horizontal',
@@ -62,7 +62,7 @@ export const panelFirst = new Panel(
       },
     },
     {
-      class: 'input-vertical',
+      class: 'input-vertical js-input-vertical',
       title: 'Вертикальный',
       attr: {
         value: 'single-vertical',
@@ -93,7 +93,7 @@ export const panelSecond = new Panel(
     },
     {
       title: 'Шаг',
-      class: 'input-step',
+      class: 'input-step js-input-step',
       attr: {
         type: 'text',
         placeholder: 'Шаг',
@@ -101,7 +101,7 @@ export const panelSecond = new Panel(
     },
     {
       title: 'Минимальное значение',
-      class: 'input-min',
+      class: 'input-min js-input-min',
       attr: {
         type: 'text',
         placeholder: 'Минимальное значение',
@@ -109,14 +109,14 @@ export const panelSecond = new Panel(
     },
     {
       title: 'Максимальное значение',
-      class: 'input-max',
+      class: 'input-max js-input-max',
       attr: {
         type: 'text',
         placeholder: 'Максимальное значение',
       },
     },
     {
-      class: 'input-flag',
+      class: 'input-flag js-input-flag',
       title: 'Флаг',
       attr: {
         type: 'checkbox',
@@ -124,7 +124,7 @@ export const panelSecond = new Panel(
       },
     },
     {
-      class: 'input-scale',
+      class: 'input-scale js-input-scale',
       title: 'Шкала',
       attr: {
         type: 'checkbox',
@@ -134,7 +134,7 @@ export const panelSecond = new Panel(
   ],
   [
     {
-      class: 'input-horizontal',
+      class: 'input-horizontal js-input-horizontal',
       title: 'Горизонтальный',
       attr: {
         value: 'double-horizontal',
@@ -143,7 +143,7 @@ export const panelSecond = new Panel(
       },
     },
     {
-      class: 'input-vertical',
+      class: 'input-vertical js-input-vertical',
       title: 'Вертикальный',
       attr: {
         value: 'double-vertical',

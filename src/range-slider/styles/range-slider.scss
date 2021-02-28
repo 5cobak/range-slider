@@ -3,8 +3,8 @@
   $self: &;
   max-width: 400px;
   margin-bottom: 50px;
-  user-select: none;
   min-height: 50px;
+  user-select: none;
   &_vertical {
     max-width: 50px;
     display: flex;
@@ -29,6 +29,7 @@
     }
     #{$self}__flag {
       left: 20px;
+      top: -5px;
     }
     #{$self}__scale {
       position: relative;
@@ -72,7 +73,6 @@
     width: 100%;
     border-radius: 20px;
     border: 1px solid $text-color-brightness-25;
-    user-select: none;
     cursor: pointer;
     &_single {
       #{$self}__inner {

@@ -41,7 +41,7 @@ export default class ViewDouble {
 
   private createMainElement() {
     const parent = document.createElement('div');
-    parent.className = 'range-slider range-slider_double';
+    parent.className = 'js-range-slider range-slider range-slider_double';
     this.parent = parent;
   }
 
@@ -71,7 +71,7 @@ export default class ViewDouble {
   // method for addition second thumb
 
   private setFlagPosOnMove(e: MouseEvent | TouchEvent): void {
-    const currentThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
+    const currentThumb = (e.target as HTMLElement).closest('.js-range-slider__thumb') as HTMLElement;
     if (this.flag) {
       if (currentThumb === this.thumb.el) {
         this.flag.setPosition(this.settings, this.thumb.el);
@@ -86,12 +86,12 @@ export default class ViewDouble {
     }
   }
 
-  private onMove(e: MouseEvent | TouchEvent) {
+  private changeValOnClickSlider(e: MouseEvent | TouchEvent) {
     this.thumb.moveDoubleType(e, this.settings, this.generalVal);
     this.setFlagPosOnMove(e);
   }
 
-  private onClick(e: MouseEvent | TouchEvent) {
+  private changeValByMoveThumb(e: MouseEvent | TouchEvent) {
     this.thumb.onClickDoubleType(e, this.settings, this.generalVal);
     this.setFlagPosOnClick();
   }
@@ -99,8 +99,7 @@ export default class ViewDouble {
   // method for addition second thumb
   private addSecondThumb(): void {
     this.secondThumb = new ViewThumb(this.settings, this.generalVal);
-    this.secondThumb.el.classList.remove('range-slider__thumb_first');
-    this.secondThumb.el.classList.add('range-slider__thumb_second');
+    this.secondThumb.el.className = 'range-slider__thumb_second js-range-slider__thumb_second js-range-slider__thumb range-slider__thumb';
   }
 
   // add all elements in view
@@ -123,17 +122,17 @@ export default class ViewDouble {
   private addEvents(): void {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    const onClick = this.onClick.bind(this);
-    const onMove = this.onMove.bind(this);
+    const changeValOnClickSlider = this.changeValOnClickSlider.bind(this);
+    const changeValByMoveThumb = this.changeValByMoveThumb.bind(this);
     const setFlagPosOnMove = this.setFlagPosOnMove.bind(this);
 
     if (isMobile) {
-      this.parent.addEventListener('touchstart', onClick);
-      this.parent.addEventListener('touchstart', onMove);
+      this.parent.addEventListener('touchstart', changeValOnClickSlider);
+      this.parent.addEventListener('touchstart', changeValByMoveThumb);
       this.parent.addEventListener('touchmove', setFlagPosOnMove);
     } else {
-      this.parent.addEventListener('mousedown', onClick);
-      this.parent.addEventListener('mousedown', onMove);
+      this.parent.addEventListener('mousedown', changeValOnClickSlider);
+      this.parent.addEventListener('mousedown', changeValByMoveThumb);
       this.parent.addEventListener('mousemove', setFlagPosOnMove);
     }
   }

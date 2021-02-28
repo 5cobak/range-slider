@@ -75,10 +75,10 @@ export function getValues(
   thumbSize: number;
   trackSize: number;
 } {
-  const track = (e.target as HTMLElement).closest('.range-slider') as HTMLElement;
+  const track = (e.target as HTMLElement).closest('.js-range-slider') as HTMLElement;
 
-  const thumbs = track.querySelectorAll('.range-slider__thumb');
-  const targetThumb = (e.target as HTMLElement).closest('.range-slider__thumb') as HTMLElement;
+  const thumbs = track.querySelectorAll('.js-range-slider__thumb');
+  const targetThumb = (e.target as HTMLElement).closest('.js-range-slider__thumb') as HTMLElement;
 
   let targetSecondThumb: HTMLElement | null = null;
   const firstThumb = thumbs[0] as HTMLElement;
