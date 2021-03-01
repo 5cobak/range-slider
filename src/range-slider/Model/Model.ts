@@ -27,9 +27,9 @@ export default class Model implements IModel {
   // first argument is positon to or from which come from view at the presenter
   // second argument step size of track
   // currentVal is string which point us which position to return: from or to
-  public setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void {
+  public setCurrentVal(pos: number, thumbPosPercentFrom: number, stepSize: number, step: number, currentVal: string): void {
     let val = Number(this.settings.min) + (Math.round(pos / stepSize) * (step * 10)) / 10;
-
+    if (thumbPosPercentFrom === 100) val = this.settings.max;
     if (val > this.settings.max) val = this.settings.max;
 
     this.bank[currentVal] = parseFloat(val.toFixed(10));

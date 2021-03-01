@@ -113,6 +113,7 @@ export default class ViewSingleVertical {
     from -= min;
 
     from = ((stepSize * Math.round(from / settings.step)) / trackSize) * 100;
+    if (from > 100) from = 100;
     this.thumb.el.style.top = `${from}%`;
 
     this.positions.from = from;

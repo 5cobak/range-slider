@@ -73,7 +73,7 @@ export interface ISubView {
 export interface IModel {
   modelChangedSubject: IObserver;
   bank: IBankModel;
-  setCurrentVal(pos: number, stepSize: number, step: number, currentVal: string): void;
+  setCurrentVal(pos: number, posPercent: number, stepSize: number, step: number, currentVal: string): void;
   settings: ISettingsTypes;
 }
 export interface IView {

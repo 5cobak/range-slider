@@ -24,8 +24,8 @@ export default class Presenter {
     const stepCount = generalVal / step;
     const stepSize = trackSize / stepCount;
     const thumbPosFrom = (view.positions.from / 100) * trackSize;
-
-    model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
+    const thumbPosPercentFrom = view.positions.from;
+    model.setCurrentVal(thumbPosFrom, thumbPosPercentFrom, stepSize, step, 'from');
   }
 
   // method for calculate from and to in model by using thumbs position from view
@@ -39,10 +39,12 @@ export default class Presenter {
     const stepSize = trackSize / stepCount;
     const thumbPosFrom = (view.positions.from / 100) * trackSize;
     const thumbPosTo = (view.positions.to / 100) * trackSize;
+    const thumbPosPercentFrom = view.positions.from;
+    const thumbPosPercentTo = view.positions.to;
     // set value in model.bank.from, which will be used in view's observer above
-    model.setCurrentVal(thumbPosFrom, stepSize, step, 'from');
+    model.setCurrentVal(thumbPosFrom, thumbPosPercentFrom, stepSize, step, 'from');
     // set value in model.bank.to, which will be used in view's observer above
-    model.setCurrentVal(thumbPosTo, stepSize, step, 'to');
+    model.setCurrentVal(thumbPosTo, thumbPosPercentTo, stepSize, step, 'to');
   }
 
   private init(settings: ISettingsTypes, element: HTMLElement) {

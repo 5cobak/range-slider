@@ -4,10 +4,10 @@ import Controller from './controller/Controller';
 
 const rangeFirst = $('.js-range-slider-1').rangeSlider({
   type: 'single-horizontal',
-  min: 100,
-  max: 500,
+  min: -1,
+  max: 1,
   from: 100,
-  step: 100,
+  step: 0.3,
 });
 
 rangeFirst.after(panelFirst.el);

@@ -1,5 +1,5 @@
 import { IScale, ISettingsTypes } from '../Interfaces/globals';
-import { getValues, setBigLines, setSmallLines } from '../utils/scaleHelpers';
+import { getValues, setBigLines, setSmallLines } from './utils/scaleHelpers';
 
 export default class Scale implements IScale {
   settings: ISettingsTypes;

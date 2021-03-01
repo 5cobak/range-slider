@@ -69,9 +69,7 @@ export default class Controller implements IController {
     document.removeEventListener('mouseup', updateVal);
   }
 
-  private changeValOnSlider(e: MouseEvent | TouchEvent) {
-    const eventType: string = e.type;
-
+  private changeValOnSlider() {
     const sliderEl = this.getElementOfSlider();
 
     const removeEvents = this.removeEventMouseTouchEvents.bind(this);
