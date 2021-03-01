@@ -71,7 +71,6 @@ export default class Controller implements IController {
 
   private changeValOnSlider(e: MouseEvent | TouchEvent) {
     const eventType: string = e.type;
-    if (eventType !== 'mousedown') return;
 
     const sliderEl = this.getElementOfSlider();
 
