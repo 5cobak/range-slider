@@ -18,10 +18,10 @@ export default class MakeObservableSubject {
     this.observers.forEach((item, i) => {
       if (item === o) {
         this.observers.splice(i, 1);
+        return;
       }
+      throw new Error('could not find observer in list of observers');
     });
-
-    throw new Error('could not find observer in list of observers');
   }
 
   notifyObservers(): void {

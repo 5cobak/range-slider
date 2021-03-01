@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>18/20</span>
             </div>
         
             
@@ -91,7 +91,10 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -99,14 +102,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -117,11 +123,11 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -132,30 +138,33 @@ export default class ViewTrack {
 &nbsp;
   type!: string;
 &nbsp;
+  // constructor access one argument, this is validated options from model
   constructor(settings: ISettingsTypes) {
     this.createElement();
-    this.setType(settings.type)
+    this.setType(settings.type);
   }
 &nbsp;
-  private createElement():void {
+  // method create track element and add class .range-slider
+  private createElement(): void {
     const el = document.createElement('div');
-    el.className = 'range-slider';
+    el.className = 'range-slider__track';
     this.el = el;
   }
 &nbsp;
-  private setType(type: string):void {
-    if (type === 'single') {
+  // method choose type of track(single, single-vertical, double-vertical, double ) and add current class name
+  private setType(type: string): void {
+    if (type === 'single-horizontal') {
       this.el.className = '';
-      this.el.className = 'range-slider range-slider_single';
+      this.el.className = 'range-slider__track range-slider__track_single';
     } else if (type === 'single-vertical') {
       this.el.className = '';
-      this.el.className = 'range-slider range-slider_single range-slider_vertical';
-    } else if (type === 'double') {
-      this.el.className = '';
-      this.el.className = 'range-slider range-slider_double';
+      this.el.className = 'range-slider__track range-slider_single range-slider__track_vertical';
+    } else <span class="missing-if-branch" title="if path not taken" >I</span>if (type === 'double') {
+<span class="cstat-no" title="statement not covered" >      this.el.className = '';</span>
+<span class="cstat-no" title="statement not covered" >      this.el.className = 'range-slider__track range-slider__track_double';</span>
     } else {
       this.el.className = '';
-      this.el.className = 'range-slider range-slider_double range-slider_vertical';
+      this.el.className = 'range-slider__track range-slider__track_double range-slider__track_vertical';
     }
   }
 }
@@ -166,7 +175,7 @@ export default class ViewTrack {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 14 2020 16:04:14 GMT+0400 (GMT+04:00)
+                at Mon Mar 01 2021 16:24:54 GMT+0400 (Самарское стандартное время)
             </div>
         </div>
         <script src="prettify.js"></script>

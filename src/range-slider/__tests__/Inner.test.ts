@@ -4,7 +4,7 @@ describe('test inner', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -19,8 +19,8 @@ describe('test inner', () => {
 
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
-  thumb.className = 'range-slider__thumb_first';
-  secondThumb.className = 'range-slider__thumb_second';
+  thumb.className = 'js-range-slider__thumb_first';
+  secondThumb.className = 'js-range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -53,7 +53,7 @@ describe('test inner double', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -68,8 +68,8 @@ describe('test inner double', () => {
 
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
-  thumb.className = 'range-slider__thumb_first';
-  secondThumb.className = 'range-slider__thumb_second';
+  thumb.className = 'js-range-slider__thumb_first';
+  secondThumb.className = 'js-range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -117,8 +117,8 @@ describe('test inner single-vertical', () => {
 
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
-  thumb.className = 'range-slider__thumb_first';
-  secondThumb.className = 'range-slider__thumb_second';
+  thumb.className = 'js-range-slider__thumb_first';
+  secondThumb.className = 'js-range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 
@@ -166,8 +166,8 @@ describe('test inner double-vertical', () => {
 
   const thumb = document.createElement('div');
   const secondThumb = document.createElement('div');
-  thumb.className = 'range-slider__thumb_first';
-  secondThumb.className = 'range-slider__thumb_second';
+  thumb.className = 'js-range-slider__thumb_first';
+  secondThumb.className = 'js-range-slider__thumb_second';
   parent.style[size] = '400px';
   parent.style.position = 'relative';
 

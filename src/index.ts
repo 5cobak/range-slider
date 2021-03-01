@@ -1,3 +1,3 @@
-import './main.scss';
+import './demo-page/main.scss';
 import './range-slider/range-slider';
-import './index.js';
+import './demo-page/index.js';

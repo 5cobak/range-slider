@@ -40,8 +40,8 @@ describe('test ViewTrack single', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('single', () => {
-    flag.setPosition(settings);
-    expect(flag.el.style[coord]).toMatch(/px/);
+    flag.setPosition(settings, parent);
+    expect(flag.el.style[coord]).toMatch(/%/);
   });
 });
 
@@ -84,8 +84,8 @@ describe('test ViewTrack double', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('single', () => {
-    flag.setPosition(settings);
-    expect(flag.el.style[coord]).toMatch(/px/);
+    flag.setPosition(settings, parent);
+    expect(flag.el.style[coord]).toMatch(/%/);
   });
 });
 
@@ -128,7 +128,7 @@ describe('test ViewTrack double-vertical', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('flag top must be with px', () => {
-    flag.setPosition(settings);
+    flag.setPosition(settings, parent);
     expect(flag.el.style[coord]).toMatch(/px/);
     expect(flag.el.style[coord]).toBe('0px');
   });
@@ -173,7 +173,7 @@ describe('test ViewTrack single vertical', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('flag top must be with px', () => {
-    flag.setPosition(settings);
+    flag.setPosition(settings, parent);
     expect(flag.el.style[coord]).toMatch(/px/);
   });
 });
@@ -217,7 +217,7 @@ describe('test ViewTrack double vertical', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('flag top must be with px', () => {
-    flag.setPosition(settings);
+    flag.setPosition(settings, parent);
     expect(flag.el.style[coord]).toMatch(/px/);
   });
 });
@@ -261,7 +261,7 @@ describe('test ViewTrack single vertical', () => {
     expect(flag.el.className).toMatch(/flag/);
   });
   test('flag top must be 0', () => {
-    flag.setPosition(settings);
+    flag.setPosition(settings, parent);
     expect(flag.el.style[coord]).toMatch(/px/);
     expect(flag.el.style[coord]).toBe('0px');
   });

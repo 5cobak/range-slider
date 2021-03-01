@@ -10,7 +10,7 @@ describe('test ViewTrack', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -22,7 +22,7 @@ describe('test ViewTrack', () => {
   const isVertical = settings.type.match('vertical');
   const size = isVertical ? 'height' : 'width';
 
-  parent.className = 'range-slider';
+  parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';
   parent.style[size] = '400px';
@@ -61,7 +61,7 @@ describe('ViewDouble without scale and flag', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -74,7 +74,7 @@ describe('ViewDouble without scale and flag', () => {
 
   const size = isVertical ? 'height' : 'width';
 
-  parent.className = 'range-slider';
+  parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';
   parent.style[size] = '400px';
@@ -108,7 +108,7 @@ describe('ViewDouble without scale and flag', () => {
   });
 
   test('scale and flag must be null', () => {
-    expect(view.thumb.el.querySelector('range-slider__flag')).toBeNull();
-    expect(view.track.el.querySelector('range-slider__scale')).toBeNull();
+    expect(view.thumb.el.querySelector('js-range-slider__flag')).toBeNull();
+    expect(view.track.el.querySelector('js-range-slider__scale')).toBeNull();
   });
 });

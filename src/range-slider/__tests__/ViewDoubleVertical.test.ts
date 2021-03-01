@@ -22,7 +22,7 @@ describe('test ViewTrack', () => {
   const isVertical = settings.type.match('vertical');
   const size = isVertical ? 'height' : 'width';
 
-  parent.className = 'range-slider';
+  parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';
   parent.style[size] = '400px';
@@ -73,7 +73,7 @@ describe('test ViewTrack', () => {
 
     const size = isVertical ? 'height' : 'width';
 
-    parent.className = 'range-slider';
+    parent.className = 'js-range-slider';
 
     parent.style.position = 'absolute';
     parent.style[size] = '400px';
@@ -107,8 +107,8 @@ describe('test ViewTrack', () => {
     });
 
     test('scale and flag must be null', () => {
-      expect(view.thumb.el.querySelector('range-slider__flag')).toBeNull();
-      expect(view.track.el.querySelector('range-slider__scale')).toBeNull();
+      expect(view.thumb.el.querySelector('js-range-slider__flag')).toBeNull();
+      expect(view.track.el.querySelector('js-range-slider__scale')).toBeNull();
     });
   });
 });

@@ -1,4 +1,4 @@
-import IPanel from '../panel/globals';
+import IPanel from '../../panel/globals';
 import IController from './globals';
 
 export default class Controller implements IController {

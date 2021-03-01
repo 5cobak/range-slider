@@ -6,7 +6,7 @@ describe('test model', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -48,7 +48,7 @@ describe('test model with non-multiple step', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -84,7 +84,7 @@ describe('test model with non-multiple step', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 11000,
@@ -108,7 +108,7 @@ describe('test from and to if they greater then max', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 11000,
@@ -132,7 +132,7 @@ describe('test from and to if they less then min', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: -1000,
@@ -155,7 +155,7 @@ describe('test from and to if they less then min', () => {
   const parent = document.createElement('div') as HTMLElement;
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: -1000,
@@ -179,7 +179,7 @@ describe('test step if it is be zero', () => {
   const parent = document.createElement('div') as HTMLElement;
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: -1000,

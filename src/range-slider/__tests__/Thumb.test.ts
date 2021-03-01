@@ -7,8 +7,8 @@ import './Observer.test';
 describe('test single type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
-  parent.className = 'range-slider';
-  inner.className = 'range-slider__inner';
+  parent.className = 'js-range-slider';
+  inner.className = 'js-range-slider__inner';
 
   document.body.append(parent);
   const settings = {
@@ -48,8 +48,8 @@ describe('test single type thumb', () => {
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb-first';
+    thumb = new ViewThumb(settings, generalVal);
+    thumb.el.className = 'js-range-slider__thumb js-range-slider__thumb-first';
     parent.style.position = 'relative';
     parent.style.width = '400px';
     parent.style.height = '8px';
@@ -152,8 +152,8 @@ describe('test single type thumb', () => {
 describe('test double type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
-  parent.className = 'range-slider';
-  inner.className = 'range-slider__inner';
+  parent.className = 'js-range-slider';
+  inner.className = 'js-range-slider__inner';
 
   document.body.append(parent);
   const settings = {
@@ -192,10 +192,10 @@ describe('test double type thumb', () => {
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    secondThumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb_first';
-    secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
+    thumb = new ViewThumb(settings, generalVal);
+    secondThumb = new ViewThumb(settings, generalVal);
+    thumb.el.className = 'js-range-slider__thumb js-range-slider__thumb_first';
+    secondThumb.el.className = 'js-range-slider__thumb js-range-slider__thumb_second';
     parent.style.position = 'relative';
     parent.style.width = '400px';
     parent.style.height = '8px';
@@ -372,8 +372,8 @@ describe('test double type thumb', () => {
 describe('test single-vertical type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
-  parent.className = 'range-slider';
-  inner.className = 'range-slider__inner';
+  parent.className = 'js-range-slider';
+  inner.className = 'js-range-slider__inner';
 
   document.body.append(parent);
   const settings = {
@@ -412,8 +412,8 @@ describe('test single-vertical type thumb', () => {
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb-first';
+    thumb = new ViewThumb(settings, generalVal);
+    thumb.el.className = 'js-range-slider__thumb js-range-slider__thumb-first';
     parent.style.position = 'relative';
     parent.style.height = '400px';
     parent.style.width = '8px';
@@ -436,7 +436,7 @@ describe('test single-vertical type thumb', () => {
     expect(thumb).not.toBeUndefined();
   });
 
-  test('must be instance of HTMLelement and has class .range-slider__thumb', () => {
+  test('must be instance of HTMLelement and has class .js-range-slider__thumb', () => {
     expect(thumb.el).toBeInstanceOf(HTMLElement);
     expect(thumb.el.className).toMatch(/thumb/);
   });
@@ -513,8 +513,8 @@ describe('test single-vertical type thumb', () => {
 describe('test double-vertical type thumb', () => {
   const parent = document.createElement('div');
   const inner = document.createElement('div');
-  parent.className = 'range-slider';
-  inner.className = 'range-slider__inner';
+  parent.className = 'js-range-slider';
+  inner.className = 'js-range-slider__inner';
 
   document.body.append(parent);
   const settings = {
@@ -554,10 +554,10 @@ describe('test double-vertical type thumb', () => {
   }
 
   beforeEach(() => {
-    thumb = new ViewThumb(settings);
-    secondThumb = new ViewThumb(settings);
-    thumb.el.className = 'range-slider__thumb range-slider__thumb_first';
-    secondThumb.el.className = 'range-slider__thumb range-slider__thumb_second';
+    thumb = new ViewThumb(settings, generalVal);
+    secondThumb = new ViewThumb(settings, generalVal);
+    thumb.el.className = 'js-range-slider__thumb js-range-slider__thumb_first';
+    secondThumb.el.className = 'js-range-slider__thumb js-range-slider__thumb_second';
     parent.style.position = 'relative';
     parent.style.height = '400px';
     parent.style.width = '8px';
@@ -671,6 +671,7 @@ describe('test double-vertical type thumb', () => {
   test('test general val', () => {
     function triggerMouseEvent(node: Element, eventType: string) {
       const settings = {
+        el: parent,
         type: 'double-vertical',
         min: 0,
         max: 10000,

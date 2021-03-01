@@ -17,6 +17,7 @@ describe('test Observer class', () => {
     obj.addObservers(o);
     obj.notifyObservers();
     expect(someObject.currentNum).toBe(9);
+    obj.removeObserver(o);
   });
 
   test('test method addobservers if observer exists', () => {
@@ -30,13 +31,13 @@ describe('test Observer class', () => {
     } catch (e) {
       expect(e).toBeInstanceOf(Error);
     }
+    obj.removeObserver(o);
   });
   test('test method removeObservers', () => {
     function o(): void {
       someObject.currentNum += 1;
     }
     obj.addObservers(o);
-    obj.notifyObservers();
     obj.removeObserver(o);
     obj.notifyObservers();
     expect(someObject.currentNum).toBe(1);
@@ -45,15 +46,11 @@ describe('test Observer class', () => {
     function o(): void {
       someObject.currentNum += 1;
     }
-    obj.addObservers(o);
-    obj.notifyObservers();
-    obj.removeObserver(o);
-    obj.notifyObservers();
 
     try {
       obj.removeObserver(o);
     } catch (e) {
-      expect(e).toBeInstanceOf(Error);
+      expect(e.message).toBe('could not find observer in list of observers');
     }
   });
 });

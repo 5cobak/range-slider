@@ -11,7 +11,7 @@ describe('test ViewTrack', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -23,8 +23,8 @@ describe('test ViewTrack', () => {
   const isVertical = settings.type.match('vertical');
 
   const size = isVertical ? 'height' : 'width';
-
-  parent.className = 'range-slider';
+  const hiddenTrack = document.createElement('div');
+  parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';
   parent.style[size] = '400px';
@@ -40,6 +40,7 @@ describe('test ViewTrack', () => {
   view.thumb.el.style.width = '15px';
   view.thumb.el.style.height = '15px';
   view.thumb.el.style.position = 'absolute';
+  view.thumb.el.className = 'js-range-slider__thumb_first js-range-slider__thumb';
 
   view.track.el.style[size] = '400px';
   view.track.el.style.position = 'relative';
@@ -63,7 +64,7 @@ describe('ViewSingle without scale and flag', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -76,7 +77,7 @@ describe('ViewSingle without scale and flag', () => {
 
   const size = isVertical ? 'height' : 'width';
 
-  parent.className = 'range-slider';
+  parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';
   parent.style[size] = '400px';
@@ -92,6 +93,8 @@ describe('ViewSingle without scale and flag', () => {
   view.thumb.el.style.width = '15px';
   view.thumb.el.style.height = '15px';
   view.thumb.el.style.position = 'absolute';
+  view.thumb.el.style.position = 'absolute';
+  view.thumb.el.className = 'js-range-slider__thumb_first js-range-slider__thumb';
 
   view.track.el.style[size] = '400px';
   view.track.el.style.position = 'relative';
@@ -104,7 +107,7 @@ describe('ViewSingle without scale and flag', () => {
     expect(view.flag).not.toBeUndefined();
   });
   test('scale and flag must be null', () => {
-    expect(view.thumb.el.querySelector('range-slider__flag')).toBeNull();
-    expect(view.track.el.querySelector('range-slider__scale')).toBeNull();
+    expect(view.thumb.el.querySelector('js-range-slider__flag')).toBeNull();
+    expect(view.track.el.querySelector('js-range-slider__scale')).toBeNull();
   });
 });

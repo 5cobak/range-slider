@@ -70,6 +70,7 @@ export default class ViewDoubleVertical {
     from = ((stepSize * Math.round(from / settings.step)) / trackSize) * 100;
     this.thumb.el.style.top = `${from}%`;
     to = ((stepSize * Math.round((to as number) / settings.step)) / trackSize) * 100;
+    if (to > 100) to = 100;
     this.secondThumb.el.style.top = `${to}%`;
 
     this.positions.from = from;

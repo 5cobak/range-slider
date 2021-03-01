@@ -79,7 +79,7 @@ const PATHS = {
 
 // Pages const for HtmlWebpackPlugin
 // see more: https://github.com/vedees/webpack-template/blob/master/README.md#html-dir-folder
-const PAGES_DIR = `${PATHS.src}/page/`;
+const PAGES_DIR = `${PATHS.src}/demo-page/page/`;
 const PAGES = fs.readdirSync(PAGES_DIR).filter((fileName) => fileName.endsWith('.pug'));
 
 module.exports = {
@@ -92,7 +92,6 @@ module.exports = {
   output: {
     filename: filename('js'),
     path: path.resolve(__dirname, 'dist'),
-    // publicPath: '/range-slider/',
   },
   resolve: {
     extensions: ['.jsx', '.ts', '.js'],

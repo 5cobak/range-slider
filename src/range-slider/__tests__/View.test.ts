@@ -20,7 +20,7 @@ describe('test main view class with type double ', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -47,7 +47,7 @@ describe('test main view class with type single ', () => {
   const parent = document.createElement('div');
   const settings = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,

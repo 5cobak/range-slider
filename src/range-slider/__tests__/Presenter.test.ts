@@ -18,7 +18,7 @@ describe('test class Presenter with single type', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 1000,
     from: 0,
@@ -62,7 +62,7 @@ describe('test class Presenter with double type', () => {
   const parent = document.createElement('div');
   const settings: ISettingsTypes = {
     el: parent,
-    type: 'double',
+    type: 'double-horizontal',
     min: 0,
     max: 1000,
     from: 0,

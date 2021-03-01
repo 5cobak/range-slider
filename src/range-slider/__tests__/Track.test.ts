@@ -5,7 +5,7 @@ describe('test ViewTrack', () => {
   const elem = document.createElement('div');
   const settings = {
     el: elem,
-    type: 'single',
+    type: 'single-horizontal',
     min: 0,
     max: 10000,
     from: 0,
@@ -40,7 +40,7 @@ describe('test ViewTrack', () => {
     const elem = document.createElement('div');
     const settings = {
       el: elem,
-      type: 'double',
+      type: 'double-horizontal',
       min: 0,
       max: 10000,
       from: 0,
