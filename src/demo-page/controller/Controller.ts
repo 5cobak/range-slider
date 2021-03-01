@@ -1,4 +1,4 @@
-import IPanel from '../../panel/globals';
+import IPanel from '../panel/globals';
 import IController from './globals';
 
 export default class Controller implements IController {
@@ -71,7 +71,7 @@ export default class Controller implements IController {
 
   private changeValOnSlider(e: MouseEvent | TouchEvent) {
     const eventType: string = e.type;
-    if (eventType === 'mousedown') return;
+    if (eventType !== 'mousedown') return;
 
     const sliderEl = this.getElementOfSlider();
 
