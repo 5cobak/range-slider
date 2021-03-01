@@ -1,5 +1,5 @@
-import Model from '../Model';
-import { ISettingsTypes } from '../globals';
+import Model from '../Model/Model';
+import { ISettingsTypes } from '../Interfaces/globals';
 import './Observer.test';
 
 describe('test model', () => {

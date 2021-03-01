@@ -1,4 +1,4 @@
-import ViewInner from '../ViewInner';
+import ViewInner from '../View/ViewInner';
 
 describe('test inner', () => {
   const parent = document.createElement('div');

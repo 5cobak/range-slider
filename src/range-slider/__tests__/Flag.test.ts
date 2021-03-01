@@ -1,5 +1,5 @@
-import ViewFlag from '../ViewFlag';
-import { IFlag, ISettingsTypes } from '../globals';
+import ViewFlag from '../View/ViewFlag';
+import { IFlag, ISettingsTypes } from '../Interfaces/globals';
 
 describe('test ViewTrack single', () => {
   const parent = document.createElement('div');

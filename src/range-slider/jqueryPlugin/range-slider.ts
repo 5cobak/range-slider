@@ -1,5 +1,5 @@
-import Presenter from './Presenter';
-import { ISettingsTypes, IMethods } from './globals';
+import Presenter from '../Presenter/Presenter';
+import { ISettingsTypes, IMethods } from '../Interfaces/globals';
 
 (($) => {
   $.fn.extend({

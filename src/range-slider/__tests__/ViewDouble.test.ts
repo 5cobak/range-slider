@@ -1,4 +1,4 @@
-import ViewDouble from '../ViewDouble';
+import ViewDouble from '../View/ViewDouble';
 import './Thumb.test';
 import './Flag.test';
 import './Inner.test';

@@ -1,4 +1,4 @@
-import View from '../View';
+import View from '../View/View';
 import './Thumb.test';
 import './Flag.test';
 import './Inner.test';
@@ -10,11 +10,11 @@ import './ViewDouble.test';
 import './ViewDoubleVertical.test';
 import './Observer.test';
 
-import { IView } from '../globals';
-import ViewDouble from '../ViewDouble';
-import ViewSingle from '../ViewSingle';
-import ViewDoubleVertical from '../ViewDoubleVertical';
-import ViewSingleVertical from '../ViewSingleVertical';
+import { IView } from '../Interfaces/globals';
+import ViewDouble from '../View/ViewDouble';
+import ViewSingle from '../View/ViewSingle';
+import ViewDoubleVertical from '../View/ViewDoubleVertical';
+import ViewSingleVertical from '../View/ViewSingleVertical';
 
 describe('test main view class with type double ', () => {
   const parent = document.createElement('div');

@@ -1,4 +1,4 @@
-import ViewSingleVertical from '../ViewSingleVertical';
+import ViewSingleVertical from '../View/ViewSingleVertical';
 
 import './Thumb.test';
 import './Flag.test';

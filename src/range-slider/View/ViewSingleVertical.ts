@@ -4,8 +4,8 @@ import ViewThumb from './ViewThumb';
 import ViewInner from './ViewInner';
 import ViewFlag from './ViewFlag';
 import ViewScale from './ViewScale';
-import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, IPosition } from './globals';
-import MakeObservableSubject from './Observer';
+import { ISettingsTypes, ITrack, IClassProperties, IFlag, IScale, IThumb, IObserver, IPosition } from '../Interfaces/globals';
+import MakeObservableSubject from '../Observer/Observer';
 // VIEW class
 export default class ViewSingleVertical {
   settings!: ISettingsTypes;

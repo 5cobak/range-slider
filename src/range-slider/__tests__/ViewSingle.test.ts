@@ -1,4 +1,4 @@
-import ViewSingle from '../ViewSingle';
+import ViewSingle from '../View/ViewSingle';
 
 import './Thumb.test';
 import './Flag.test';

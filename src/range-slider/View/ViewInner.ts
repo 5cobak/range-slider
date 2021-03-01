@@ -1,4 +1,4 @@
-import { ISettingsTypes } from './globals';
+import { ISettingsTypes } from '../Interfaces/globals';
 
 export default class ViewInner {
   settings: ISettingsTypes;

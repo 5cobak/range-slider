@@ -1,5 +1,5 @@
-import Observer from '../Observer';
-import { IObserver } from '../globals';
+import Observer from '../Observer/Observer';
+import { IObserver } from '../Interfaces/globals';
 
 describe('test Observer class', () => {
   const someObject = {

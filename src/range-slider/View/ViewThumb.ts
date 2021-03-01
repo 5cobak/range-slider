@@ -1,7 +1,7 @@
-import { IObserver, ISettingsTypes, IThumb, IPosition } from './globals';
-import MakeObservableSubject from './Observer';
+import { IObserver, ISettingsTypes, IThumb, IPosition } from '../Interfaces/globals';
+import MakeObservableSubject from '../Observer/Observer';
 
-import { validateCoordsByClick, validateCoord, validateCoordsByMove, getValues } from './utils/thumbHelpers';
+import { validateCoordsByClick, validateCoord, validateCoordsByMove, getValues } from '../utils/thumbHelpers';
 
 export default class ViewThumb implements IThumb {
   el!: HTMLElement;

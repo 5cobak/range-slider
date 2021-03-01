@@ -1,7 +1,7 @@
 /* eslint-disable fsd/no-function-declaration-in-event-listener */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { IThumb } from '../globals';
-import ViewThumb from '../ViewThumb';
+import { IThumb } from '../Interfaces/globals';
+import ViewThumb from '../View/ViewThumb';
 import './Observer.test';
 
 describe('test single type thumb', () => {

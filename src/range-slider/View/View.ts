@@ -2,8 +2,8 @@ import ViewSingle from './ViewSingle';
 import ViewDouble from './ViewDouble';
 import ViewDoubleVertical from './ViewDoubleVertical';
 import ViewSingleVertical from './ViewSingleVertical';
-import MakeObservableSubject from './Observer';
-import { IView, ISettingsTypes, ISubView, IObserver } from './globals';
+import MakeObservableSubject from '../Observer/Observer';
+import { IView, ISettingsTypes, ISubView, IObserver } from '../Interfaces/globals';
 // ---------------------------------------   VIEW main --------------------------------------------
 export default class View implements IView {
   settings!: ISettingsTypes;

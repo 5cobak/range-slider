@@ -1,5 +1,5 @@
-import Presenter from '../Presenter';
-import { ISettingsTypes } from '../globals';
+import Presenter from '../Presenter/Presenter';
+import { ISettingsTypes } from '../Interfaces/globals';
 
 import './Thumb.test';
 import './Flag.test';

@@ -1,6 +1,6 @@
-import ViewScale from '../ViewScale';
+import ViewScale from '../View/ViewScale';
 
-import { IScale, ISettingsTypes } from '../globals';
+import { IScale, ISettingsTypes } from '../Interfaces/globals';
 
 describe('test inner in single', () => {
   const parent = document.createElement('div');

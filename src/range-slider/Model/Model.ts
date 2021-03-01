@@ -1,5 +1,5 @@
-import MakeObservableSubject from './Observer';
-import { IModel, ISettingsTypes, IObserver, IBankModel } from './globals';
+import MakeObservableSubject from '../Observer/Observer';
+import { IModel, ISettingsTypes, IObserver, IBankModel } from '../Interfaces/globals';
 
 export default class Model implements IModel {
   settings!: ISettingsTypes;

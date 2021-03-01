@@ -1,4 +1,4 @@
-import { ISettingsTypes } from '../globals.d';
+import { ISettingsTypes } from '../Interfaces/globals';
 
 function toFixed(num: number) {
   num = Number(num.toFixed(20));

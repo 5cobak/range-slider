@@ -1,5 +1,5 @@
-import ViewTrack from '../ViewTrack';
-import { ITrack } from '../globals';
+import ViewTrack from '../View/ViewTrack';
+import { ITrack } from '../Interfaces/globals';
 
 describe('test ViewTrack', () => {
   const elem = document.createElement('div');

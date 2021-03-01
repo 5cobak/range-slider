@@ -1,6 +1,6 @@
-import View from './View';
-import Model from './Model';
-import { IFlag, IModel, ISettingsTypes, IView } from './globals';
+import View from '../View/View';
+import Model from '../Model/Model';
+import { IFlag, IModel, ISettingsTypes, IView } from '../Interfaces/globals';
 
 export default class Presenter {
   private view!: IView;

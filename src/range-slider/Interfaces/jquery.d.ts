@@ -1,4 +1,4 @@
-import { IObserver } from './globals'
+import { IObserver } from './globals';
 
 export interface jQuery {
   rangeSlider(): any;
