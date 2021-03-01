@@ -2,7 +2,6 @@
   position: relative;
   $self: &;
   max-width: 400px;
-  margin-bottom: 50px;
   min-height: 50px;
   user-select: none;
   &_vertical {
@@ -161,7 +160,6 @@
     position: relative;
     top: 110%;
     min-height: 25px;
-    background-color: #fff;
     font-size: 14px;
     @media (max-width: $phone-width) {
       font-size: 10px;

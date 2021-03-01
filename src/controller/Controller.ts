@@ -44,6 +44,10 @@ export default class Controller implements IController {
 
     inputFrom.value = newFrom;
     if (inputTo) inputTo.value = newTo;
+
+    this.changeVal('min', this.slider.data('min'));
+    this.changeVal('max', this.slider.data('max'));
+    this.changeVal('step', this.slider.data('step'));
   }
 
   private changeValInPanel() {
@@ -65,7 +69,10 @@ export default class Controller implements IController {
     document.removeEventListener('mouseup', updateVal);
   }
 
-  private changeValOnSlider() {
+  private changeValOnSlider(e: MouseEvent | TouchEvent) {
+    const eventType: string = e.type;
+    if (eventType === 'mousedown') return;
+
     const sliderEl = this.getElementOfSlider();
 
     const removeEvents = this.removeEventMouseTouchEvents.bind(this);
@@ -73,7 +80,7 @@ export default class Controller implements IController {
     if (!sliderEl) return;
     changeVal();
     document.addEventListener('mousemove', changeVal);
-    document.addEventListener('touchstart', changeVal);
+    document.addEventListener('touchmove', changeVal);
     document.addEventListener('mouseup', removeEvents);
   }
 
@@ -88,46 +95,46 @@ export default class Controller implements IController {
     const inputMin = (e.target as HTMLElement).closest('.js-input-min') as HTMLInputElement;
     const inputFrom = this.panel.from as HTMLInputElement;
 
-    this.slider.rangeSlider({ min: inputMin.value }, 'update');
+    this.slider.rangeSlider({ min: Number(inputMin.value) }, 'update');
     inputFrom.value = this.slider.data('from');
     this.updateVal();
   }
 
   private changeMaxOnSlider(e: Event) {
     const maxInput = (e.target as HTMLElement).closest('.js-input-max') as HTMLInputElement;
-    this.slider.rangeSlider({ max: maxInput.value }, 'update');
+    this.slider.rangeSlider({ max: Number(maxInput.value) }, 'update');
     this.updateVal();
   }
 
   private changeStartValOnSlider(e: Event) {
-    const fromInput = (e.target as HTMLElement).closest('.js-input-from') as HTMLInputElement;
-    this.slider.rangeSlider({ from: fromInput.value }, 'update');
+    const fromInput = (e.target as HTMLElement) as HTMLInputElement;
+    this.slider.rangeSlider({ from: Number(fromInput.value) }, 'update');
     const toInput = this.panel.to as HTMLInputElement;
 
     const { from } = this.slider.data('el').querySelector('.js-range-slider').dataset;
     let to: number;
+    fromInput.value = `${from}`;
     if (toInput) {
       to = this.slider.data('el').querySelector('.js-range-slider').dataset.to;
       toInput.value = `${to}`;
     }
-
-    fromInput.value = `${from}`;
   }
 
   private changeSecondValueOnSlider(e: Event) {
-    const toInput = (e.target as HTMLElement).closest('.js-input-to') as HTMLInputElement;
+    const toInput = (e.target as HTMLElement) as HTMLInputElement;
     const fromInput = this.panel.from as HTMLInputElement;
-    this.slider.rangeSlider({ to: toInput.value }, 'update');
-    const { to, from } = this.slider.data('el').querySelector('.js-range-slider').dataset;
-    this.slider.rangeSlider({ from }, 'update');
-    toInput.value = `${to}`;
-    fromInput.value = `${from}`;
+    this.slider.rangeSlider({ to: Number(toInput.value) }, 'update');
+    this.slider.rangeSlider({ from: Number(fromInput.value) }, 'update');
+    const newTo = this.slider.data('to');
+    const newFrom = this.slider.data('from');
+    toInput.value = `${newTo}`;
+    fromInput.value = `${newFrom}`;
   }
 
   private showHideFlag(e: Event) {
     const stepInput = (e.target as HTMLElement).closest('.js-input-flag') as HTMLInputElement;
-    this.slider.rangeSlider({ flag: stepInput.checked }, 'update');
     this.updateVal();
+    this.slider.rangeSlider({ flag: stepInput.checked }, 'update');
   }
 
   private showHideScale(e: Event) {
@@ -144,8 +151,10 @@ export default class Controller implements IController {
 
   private addEventsOnSlider(): void {
     const changeVal = this.changeValOnSlider.bind(this);
-    this.slider.on('mousemove', changeVal);
-    this.slider.on('touchmove', changeVal);
+    const sliderEl = this.slider.data('el').querySelector('.range-slider') as HTMLElement;
+
+    sliderEl.addEventListener('mousedown', changeVal);
+    sliderEl.addEventListener('touchstart', changeVal);
   }
 
   private addEventsOnPanel() {
@@ -166,6 +175,7 @@ export default class Controller implements IController {
     const horizontalToggle = this.panel.horizontal as HTMLElement;
     const verticalToggle = this.panel.vertical as HTMLElement;
     const changeTypeOfSlider = this.changeTypeOfSlider.bind(this);
+
     step.addEventListener('change', changeStepOnSlider);
     min.addEventListener('change', changeMinOnSlider);
     max.addEventListener('change', changeMaxOnSlider);

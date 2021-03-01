@@ -32,12 +32,20 @@ export default class Model implements IModel {
 
     if (val > this.settings.max) val = this.settings.max;
 
-    this.bank[currentVal] = val;
+    this.bank[currentVal] = parseFloat(val.toFixed(10));
   }
 
   // method for validate settings which come from user or default
   private isFromBiggerThenTo() {
     return this.settings.type.match('double') && this.settings.from > (this.settings.to as number);
+  }
+
+  private isMaxNegativeAndLessThenMin() {
+    return this.settings.max < this.settings.min && this.settings.max < 0;
+  }
+
+  private isMaxPositiveAndLessThenMin() {
+    return this.settings.max < this.settings.min && this.settings.max > 0;
   }
 
   private validate() {
@@ -48,6 +56,16 @@ export default class Model implements IModel {
       this.settings.from = to;
       this.settings.to = from;
     }
+    if (this.settings.max < this.settings.min) {
+      const oldMax = this.settings.max;
+      this.settings.max = this.settings.min;
+      this.settings.min = oldMax;
+    } else if (this.settings.max === this.settings.min) this.settings.max += this.settings.max;
+
+    if (this.isMaxNegativeAndLessThenMin()) this.settings.max = -this.settings.max;
+
+    if (this.isMaxPositiveAndLessThenMin()) this.settings.max += this.settings.min;
+
     if (this.settings.step < 0) this.settings.step = -this.settings.step;
     if (this.settings.step === 0) this.settings.step = 1;
     if (this.settings.from < this.settings.min) this.settings.from = this.settings.min;
@@ -67,9 +85,9 @@ export default class Model implements IModel {
       from: this.settings.from,
       to: this.settings.to,
     };
+    this.validate();
     // calculate and set general value of range-slider
     this.setGeneralValue(settings);
     // validate all settings from usder or default settings
-    this.validate();
   }
 }

@@ -19,6 +19,7 @@ export default class ViewFlag {
 
     const thumb = parent;
     const flag = thumb.querySelector('.js-range-slider__flag') as HTMLElement;
+    if (!flag) return;
     const thumbLeft = parseFloat(thumb.style.left);
     const halfHeightThumb = thumb.offsetHeight / 2;
     const halfHeightFlag = flag.offsetHeight / 2;

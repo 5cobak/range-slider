@@ -77,7 +77,7 @@ export const panelSecond = new Panel(
   [
     {
       title: 'от',
-      class: 'input-from',
+      class: 'input-from js-input-from',
       attr: {
         type: 'text',
         placeholder: 'Текущее значение',
@@ -85,7 +85,7 @@ export const panelSecond = new Panel(
     },
     {
       title: 'до',
-      class: 'input-to',
+      class: 'input-to js-input-to',
       attr: {
         type: 'text',
         placeholder: 'Текущее значение',

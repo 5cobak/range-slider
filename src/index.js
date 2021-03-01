@@ -4,9 +4,9 @@ import Controller from './controller/Controller';
 
 const rangeFirst = $('.js-range-slider-1').rangeSlider({
   type: 'single-horizontal',
-  min: 0,
+  min: 100,
   max: 500,
-  from: 0,
+  from: 100,
   step: 100,
 });
 
@@ -14,7 +14,7 @@ rangeFirst.after(panelFirst.el);
 
 new Controller(rangeFirst, panelFirst);
 
-// /* ----------------------------------------------- second slider with panel -------------------------- */
+// // /* ----------------------------------------------- second slider with panel -------------------------- */
 
 const rangeSecond = $('.js-range-slider-2').rangeSlider({
   type: 'double-horizontal',

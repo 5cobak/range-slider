@@ -62,6 +62,7 @@ export default class ViewDouble {
     from = ((stepSize * Math.round(from / settings.step)) / trackSize) * 100;
     this.thumb.el.style.left = `${from}%`;
     to = ((stepSize * Math.round(to / settings.step)) / trackSize) * 100;
+    if (to > 100) to = 100;
     this.secondThumb.el.style.left = `${to}%`;
     this.positions.from = from;
     this.positions.to = to;
