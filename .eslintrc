@@ -18,15 +18,17 @@
     "max-len": [2, 200, 4, { "ignoreUrls": true }],
     "no-param-reassign": "off",
     "semi": "off",
-    "no-unused-vars": "warn",
-    "space-in-parens": "off",
+    "no-unused-vars": ["error", { "vars": "all", "args": "all", "ignoreRestSiblings": false }],
+    "no-new": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "@typescript-eslint/no-this-alias": "off",
     "comma-dangle": "off",
     "object-curly-newline": "off",
     "no-shadow": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "implicit-arrow-linebreak": "off",
+    "@typescript-eslint/no-var-requires": "off"
   },
   "parserOptions": {
     "ecmaVersion": 11,

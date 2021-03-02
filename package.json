@@ -9,6 +9,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
     "test": "jest",
     "lint:fix": "eslint --fix --ext .js, src test/unit/specs test/e2e/specs",
+    "lint": "eslint \"**/*.{js,ts}\"",
     "deploy": "gh-pages -d dist"
   },
   "jest": {

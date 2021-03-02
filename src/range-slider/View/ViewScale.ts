@@ -51,17 +51,16 @@ export default class Scale implements IScale {
     const { smallLine } = this;
     const scale = this.el;
     // get values and calculate step size
-    const { thumbSize, trackSize, stepCount, stepSize, posCountSmallPercent } = getValues(settings, generalVal, scale);
+    const { thumbSize, trackSize, stepCount, stepSize } = getValues(settings, generalVal, scale);
 
     // get positions for bit and small lines
-    const { posCountBig } = getValues(settings, generalVal, scale);
 
     // add small line in scale
     this.el.append(this.smallLine);
 
     // calculate and append small lines in scale
-    setSmallLines(settings, stepCount, posCountSmallPercent, trackSize, thumbSize, stepSize, smallLine, scale);
+    setSmallLines(settings, stepCount, trackSize, thumbSize, stepSize, smallLine, scale);
     // calculate and append big Lines in scale
-    setBigLines(settings, stepCount, posCountBig, stepSize, trackSize, scale);
+    setBigLines(settings, stepCount, stepSize, trackSize, scale);
   }
 }

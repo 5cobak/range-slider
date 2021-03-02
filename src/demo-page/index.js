@@ -1,4 +1,4 @@
-import { panelFirst, panelSecond, panelThird, panelFourth } from './panel/panels';
+import { panelFirst, panelSecond } from './panel/panels';
 import Controller from './controller/Controller';
 /* ----------------------------------------------- first slider with panel -------------------------- */
 

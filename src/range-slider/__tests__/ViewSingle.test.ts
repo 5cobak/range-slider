@@ -23,7 +23,6 @@ describe('test ViewTrack', () => {
   const isVertical = settings.type.match('vertical');
 
   const size = isVertical ? 'height' : 'width';
-  const hiddenTrack = document.createElement('div');
   parent.className = 'js-range-slider';
 
   parent.style.position = 'absolute';

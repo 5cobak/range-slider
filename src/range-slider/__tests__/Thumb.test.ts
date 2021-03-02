@@ -531,16 +531,6 @@ describe('test double-vertical type thumb', () => {
   let generalVal = settings.max - settings.min - ((settings.max - settings.min) % (settings.step / 10)) * 10;
   if (generalVal % settings.step) generalVal += settings.step - (generalVal % settings.step);
 
-  function triggerMouseEvent(node: Element, eventType: string) {
-    const event = new MouseEvent(eventType, {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-      clientY: 700,
-    });
-    node.dispatchEvent(event);
-  }
-
   let thumb: IThumb;
   let secondThumb: IThumb;
   // ---------------------- tests
