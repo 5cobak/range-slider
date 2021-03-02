@@ -36,12 +36,12 @@ export default class Scale implements IScale {
   writeMinAndMaxValues(settings: ISettingsTypes): void {
     const lineCollections = this.el.querySelectorAll('.js-range-slider__big-line');
     const min = document.createElement('div');
-
     min.className = 'range-slider__text js-range-slider__text';
     min.innerHTML = `${settings.min}`;
 
     const max = min.cloneNode(true) as HTMLElement;
     max.innerHTML = `${settings.max}`;
+    console.log(lineCollections[lineCollections.length - 1]);
 
     lineCollections[0].append(min);
     lineCollections[lineCollections.length - 1].append(max);

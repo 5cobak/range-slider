@@ -56,53 +56,52 @@ function setFewSmallLine(
   smallLine: HTMLElement,
   trackSize: number,
   settings: ISettingsTypes,
-  stepSize: number
+  stepSize: number,
+  posLine: number
 ): void {
   const coord = settings.type.match('vertical') ? 'top' : 'left';
   const size = settings.type.match('vertical') ? 'height' : 'width';
-  let posLine = 0;
-  for (let i = 0; i <= stepCount * 3; i += 1) {
-    const smallLineClone = smallLine.cloneNode(true) as HTMLElement;
-    scale.append(smallLineClone);
-    smallLineClone.style.display = 'none';
-    const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
-    const smallLineCoord = ((posLine - smallLineSize / 2) / trackSize) * 100;
-    const excessLinePos = posLine - smallLineSize / 2;
-    if (excessLinePos >= trackSize) break;
-    smallLineClone.style.display = 'block';
-    (smallLineClone as HTMLElement).style[coord] = `${toFixed(smallLineCoord)}%`;
-    posLine += stepSize / 2;
-  }
+
+  const smallLineClone = smallLine.cloneNode(true) as HTMLElement;
+  scale.append(smallLineClone);
+  smallLineClone.style.display = 'none';
+  const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
+  const smallLineCoord = ((posLine - smallLineSize / 2) / trackSize) * 100;
+  const excessLinePos = posLine - smallLineSize / 2;
+  if (excessLinePos >= trackSize) return;
+  smallLineClone.style.display = 'block';
+  (smallLineClone as HTMLElement).style[coord] = `${toFixed(smallLineCoord)}%`;
+  posLine += stepSize / 2;
+  setFewSmallLine(stepCount, scale, smallLine, trackSize, settings, stepSize, posLine);
 }
+
 function setMuchSmallLine(
   stepCount: number,
   scale: HTMLElement,
   smallLine: HTMLElement,
   trackSize: number,
   settings: ISettingsTypes,
-  thumbSize: number
+  thumbSize: number,
+  posLine: number
 ): void {
   const coord = settings.type.match('vertical') ? 'top' : 'left';
   const size = settings.type.match('vertical') ? 'height' : 'width';
-  let posLine = 0;
-  for (let i = 0; i <= stepCount; i += 1) {
-    const smallLineClone = smallLine.cloneNode(true);
 
-    scale.append(smallLineClone);
-    const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
+  const smallLineClone = smallLine.cloneNode(true);
 
-    const smallLineCoord = (posLine / trackSize) * 100;
-    const excessLinePos = posLine - smallLineSize / 2;
+  scale.append(smallLineClone);
+  const smallLineSize = parseFloat(getComputedStyle(smallLineClone as HTMLElement)[size]);
 
-    if (excessLinePos >= trackSize) {
-      break;
-    }
+  const smallLineCoord = (posLine / trackSize) * 100;
 
-    (smallLineClone as HTMLElement).style[coord] = `${smallLineCoord}%`;
-    posLine += thumbSize / 2 - smallLineSize / 2;
+  const excessLinePos = posLine - smallLineSize / 2;
+  if (excessLinePos >= trackSize) {
+    return;
   }
 
-  scale.removeChild(scale.lastChild as Node);
+  (smallLineClone as HTMLElement).style[coord] = `${smallLineCoord}%`;
+  posLine += thumbSize / 2 - smallLineSize / 2;
+  setMuchSmallLine(stepCount, scale, smallLine, trackSize, settings, thumbSize, posLine);
 }
 
 export function setSmallLines(
@@ -114,35 +113,41 @@ export function setSmallLines(
   smallLine: HTMLElement,
   scale: HTMLElement
 ): void {
+  const posLine = 0;
   scale.innerHTML = '';
   if (!(stepCount > 50)) {
-    setFewSmallLine(stepCount, scale, smallLine, trackSize, settings, stepSize);
+    setFewSmallLine(stepCount, scale, smallLine, trackSize, settings, stepSize, posLine);
   } else {
-    setMuchSmallLine(stepCount, scale, smallLine, trackSize, settings, thumbSize);
+    setMuchSmallLine(stepCount, scale, smallLine, trackSize, settings, thumbSize, posLine);
   }
 }
 
-function setMuchBigLines(stepCount: number, scale: HTMLElement, settings: ISettingsTypes, trackSize: number, stepSize: number): void {
+function setMuchBigLines(scale: HTMLElement, settings: ISettingsTypes, trackSize: number, stepSize: number, posLine: number): void {
   const coord = settings.type.match('vertical') ? 'top' : 'left';
   const size = settings.type.match('vertical') ? 'height' : 'width';
-  let posLine = 0;
-  for (let i = 0; i <= stepCount; i += 1) {
-    const bigLine: HTMLElement = document.createElement('span');
-    bigLine.className = 'js-range-slider__big-line range-slider__big-line';
-    scale.append(bigLine);
-    const bigLineSize = parseFloat(getComputedStyle(bigLine)[size]);
 
-    const bigLineCoord = ((posLine - bigLineSize / 2) / trackSize) * 100;
-    bigLine.style[coord] = `${toFixed(bigLineCoord)}%`;
-    posLine += stepSize;
+  const bigLine: HTMLElement = document.createElement('span');
+  bigLine.className = 'js-range-slider__big-line range-slider__big-line';
+  scale.append(bigLine);
+  const bigLineSize = parseFloat(getComputedStyle(bigLine)[size]);
+
+  const bigLineCoord = ((posLine - bigLineSize / 2) / trackSize) * 100;
+  if (bigLineCoord >= 100) {
+    (scale.querySelector('.js-range-slider__big-line:last-child') as HTMLElement).remove();
+    return;
   }
+  bigLine.style[coord] = `${toFixed(bigLineCoord)}%`;
+  posLine += stepSize;
+
+  setMuchBigLines(scale, settings, trackSize, stepSize, posLine);
 }
 
 export function setBigLines(settings: ISettingsTypes, stepCount: number, stepSize: number, trackSize: number, scale: HTMLElement): void {
   const coord = settings.type.match('vertical') ? 'top' : 'left';
   const size = settings.type.match('vertical') ? 'height' : 'width';
+  const posLine = 0;
   if (!(stepCount > 50)) {
-    setMuchBigLines(stepCount, scale, settings, trackSize, stepSize);
+    setMuchBigLines(scale, settings, trackSize, stepSize, posLine);
   } else {
     const firstBigLine: HTMLElement = document.createElement('span');
     firstBigLine.className = 'js-range-slider__big-line range-slider__big-line';
