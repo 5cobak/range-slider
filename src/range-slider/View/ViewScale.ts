@@ -41,7 +41,6 @@ export default class Scale implements IScale {
 
     const max = min.cloneNode(true) as HTMLElement;
     max.innerHTML = `${settings.max}`;
-    console.log(lineCollections[lineCollections.length - 1]);
 
     lineCollections[0].append(min);
     lineCollections[lineCollections.length - 1].append(max);
