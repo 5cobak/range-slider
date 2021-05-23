@@ -61,7 +61,7 @@ export default class Presenter {
     this.view.changedSubject.addObservers(() => {
       const flag = this.view.type.flag.el;
       const { parent } = this.view.type;
-      // notify model and model calculate current vals for from and to
+      // notify model and model calculate current values for from and to
       this.model.modelChangedSubject.notifyObservers();
       if (!this.isDouble) {
         const { from } = this.model.bank;
