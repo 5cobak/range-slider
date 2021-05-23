@@ -24,7 +24,7 @@ export default class Model implements IModel {
   }
 
   // method for calculate model.bank.from or model.bank.to
-  // first argument is positon to or from which come from view at the presenter
+  // first argument is position to or from which come from view at the presenter
   // second argument step size of track
   // currentVal is string which point us which position to return: from or to
   public setCurrentVal(pos: number, thumbPosPercentFrom: number, stepSize: number, step: number, currentVal: string): void {
@@ -88,6 +88,6 @@ export default class Model implements IModel {
     this.validate();
     // calculate and set general value of range-slider
     this.setGeneralValue(settings);
-    // validate all settings from usder or default settings
+    // validate all settings from user or default settings
   }
 }

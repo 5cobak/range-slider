@@ -5,18 +5,18 @@ export default class MakeObservableSubject {
     this.observers = [];
   }
 
-  addObservers(o: () => void): void {
+  addObservers(observer: () => void): void {
     this.observers.forEach((item) => {
-      if (item === o) {
+      if (item === observer) {
         throw Error('observer is already exist');
       }
     });
-    this.observers.push(o);
+    this.observers.push(observer);
   }
 
-  removeObserver(o: () => void): void {
+  removeObserver(observer: () => void): void {
     this.observers.forEach((item, i) => {
-      if (item === o) {
+      if (item === observer) {
         this.observers.splice(i, 1);
         return;
       }

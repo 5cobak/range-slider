@@ -1,5 +1,5 @@
-import Presenter from '../Presenter/Presenter';
-import { ISettingsTypes, IMethods } from '../Interfaces/globals';
+import Presenter from "../Presenter/Presenter";
+import { ISettingsTypes, IMethods } from "../Interfaces/globals";
 
 (($) => {
   $.fn.extend({
@@ -14,7 +14,7 @@ import { ISettingsTypes, IMethods } from '../Interfaces/globals';
         // default options object
         {
           el: htmlEl,
-          type: 'single-horizontal',
+          type: "single-horizontal",
           min: 0,
           max: 1000,
           from: 0,
@@ -63,16 +63,21 @@ import { ISettingsTypes, IMethods } from '../Interfaces/globals';
           // если запрашиваемый метод существует, мы его вызываем
           // все параметры, кроме имени метода придут в метод
           // this так же перекочует в метод
-          return methods[method].apply(this, Array.prototype.slice.call(args, 1) as []);
+          return methods[method].apply(
+            this,
+            Array.prototype.slice.call(args, 1) as []
+          );
         }
-        if (typeof method === 'object' || !method) {
+        if (typeof method === "object" || !method) {
           // если первым параметром идет объект, либо совсем пусто
           // выполняем метод init
 
           return methods.init.call(this);
         }
         // если ничего не получилось
-        return $.error(`Метод "${method}" не найден в плагине jQuery.rangeSlider`);
+        return $.error(
+          `Метод "${method}" не найден в плагине jQuery.rangeSlider`
+        );
       });
     },
   });
